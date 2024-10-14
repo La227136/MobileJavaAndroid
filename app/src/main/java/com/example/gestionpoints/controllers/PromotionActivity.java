@@ -25,9 +25,10 @@ public class PromotionActivity extends BaseActivity implements FooterFragment.Fo
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         promotionManager = new PromotionManager(this);
         promotions = promotionManager.getAllPromotions();
+        super.onCreate(savedInstanceState);
+
     }
 
     @Override
