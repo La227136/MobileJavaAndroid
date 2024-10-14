@@ -20,6 +20,8 @@ public class PromotionActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        PromotionManager promotionManager = new PromotionManager(this);
+        promotions = promotionManager.getAllPromotions();
     }
 
     @Override
