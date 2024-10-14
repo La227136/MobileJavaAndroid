@@ -5,7 +5,7 @@
     android:id="@+id/learningActivityActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Controllers.MainActivity">
+    tools:context=".controllers.PromotionActivity">
 
     <!-- TextView en haut de la page pour le titre -->
     <TextView
@@ -20,8 +20,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:gravity="center" />
-
-    <!-- ScrollView en dessous du TextView -->
+    
     <ScrollView
         android:id="@+id/scrollView3"
         android:layout_width="match_parent"
