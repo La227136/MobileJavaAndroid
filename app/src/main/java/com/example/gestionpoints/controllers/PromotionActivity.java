@@ -45,12 +45,12 @@ public class PromotionActivity extends BaseActivity implements FooterFragment.Fo
 
     @Override
     public void setupFooter() {
-
+        FragmentsUtils.displayFooterFragment(this.getSupportFragmentManager(), R.id.footerContainer);
     }
 
     @Override
     public void setupHeader() {
-        FragmentsUtils.displayFooterFragment(this.getSupportFragmentManager(), R.id.footerContainer);
+
     }
 
 
@@ -86,4 +86,8 @@ public class PromotionActivity extends BaseActivity implements FooterFragment.Fo
                 .commit();
     }
 
+    @Override
+    public void onItemClick(View view) {
+
+    }
 }

@@ -1,5 +1,7 @@
 package com.example.gestionpoints.controllers;
 
+import android.view.View;
+
 import com.example.gestionpoints.R;
 
 public class LearningActivitiesActivity extends BaseActivity {
@@ -28,6 +30,11 @@ public class LearningActivitiesActivity extends BaseActivity {
 
     @Override
     public void setupMiddlePage() {
+
+    }
+
+    @Override
+    public void onItemClick(View view) {
 
     }
 }

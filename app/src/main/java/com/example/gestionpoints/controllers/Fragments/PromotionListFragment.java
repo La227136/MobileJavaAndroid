@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.gestionpoints.R;
 import com.example.gestionpoints.Utils.MarginUtils;
+import com.example.gestionpoints.controllers.EvalSettingsActivity;
 import com.example.gestionpoints.models.promotion.Promotion;
 
 import java.util.ArrayList;
@@ -71,8 +72,8 @@ public class PromotionListFragment extends Fragment {
             MarginUtils.setMargin(promotionItem);
 
             promotionLevelTextView.setText(promotion.getName());
-            //setBtnListeners(evalBtn, promotion, EvalSettingsActivity.class);
-            //setBtnListeners(pointsBtn, promotion, PointsActivity.class);
+            setBtnListeners(evalBtn, promotion, EvalSettingsActivity.class);
+           // setBtnListeners(pointsBtn, promotion, PointsActivity.class);
             promotionListContainer.addView(promotionItem);
         }
 
@@ -80,9 +81,14 @@ public class PromotionListFragment extends Fragment {
     }
 
     private void setBtnListeners(Button button, Promotion promotion, Class<?> targetActivity) {
+        Log.d("ICI", "ICI: ");
+
         button.setOnClickListener(v -> {
+            Log.d("AAAAAAAAA", "ICI: " + getActivity());
             Intent intent = new Intent(getActivity(), targetActivity);
+            Log.d("ICI", "ICI: " + promotion);
             intent.putExtra("promotion", promotion);
+            Log.d("ICI", "ICI: ");
             startActivity(intent);
         });
     }
