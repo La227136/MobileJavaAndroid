@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.gestionpoints.R;
+import com.example.gestionpoints.Utils.MarginUtils;
 import com.example.gestionpoints.models.promotion.Promotion;
 
 import java.util.List;
@@ -44,7 +45,7 @@ public class PromotionListFragment extends Fragment {
             View promotionItem = inflater.inflate(R.layout.list_item_promotion, promotionListContainer, false);
 
             retrieveView(promotionItem);
-           // MarginUtils.setMargin(promotionItem);
+            MarginUtils.setMargin(promotionItem);
 
             promotionLevelTextView.setText(promotion.getName());
             //setBtnListeners(evalBtn, promotion, EvalSettingsActivity.class);
