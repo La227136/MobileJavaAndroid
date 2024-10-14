@@ -8,19 +8,39 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.gestionpoints.R;
-
-public class MainActivity extends AppCompatActivity {
-
+public abstract class BaseActivity extends AppCompatActivity {
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_main);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+
+        setContentView(getLayoutResId());
+        setupWindowInsets();
+        setupHeader();
+        setupMiddlePage();
+        setupFooter();
+    }
+
+
+    private void setupWindowInsets() {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(getViewResId()), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
     }
+
+   
+
+    protected abstract int getViewResId();
+
+    public abstract int getLayoutResId();
+
+    public abstract void setupFooter();
+
+    public abstract void setupHeader();
+
+    public abstract void setupMiddlePage();
+
 }
