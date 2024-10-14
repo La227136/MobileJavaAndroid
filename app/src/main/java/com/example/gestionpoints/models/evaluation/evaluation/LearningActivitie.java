@@ -1,9 +1,10 @@
 package com.example.gestionpoints.models.evaluation.evaluation;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LearningActivitie extends ElementEvaluation {
+public class LearningActivitie extends ElementEvaluation{
     protected List<Evaluation> mListEvaluation = new ArrayList<>();
 
 

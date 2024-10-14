@@ -48,8 +48,8 @@ public class PromotionManager {
         return null;
     }
 
-    public List<Promotion> getAllPromotions() {
-        List<Promotion> promotions = new ArrayList<>();
+    public ArrayList<Promotion> getAllPromotions() {
+        ArrayList<Promotion> promotions = new ArrayList<>();
 
 
         Cursor cursor = mDatabase.query(

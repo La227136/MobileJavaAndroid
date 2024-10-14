@@ -1,8 +1,6 @@
 package com.example.gestionpoints.controllers.Fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,21 +16,35 @@ import com.example.gestionpoints.R;
 import com.example.gestionpoints.Utils.MarginUtils;
 import com.example.gestionpoints.models.promotion.Promotion;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PromotionListFragment extends Fragment {
 
-    private List<Promotion> promotionList;
+    private static final String ARG_PROMOTION = "promotion";
+    private List<Promotion> promotions;
     private LinearLayout promotionListContainer;
     private TextView promotionLevelTextView;
     private Button evalBtn;
     private Button pointsBtn;
 
-    // Constructeur pour recevoir la liste des promotions
-    public PromotionListFragment(List<Promotion> promotionList) {
-
-        this.promotionList = promotionList;
+    // On peut pas mettre des trucs dans le constructeur car quand on tourne telephone ca va tout casser
+    public static PromotionListFragment newInstance(ArrayList<Promotion> promotions) {
+        PromotionListFragment fragment = new PromotionListFragment();
+        Bundle args = new Bundle();
+        args.putSerializable(ARG_PROMOTION, promotions);
+        fragment.setArguments(args);
+        return fragment;
     }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            promotions = (List<Promotion>) getArguments().getSerializable(ARG_PROMOTION);
+        }
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -41,7 +53,7 @@ public class PromotionListFragment extends Fragment {
 
         promotionListContainer = view.findViewById(R.id.promotion_list_container);
         // Affichage des promotions
-        for (Promotion promotion : promotionList) {
+        for (Promotion promotion : promotions) {
             View promotionItem = inflater.inflate(R.layout.list_item_promotion, promotionListContainer, false);
 
             retrieveView(promotionItem);

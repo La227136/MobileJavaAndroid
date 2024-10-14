@@ -1,5 +1,6 @@
 package com.example.gestionpoints.models.student;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class Student {
