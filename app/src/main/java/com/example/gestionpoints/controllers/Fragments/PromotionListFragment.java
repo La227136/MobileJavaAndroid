@@ -1,15 +1,16 @@
 package com.example.gestionpoints.controllers.Fragments;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.content.Intent;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.gestionpoints.R;
@@ -27,6 +28,7 @@ public class PromotionListFragment extends Fragment {
     private TextView promotionLevelTextView;
     private Button evalBtn;
     private Button pointsBtn;
+    public static List<Integer> selectedPromotions = new ArrayList<>();
 
     // On peut pas mettre des trucs dans le constructeur car quand on tourne telephone ca va tout casser
     public static PromotionListFragment newInstance(ArrayList<Promotion> promotions) {
@@ -45,9 +47,9 @@ public class PromotionListFragment extends Fragment {
         }
     }
 
-    @Nullable
+
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_promotion_list, container, false);
 
@@ -55,7 +57,16 @@ public class PromotionListFragment extends Fragment {
         // Affichage des promotions
         for (Promotion promotion : promotions) {
             View promotionItem = inflater.inflate(R.layout.list_item_promotion, promotionListContainer, false);
+            promotionItem.setOnLongClickListener(v -> {
+                if (promotion.isSelected()) {
+                    promotion.setIsSelected(false);
 
+                } else {
+                    promotion.setIsSelected(true);
+                    selectedPromotions.add(promotion.getId());
+                }
+                return true;
+            });
             retrieveView(promotionItem);
             MarginUtils.setMargin(promotionItem);
 
@@ -67,39 +78,18 @@ public class PromotionListFragment extends Fragment {
 
         return view;
     }
-//
-//    private void setBtnListeners(Button button, Promotion promotion, Class<?> targetActivity) {
-//        button.setOnClickListener(v -> {
-//            Intent intent = new Intent(getActivity(), targetActivity);
-//            Log.d("PromotionListFragment", "Promotion: " + promotion.getName());
-//            intent.putExtra("promotion", promotion);
-//            startActivity(intent);
-//        });
-//    }
+
+    private void setBtnListeners(Button button, Promotion promotion, Class<?> targetActivity) {
+        button.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), targetActivity);
+            intent.putExtra("promotion", promotion);
+            startActivity(intent);
+        });
+    }
 
     private void retrieveView(View classeView) {
         promotionLevelTextView = classeView.findViewById(R.id.promotionsTextView);
         evalBtn = classeView.findViewById(R.id.evalBtn);
         pointsBtn = classeView.findViewById(R.id.pointsBtn);
     }
-//
-//    @Override
-//    public void onAddButtonClick() {
-//
-//        promotionList.add(new Promotion(12, "NEWWWWW"));
-//
-//        for(Promotion promotion : promotionList) {
-//
-//            View promotionItem =  getLayoutInflater().inflate(R.layout.list_item_classe, promotionListContainer,false);
-//
-//            retrieveView(promotionItem);
-//            MarginUtils.setMargin(promotionItem);
-//
-//            promotionLevelTextView.setText(promotion.getName());
-//            setBtnListeners(evalBtn, promotion, EvalSettingsActivity.class);
-//            setBtnListeners(pointsBtn, promotion, PointsActivity.class);
-//
-//            promotionListContainer.addView(promotionItem);
-//        }
-//    }
 }

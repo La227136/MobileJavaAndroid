@@ -1,6 +1,8 @@
 package com.example.gestionpoints.controllers;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.fragment.app.FragmentManager;
@@ -66,13 +68,22 @@ public class PromotionActivity extends BaseActivity implements FooterFragment.Fo
         Promotion promotion = new Promotion("promotion");
         promotionManager.addPromotion(promotion);
         fragmentManager.beginTransaction()
-                .replace(R.id.learningActivities_container,  PromotionListFragment.newInstance(promotionManager.getAllPromotions()))
+                .replace(R.id.learningActivities_container, PromotionListFragment.newInstance(promotionManager.getAllPromotions()))
                 .commit();
     }
 
     @Override
     public void onDeleteButtonClick() {
-
+        promotions = promotionManager.getAllPromotions();
+        for (Promotion promotion : promotions) {
+            for (int i = 0; i < PromotionListFragment.selectedPromotions.size(); i++) {
+                if (promotion.getId() == PromotionListFragment.selectedPromotions.get(i))
+                    promotionManager.deletePromotion(promotion);
+            }
+        }
+        fragmentManager.beginTransaction()
+                .replace(R.id.learningActivities_container, PromotionListFragment.newInstance(promotionManager.getAllPromotions()))
+                .commit();
     }
 
 }

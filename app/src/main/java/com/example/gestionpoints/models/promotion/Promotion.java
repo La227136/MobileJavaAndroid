@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 public class Promotion implements Serializable {
-
+    private boolean mIsSelected = false;
     private int mId;
     private List<Student> mListStudent = new ArrayList<>();
 
@@ -32,5 +32,13 @@ public class Promotion implements Serializable {
 
     public String getName() {
         return mName;
+    }
+
+    public boolean isSelected() {
+        return mIsSelected;
+    }
+
+    public void setIsSelected(boolean mIsSelected) {
+        this.mIsSelected = mIsSelected;
     }
 }
