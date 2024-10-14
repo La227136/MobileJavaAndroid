@@ -19,11 +19,14 @@ public class PromotionActivity extends BaseActivity implements FooterFragment.Fo
     int layoutResId = R.layout.activity_main;
     int viewResId = R.id.learningActivities_container;
     List<Promotion> promotions = new ArrayList<>();
+    PromotionManager promotionManager;
+    PromotionListFragment promotionListFragment;
+    FragmentManager fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        PromotionManager promotionManager = new PromotionManager(this);
+        promotionManager = new PromotionManager(this);
         promotions = promotionManager.getAllPromotions();
     }
 
@@ -50,8 +53,8 @@ public class PromotionActivity extends BaseActivity implements FooterFragment.Fo
 
     @Override
     public void setupMiddlePage() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        PromotionListFragment promotionListFragment = new PromotionListFragment(promotions);
+        fragmentManager = getSupportFragmentManager();
+        promotionListFragment = new PromotionListFragment(promotions);
         fragmentManager.beginTransaction()
                 .add(R.id.learningActivities_container, promotionListFragment)
                 .commit();
@@ -59,12 +62,16 @@ public class PromotionActivity extends BaseActivity implements FooterFragment.Fo
 
     @Override
     public void onAddButtonClick() {
-        Toast.makeText(this, "ADD ZINZIN", Toast.LENGTH_SHORT).show();
+        Promotion promotion = new Promotion("promotion");
+        promotionManager.addPromotion(promotion);
+        fragmentManager.beginTransaction()
+                .replace(R.id.learningActivities_container, new PromotionListFragment(promotionManager.getAllPromotions()))
+                .commit();
     }
 
     @Override
     public void onDeleteButtonClick() {
-        Toast.makeText(this, " DELETE ZINZIN", Toast.LENGTH_SHORT).show();
+
     }
 
 }
