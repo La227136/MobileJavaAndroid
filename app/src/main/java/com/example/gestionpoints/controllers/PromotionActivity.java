@@ -34,7 +34,7 @@ public class PromotionActivity extends BaseActivity implements FooterFragment.Fo
     }
 
     @Override
-    protected int getViewResId() {
+    public int getViewResId() {
         return viewResId;
     }
 

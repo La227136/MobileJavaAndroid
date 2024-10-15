@@ -9,7 +9,7 @@ public class LearningActivitiesActivity extends BaseActivity {
     int viewResId = R.id.learningActivities_container;
 
     @Override
-    protected int getViewResId() {
+    public int getViewResId() {
         return viewResId;
     }
 

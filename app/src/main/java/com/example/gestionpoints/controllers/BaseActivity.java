@@ -9,6 +9,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.gestionpoints.R;
+
 public abstract class BaseActivity extends AppCompatActivity implements OnItemClickListener {
     
     @Override
@@ -37,11 +39,11 @@ public abstract class BaseActivity extends AppCompatActivity implements OnItemCl
         });
     }
 
-   
 
-    protected abstract int getViewResId();
 
-    public abstract int getLayoutResId();
+    public abstract int getViewResId();
+
+        public abstract int getLayoutResId();
 
     public abstract void setupFooter();
 
