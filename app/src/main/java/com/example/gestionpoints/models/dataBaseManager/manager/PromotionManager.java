@@ -80,7 +80,7 @@ public class PromotionManager {
 
     private ContentValues getContentValues(Promotion promotion) {
         ContentValues values = new ContentValues();
-        values.put(PromotionTable.Cols.NAME, promotion.getName());
+        values.put(PromotionTable.Cols.PROMOTION_NAME, promotion.getName());
         return values;
     }
 

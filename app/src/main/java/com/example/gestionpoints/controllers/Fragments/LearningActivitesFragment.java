@@ -15,15 +15,17 @@ import androidx.fragment.app.Fragment;
 import com.example.gestionpoints.R;
 import com.example.gestionpoints.Utils.MarginUtils;
 import com.example.gestionpoints.controllers.OnItemClickListener;
-import com.example.gestionpoints.models.evaluation.evaluation.LearningActivitie;
+import com.example.gestionpoints.models.dataBaseManager.manager.EvaluationManager;
+import com.example.gestionpoints.models.evaluation.Evaluation;
 import com.example.gestionpoints.models.promotion.Promotion;
+
+import java.util.List;
 
 
 public class LearningActivitesFragment extends Fragment {
 
     private static final String ARG_PROMOTION = "promotion";
     private Promotion promotion;
-
 
 
     LinearLayout learningActivitiesContainer;
@@ -65,28 +67,19 @@ public class LearningActivitesFragment extends Fragment {
 
         learningActivitiesContainer = v.findViewById(R.id.learningActivitiesContainer);
 
-        Log.d("YYYYY", "onCreateView: " + promotion);
-        Log.d("YYYYY", "onCreateView: " + promotion.getListLearningActivities().size());
         if (promotion != null) {
-
-            for (LearningActivitie learningActivities : promotion.getListLearningActivities()) {
-                Log.d("LearningActivitesFragment", "onCreateView: " + learningActivities.getName());
-                View classeView = inflater.inflate(R.layout.list_item_learning_activity,learningActivitiesContainer, false);
-                //todo
-                MarginUtils.setMargin(classeView);
-
-                ((TextView) classeView.findViewById(R.id.learningActivityTextView)).setText(learningActivities.getName());
-
-                // Définir un OnClickListener qui appelle l'interface générique
-                classeView.setOnClickListener(view -> listener.onItemClick(view));
-
-                Log.d("LearningActivitesFragmentAAAA", "onCreateView: " + classeView.getWidth());
-
-                learningActivitiesContainer.addView(classeView);
+            EvaluationManager evaluationManager = new EvaluationManager(getContext());
+            List<Evaluation> evaluationList = evaluationManager.getAllEvaluations();
+            for (Evaluation evaluation : evaluationList) {
+                if (evaluation.getParentId() == null) {
+                    View classeView = inflater.inflate(R.layout.list_item_learning_activity, learningActivitiesContainer, false);
+                    MarginUtils.setMargin(classeView);
+                    ((TextView) classeView.findViewById(R.id.learningActivityTextView)).setText(evaluation.getName());
+                    classeView.setOnClickListener(view -> listener.onItemClick(view));
+                    learningActivitiesContainer.addView(classeView);
+                }
             }
         }
-
-
 
 
         return v;

@@ -2,11 +2,13 @@ package com.example.gestionpoints.controllers;
 
 import android.view.View;
 
+import androidx.fragment.app.Fragment;
+
 import com.example.gestionpoints.R;
 
 public class LearningActivitiesActivity extends BaseActivity {
     int layoutResId = R.layout.activity_main;
-    int viewResId = R.id.learningActivities_container;
+    int viewResId = R.id.middlePageContainer;
 
     @Override
     public int getViewResId() {
@@ -31,6 +33,11 @@ public class LearningActivitiesActivity extends BaseActivity {
     @Override
     public void setupMiddlePage() {
 
+    }
+
+    @Override
+    public Fragment getFragmentToLaunch() {
+        return new Fragment();
     }
 
     @Override

@@ -5,9 +5,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.gestionpoints.models.dataBaseManager.dbSchema.BulletinDBSchema.PromotionTable;
-import com.example.gestionpoints.models.dataBaseManager.dbSchema.BulletinDBSchema.EvaluationTable;
 import com.example.gestionpoints.models.dataBaseManager.dbSchema.BulletinDBSchema.StudentTable;
-import com.example.gestionpoints.models.dataBaseManager.dbSchema.BulletinDBSchema.PointsTable;
+import com.example.gestionpoints.models.dataBaseManager.dbSchema.BulletinDBSchema.EvaluationTable;
+import com.example.gestionpoints.models.dataBaseManager.dbSchema.BulletinDBSchema.GradeTable;
 
 public class BulletinBaseHelper extends SQLiteOpenHelper {
     private static final int VERSION = 1;
@@ -20,9 +20,9 @@ public class BulletinBaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         // Table Promotion
-        db.execSQL("CREATE TABLE " +PromotionTable.NAME + " ("
+        db.execSQL("CREATE TABLE " + PromotionTable.NAME + " ("
                 + PromotionTable.Cols.ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + PromotionTable.Cols.NAME + " TEXT NOT NULL"
+                + PromotionTable.Cols.PROMOTION_NAME + " TEXT NOT NULL"
                 + ")"
         );
 
@@ -40,28 +40,28 @@ public class BulletinBaseHelper extends SQLiteOpenHelper {
         // Table Evaluation
         db.execSQL("CREATE TABLE " + EvaluationTable.NAME + " ("
                 + EvaluationTable.Cols.ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + EvaluationTable.Cols.NAME + " TEXT NOT NULL, "
-                + EvaluationTable.Cols.MAX_POINTS + " FLOAT NOT NULL, "
                 + EvaluationTable.Cols.PARENT_ID + " INTEGER, "
-                + EvaluationTable.Cols.PARENT_TYPE + " TEXT, "
                 + EvaluationTable.Cols.PROMOTION_ID + " INTEGER NOT NULL, "
-                + "FOREIGN KEY (" + EvaluationTable.Cols.PARENT_ID + ") REFERENCES "
-                + EvaluationTable.NAME + "(" + EvaluationTable.Cols.ID + "), "
+                + EvaluationTable.Cols.MAX_GRADE + " FLOAT NOT NULL, "
+                + EvaluationTable.Cols.EVALUATION_NAME + " TEXT NOT NULL, "
                 + "FOREIGN KEY (" + EvaluationTable.Cols.PROMOTION_ID + ") REFERENCES "
-                + PromotionTable.NAME + "(" + PromotionTable.Cols.ID + ")"
+                + PromotionTable.NAME + "(" + PromotionTable.Cols.ID + "), "
+                + "FOREIGN KEY (" + EvaluationTable.Cols.PARENT_ID + ") REFERENCES "
+                + EvaluationTable.NAME + "(" + EvaluationTable.Cols.ID + ")"
                 + ")"
         );
 
-        // Table Points
-        db.execSQL("CREATE TABLE " + PointsTable.NAME + " ("
-                + PointsTable.Cols.STUDENT_ID + " INTEGER NOT NULL, "
-                + PointsTable.Cols.EVALUATION_ID + " INTEGER NOT NULL, "
-                + PointsTable.Cols.POINTS_OBTAINED + " FLOAT CHECK(" + PointsTable.Cols.POINTS_OBTAINED + " >= 0), "
-                + "PRIMARY KEY (" + PointsTable.Cols.STUDENT_ID + ", " + PointsTable.Cols.EVALUATION_ID + "), "
-                + "FOREIGN KEY (" + PointsTable.Cols.STUDENT_ID + ") REFERENCES "
-                + StudentTable.NAME + "(" + StudentTable.Cols.ID + "), "
-                + "FOREIGN KEY (" + PointsTable.Cols.EVALUATION_ID + ") REFERENCES "
-                + EvaluationTable.NAME + "(" + EvaluationTable.Cols.ID + ")"
+
+        // Table Grade
+        db.execSQL("CREATE TABLE " + GradeTable.NAME + " ("
+                + GradeTable.Cols.EVALUATION_ID + " INTEGER NOT NULL, "
+                + GradeTable.Cols.STUDENT_ID + " INTEGER NOT NULL, "
+                + GradeTable.Cols.GRADE + " FLOAT CHECK(" + GradeTable.Cols.GRADE + " >= 0), "
+                + "PRIMARY KEY (" + GradeTable.Cols.EVALUATION_ID + ", " + GradeTable.Cols.STUDENT_ID + "), "
+                + "FOREIGN KEY (" + GradeTable.Cols.EVALUATION_ID + ") REFERENCES "
+                + EvaluationTable.NAME + "(" + EvaluationTable.Cols.ID + "), "
+                + "FOREIGN KEY (" + GradeTable.Cols.STUDENT_ID + ") REFERENCES "
+                + StudentTable.NAME + "(" + StudentTable.Cols.ID + ")"
                 + ")"
         );
     }

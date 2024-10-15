@@ -1,25 +1,22 @@
 package com.example.gestionpoints.controllers;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.gestionpoints.R;
-import com.example.gestionpoints.Utils.FragmentsUtils;
 import com.example.gestionpoints.controllers.Fragments.FooterFragment;
 import com.example.gestionpoints.controllers.Fragments.PromotionListFragment;
 import com.example.gestionpoints.models.dataBaseManager.manager.PromotionManager;
 import com.example.gestionpoints.models.promotion.Promotion;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class PromotionActivity extends BaseActivity implements FooterFragment.FooterListener {
     int layoutResId = R.layout.activity_main;
-    int viewResId = R.id.learningActivities_container;
+    int viewResId = R.id.middlePageContainer;
     ArrayList<Promotion> promotions = new ArrayList<>();
     PromotionManager promotionManager;
     PromotionListFragment promotionListFragment;
@@ -43,32 +40,23 @@ public class PromotionActivity extends BaseActivity implements FooterFragment.Fo
         return layoutResId;
     }
 
-    @Override
-    public void setupFooter() {
-        FragmentsUtils.displayFooterFragment(this.getSupportFragmentManager(), R.id.footerContainer);
-    }
 
     @Override
     public void setupHeader() {
 
     }
 
-
     @Override
-    public void setupMiddlePage() {
-        fragmentManager = getSupportFragmentManager();
-        promotionListFragment = PromotionListFragment.newInstance(promotions);
-        fragmentManager.beginTransaction()
-                .add(R.id.learningActivities_container, promotionListFragment)
-                .commit();
+    public Fragment getFragmentToLaunch() {
+        return PromotionListFragment.newInstance(promotions);
     }
 
     @Override
     public void onAddButtonClick() {
         Promotion promotion = new Promotion("promotion");
         promotionManager.addPromotion(promotion);
-        fragmentManager.beginTransaction()
-                .replace(R.id.learningActivities_container, PromotionListFragment.newInstance(promotionManager.getAllPromotions()))
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.middlePageContainer, PromotionListFragment.newInstance(promotionManager.getAllPromotions()))
                 .commit();
     }
 
@@ -81,8 +69,8 @@ public class PromotionActivity extends BaseActivity implements FooterFragment.Fo
                     promotionManager.deletePromotion(promotion);
             }
         }
-        fragmentManager.beginTransaction()
-                .replace(R.id.learningActivities_container, PromotionListFragment.newInstance(promotionManager.getAllPromotions()))
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.middlePageContainer, PromotionListFragment.newInstance(promotionManager.getAllPromotions()))
                 .commit();
     }
 

@@ -9,7 +9,6 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 
 import com.example.gestionpoints.R;
-import com.example.gestionpoints.Utils.FragmentsUtils;
 import com.example.gestionpoints.controllers.Fragments.FooterFragment;
 import com.example.gestionpoints.controllers.Fragments.LearningActivitesFragment;
 import com.example.gestionpoints.models.promotion.Promotion;
@@ -17,7 +16,7 @@ import com.example.gestionpoints.models.promotion.Promotion;
 public class EvalSettingsActivity extends BaseActivity implements FooterFragment.FooterListener  {
 
     int layoutResId = R.layout.activity_main;
-    int viewResId = R.id.learningActivities_container;
+    int viewResId = R.id.middlePageContainer;
 
     private Promotion promotion;
     @Override
@@ -48,19 +47,14 @@ public class EvalSettingsActivity extends BaseActivity implements FooterFragment
 
     @Override
     public void setupMiddlePage() {
-        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.learningActivities_container);
-        if (fragment == null) {
-            fragment = LearningActivitesFragment.newInstance(promotion);
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.learningActivities_container, fragment)
-                    .commit();
-        }
+
     }
 
     @Override
-    public void setupFooter() {
-        FragmentsUtils.displayFooterFragment(this.getSupportFragmentManager(), R.id.footerContainer);
+    public Fragment getFragmentToLaunch() {
+        return LearningActivitesFragment.newInstance(promotion);
     }
+
 
     // Implémentation du bouton add spécifique à cette activité
     @Override

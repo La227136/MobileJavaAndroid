@@ -14,7 +14,7 @@ public class PromotionCursorWrapper extends CursorWrapper {
 
     public Promotion getPromotion() {
         int id = getInt(getColumnIndex(BulletinDBSchema.PromotionTable.Cols.ID));
-        String name = getString(getColumnIndex(BulletinDBSchema.PromotionTable.Cols.NAME));
-        return new Promotion(name, id);
+        String name = getString(getColumnIndex(BulletinDBSchema.PromotionTable.Cols.PROMOTION_NAME));
+        return new Promotion(name,id);
     }
 }

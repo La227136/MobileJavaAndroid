@@ -8,10 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import com.example.gestionpoints.models.dataBaseManager.baseHelper.BulletinBaseHelper;
 import com.example.gestionpoints.models.dataBaseManager.cursorWrapper.EvaluationCursorWrapper;
 import com.example.gestionpoints.models.dataBaseManager.dbSchema.BulletinDBSchema.EvaluationTable;
-import com.example.gestionpoints.models.evaluation.evaluation.ElementEvaluation;
-import com.example.gestionpoints.models.evaluation.evaluation.LearningActivitie;
-import com.example.gestionpoints.models.evaluation.evaluation.SubEvaluation;
-import com.example.gestionpoints.models.evaluation.evaluation.Evaluation;
+import com.example.gestionpoints.models.evaluation.Evaluation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,8 +21,8 @@ public class EvaluationManager {
     }
 
 
-    public List<ElementEvaluation> getAllEvaluations() {
-        List<ElementEvaluation> evaluations = new ArrayList<>();
+    public List<Evaluation> getAllEvaluations() {
+        List<Evaluation> evaluations = new ArrayList<>();
 
         Cursor cursor = mDatabase.query(
                 EvaluationTable.NAME,
@@ -52,64 +49,32 @@ public class EvaluationManager {
         return evaluations;
     }
 
-    public List<SubEvaluation> getSubEvaluation() {
-        List<ElementEvaluation> evaluations = getAllEvaluations();
-        List<SubEvaluation> subEvaluationList = new ArrayList<>();
-        for (ElementEvaluation evaluation : evaluations) {
-            if (evaluation instanceof SubEvaluation) {
-                subEvaluationList.add((SubEvaluation) evaluation);
-            }
-        }
-        return subEvaluationList;
-    }
 
-    public List<LearningActivitie> getLearningActivities() {
-        List<ElementEvaluation> evaluations = getAllEvaluations();
-        List<LearningActivitie> learningActivitiesList = new ArrayList<>();
-        for (ElementEvaluation evaluation : evaluations) {
-            if (evaluation instanceof LearningActivitie) {
-                learningActivitiesList.add((LearningActivitie) evaluation);
-            }
-        }
-        return learningActivitiesList;
-    }
-    public List <Evaluation> getEvaluations() {
-        List<ElementEvaluation> evaluations = getAllEvaluations();
-        List<Evaluation> evaluationList = new ArrayList<>();
-        for (ElementEvaluation evaluation : evaluations) {
-            if (evaluation instanceof Evaluation) {
-                evaluationList.add((Evaluation) evaluation);
-            }
-        }
-        return evaluationList;
-    }
-
-    public void addEvaluation(ElementEvaluation evaluation) {
+    public void addEvaluation(Evaluation evaluation) {
         mDatabase.insert(EvaluationTable.NAME, null, getContentValues(evaluation));
     }
 
 
-    public void updateEvaluation(ElementEvaluation evaluation) {
+    public void updateEvaluation(Evaluation evaluation) {
         mDatabase.update(EvaluationTable.NAME, getContentValues(evaluation),
                 EvaluationTable.Cols.ID + " = ?",
-                new String[]{String.valueOf(evaluation.getID())});
+                new String[]{String.valueOf(evaluation.getId())});
     }
 
 
-    public void deleteEvaluation(ElementEvaluation evaluation) {
+    public void deleteEvaluation(Evaluation evaluation) {
         mDatabase.delete(EvaluationTable.NAME,
                 EvaluationTable.Cols.ID + " = ?",
-                new String[]{String.valueOf(evaluation.getID())});
+                new String[]{String.valueOf(evaluation.getId())});
     }
 
 
-    private ContentValues getContentValues(ElementEvaluation evaluation) {
+    private ContentValues getContentValues(Evaluation evaluation) {
         ContentValues values = new ContentValues();
-        values.put(EvaluationTable.Cols.NAME, evaluation.getName());
-        values.put(EvaluationTable.Cols.MAX_POINTS, evaluation.getMaxPoints());
-        values.put(EvaluationTable.Cols.PARENT_ID, evaluation.getParentID());
-        values.put(EvaluationTable.Cols.PARENT_TYPE, evaluation.getParentType());
-
+        values.put(EvaluationTable.Cols.EVALUATION_NAME, evaluation.getName());
+        values.put(EvaluationTable.Cols.MAX_GRADE, evaluation.getMaxGrade());
+        values.put(EvaluationTable.Cols.PARENT_ID, evaluation.getParentId());
+        values.put(EvaluationTable.Cols.PROMOTION_ID, evaluation.getPromotionId());
         return values;
     }
 }
