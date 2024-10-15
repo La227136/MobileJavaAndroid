@@ -71,13 +71,13 @@ public class LearningActivitesFragment extends Fragment {
             EvaluationManager evaluationManager = new EvaluationManager(getContext());
             List<Evaluation> evaluationList = evaluationManager.getAllEvaluations();
             for (Evaluation evaluation : evaluationList) {
-                if (evaluation.getParentId() == null) {
+
                     View classeView = inflater.inflate(R.layout.list_item_learning_activity, learningActivitiesContainer, false);
                     MarginUtils.setMargin(classeView);
                     ((TextView) classeView.findViewById(R.id.learningActivityTextView)).setText(evaluation.getName());
                     classeView.setOnClickListener(view -> listener.onItemClick(view));
                     learningActivitiesContainer.addView(classeView);
-                }
+
             }
         }
 

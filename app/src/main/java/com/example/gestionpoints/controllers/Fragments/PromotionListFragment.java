@@ -82,14 +82,9 @@ public class PromotionListFragment extends Fragment {
     }
 
     private void setBtnListeners(Button button, Promotion promotion, Class<?> targetActivity) {
-        Log.d("ICI", "ICI: ");
-
         button.setOnClickListener(v -> {
-            Log.d("AAAAAAAAA", "ICI: " + getActivity());
             Intent intent = new Intent(getActivity(), targetActivity);
-            Log.d("ICI", "ICI: " + promotion);
             intent.putExtra("promotion", promotion);
-            Log.d("ICI", "ICI: ");
             startActivity(intent);
         });
     }

@@ -23,7 +23,6 @@ public class EvalSettingsActivity extends BaseActivity implements FooterFragment
     protected void onCreate(Bundle savedInstanceState) {
        // listener = this;
         promotion = (Promotion) getIntent().getSerializableExtra("promotion");
-        Log.d("YOOOOO", promotion.getName());
 
         super.onCreate(savedInstanceState);
     }
@@ -42,11 +41,6 @@ public class EvalSettingsActivity extends BaseActivity implements FooterFragment
 
     @Override
     public void setupHeader() {
-
-    }
-
-    @Override
-    public void setupMiddlePage() {
 
     }
 

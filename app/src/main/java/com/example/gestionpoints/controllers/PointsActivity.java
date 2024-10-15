@@ -20,10 +20,12 @@ public class PointsActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        EvaluationManager evaluationManager = new EvaluationManager(this);
-        Evaluation evaluation = new Evaluation(promotion.getId(),null,2,3,"d");
-        evaluationManager.addEvaluation(evaluation);
+    //    EvaluationManager evaluationManager = new EvaluationManager(this);
+     //   Evaluation evaluation = new Evaluation(promotion.getId(),null,2,3,"d");
+      //  evaluationManager.addEvaluation(evaluation);
         promotion = (Promotion) getIntent().getSerializableExtra("promotion");
+
+
 
         super.onCreate(savedInstanceState);
     }
