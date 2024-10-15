@@ -16,6 +16,7 @@ import java.util.List;
 public class EvaluationManager {
     private SQLiteDatabase mDatabase;
 
+    // TODO c est pas en singleton la c est surment mieux singleton
     public EvaluationManager(Context context) {
         mDatabase = new BulletinBaseHelper(context).getWritableDatabase();
     }

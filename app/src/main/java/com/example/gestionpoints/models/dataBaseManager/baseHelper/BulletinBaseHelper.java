@@ -8,13 +8,17 @@ import com.example.gestionpoints.models.dataBaseManager.dbSchema.BulletinDBSchem
 import com.example.gestionpoints.models.dataBaseManager.dbSchema.BulletinDBSchema.StudentTable;
 import com.example.gestionpoints.models.dataBaseManager.dbSchema.BulletinDBSchema.EvaluationTable;
 import com.example.gestionpoints.models.dataBaseManager.dbSchema.BulletinDBSchema.GradeTable;
+import com.example.gestionpoints.models.dataBaseManager.manager.DataGenerationTest;
 
 public class BulletinBaseHelper extends SQLiteOpenHelper {
     private static final int VERSION = 1;
-    private static final String DATABASE_NAME = "bulletinBase.db";
+    private static final String DATABASE_NAME = "testtbulletinDataBase.db";
+    private Context mContext;  // Stockez le contexte ici
 
     public BulletinBaseHelper(Context context) {
         super(context, DATABASE_NAME, null, VERSION);
+        mContext = context;  // Stockez le contexte reçu
+
     }
 
     @Override
@@ -51,7 +55,7 @@ public class BulletinBaseHelper extends SQLiteOpenHelper {
                 + ")"
         );
 
-
+// TODO on peut peut etre mettre la grade par defaut a 20 ici
         // Table Grade
         db.execSQL("CREATE TABLE " + GradeTable.NAME + " ("
                 + GradeTable.Cols.EVALUATION_ID + " INTEGER NOT NULL, "
@@ -64,6 +68,7 @@ public class BulletinBaseHelper extends SQLiteOpenHelper {
                 + StudentTable.NAME + "(" + StudentTable.Cols.ID + ")"
                 + ")"
         );
+
     }
 
     @Override

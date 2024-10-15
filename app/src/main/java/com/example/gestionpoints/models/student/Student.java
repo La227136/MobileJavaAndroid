@@ -41,6 +41,8 @@ public class Student {
     private int mid;
     private int mPromotionID;
 
+
+    // TODO y a vrm besoin d'un id ?
     public Student(int id, String lastName, String firstName, int promotion) {
         this.mid = id;
         this.mLastName = lastName;

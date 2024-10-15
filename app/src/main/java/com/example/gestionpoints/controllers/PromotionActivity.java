@@ -1,6 +1,7 @@
 package com.example.gestionpoints.controllers;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.fragment.app.Fragment;
@@ -9,6 +10,7 @@ import androidx.fragment.app.FragmentManager;
 import com.example.gestionpoints.R;
 import com.example.gestionpoints.controllers.Fragments.FooterFragment;
 import com.example.gestionpoints.controllers.Fragments.PromotionListFragment;
+import com.example.gestionpoints.models.dataBaseManager.manager.DataGenerationTest;
 import com.example.gestionpoints.models.dataBaseManager.manager.PromotionManager;
 import com.example.gestionpoints.models.promotion.Promotion;
 
@@ -24,6 +26,11 @@ public class PromotionActivity extends BaseActivity implements FooterFragment.Fo
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        // Generate dummy data after creating tables (only during development)
+        DataGenerationTest testDataGenerator = new DataGenerationTest(this);
+        testDataGenerator.generateTestData();
+
         promotionManager = new PromotionManager(this);
         promotions = promotionManager.getAllPromotions();
         super.onCreate(savedInstanceState);
@@ -48,6 +55,7 @@ public class PromotionActivity extends BaseActivity implements FooterFragment.Fo
 
     @Override
     public Fragment getFragmentToLaunch() {
+        Log.d("PromotionActivityzzzzz", "getFragmentToLaunch: " + promotions.size());
         return PromotionListFragment.newInstance(promotions);
     }
 
