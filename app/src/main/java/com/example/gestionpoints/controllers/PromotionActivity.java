@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.gestionpoints.R;
+import com.example.gestionpoints.controllers.Fragments.AddPromotionDialogFragment;
 import com.example.gestionpoints.controllers.Fragments.FooterFragment;
 import com.example.gestionpoints.controllers.Fragments.PromotionListFragment;
 import com.example.gestionpoints.models.dataBaseManager.manager.DataGenerationTest;
@@ -60,11 +61,24 @@ public class PromotionActivity extends BaseActivity implements FooterFragment.Fo
 
     @Override
     public void onAddButtonClick() {
-        Promotion promotion = new Promotion("promotion");
-        promotionManager.addPromotion(promotion);
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.middlePageContainer, PromotionListFragment.newInstance(promotionManager.getAllPromotions()))
-                .commit();
+//        Promotion promotion = new Promotion("promotion");
+//        promotionManager.addPromotion(promotion);
+//        getSupportFragmentManager().beginTransaction()
+//                .replace(R.id.middlePageContainer, PromotionListFragment.newInstance(promotionManager.getAllPromotions()))
+//                .commit();
+
+        AddPromotionDialogFragment dialogFragment = AddPromotionDialogFragment.newInstance();
+
+        dialogFragment.setAddPromotionListener(newPromotion -> {
+            // Ajouter la promotion à la liste et mettre à jour l'interface
+            promotionManager.addPromotion(newPromotion);
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.middlePageContainer, PromotionListFragment.newInstance(promotionManager.getAllPromotions()))
+                    .commit();
+        });
+
+        dialogFragment.show(getSupportFragmentManager(), "AddPromotionDialogFragment");
+
     }
 
     @Override
