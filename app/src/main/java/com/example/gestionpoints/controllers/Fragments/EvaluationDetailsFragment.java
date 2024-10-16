@@ -22,7 +22,7 @@ public class EvaluationDetailsFragment extends Fragment{
         args.putSerializable(ARG_PROMOTION, evaluation);
         fragment.setArguments(args);
         return fragment;
-        //
+
     }
 
 
