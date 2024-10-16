@@ -22,42 +22,55 @@ public class DataGenerationTest {
     }
 
     public void generateTestData() {
-        // Generate promotions
+
+        // Générer la promotion BAC2
         Promotion promotion1 = new Promotion("BAC1", 1);
-        Promotion promotion2 = new Promotion("BAC2", 2);
         promotionManager.addPromotion(promotion1);
+
+        // Générer la promotion BAC2
+        Promotion promotion2 = new Promotion("BAC2", 2);
         promotionManager.addPromotion(promotion2);
 
-        // Generate evaluations
-        Evaluation android = new Evaluation(1, null, 1, 20, "Android");
-        Evaluation flooter = new Evaluation(2, null, 2, 20, "Flooter");
-        evaluationManager.addEvaluation(android);
-        evaluationManager.addEvaluation(flooter);
+        // Évaluation ProgrammationBAC2 (id: 1) sans parent
+        Evaluation programmationBAC2 = new Evaluation(1, null, 2, 20, "ProgrammationBAC2");
+        evaluationManager.addEvaluation(programmationBAC2);
 
-        Evaluation oral = new Evaluation(3, 1, 1, 20, "Oral");
-        Evaluation written = new Evaluation(4, 1, 1, 20, "Written");
-        evaluationManager.addEvaluation(oral);
-        evaluationManager.addEvaluation(written);
+        // Évaluations JavaB2 (id: 2) et WebB2 (id: 3) avec parent ProgrammationBAC2
+        Evaluation javaB2 = new Evaluation(2, 1, 2, 20, "JavaB2");
+        Evaluation webB2 = new Evaluation(3, 1, 2, 20, "WebB2");
+        evaluationManager.addEvaluation(javaB2);
+        evaluationManager.addEvaluation(webB2);
 
+        // Générer la promotion BAC3
+        Promotion promotion3 = new Promotion("BAC3", 3);
+        promotionManager.addPromotion(promotion3);
 
+        // Évaluation MobileBAC3 (id: 4) sans parent
+        Evaluation mobileBAC3 = new Evaluation(4, null, 3, 20, "MobileBAC3");
+        evaluationManager.addEvaluation(mobileBAC3);
 
-        // Generate students
-        Student student1 = new Student(1, "Doe", "John", 1);
-        Student student2 = new Student(2, "Smith", "Jane", 1);
-        Student student3 = new Student(3, "Brown", "Michael", 1);
+        // Évaluations AndroidB3 (id: 5) et FlutterB3 (id: 6) avec parent MobileBAC3
+        Evaluation androidB3 = new Evaluation(5, 4, 3, 20, "AndroidB3");
+        Evaluation flutterB3 = new Evaluation(6, 4, 3, 20, "FlutterB3");
+        evaluationManager.addEvaluation(androidB3);
+        evaluationManager.addEvaluation(flutterB3);
+
+        // Évaluations ORALAndroidB3 (id: 7) et ECRITAndroidB3 (id: 8) avec parent AndroidB3
+        Evaluation oralAndroidB3 = new Evaluation(7, 5, 3, 20, "ORALAndroidB3");
+        Evaluation ecritAndroidB3 = new Evaluation(8, 5, 3, 20, "ECRITAndroidB3");
+        evaluationManager.addEvaluation(oralAndroidB3);
+        evaluationManager.addEvaluation(ecritAndroidB3);
+
+        // Évaluations ORALFlutterB3 (id: 9) et ECRITFlutterB3 (id: 10) avec parent FlutterB3
+        Evaluation oralFlutterB3 = new Evaluation(9, 6, 3, 20, "ORALFlutterB3");
+        Evaluation ecritFlutterB3 = new Evaluation(10, 6, 3, 20, "ECRITFlutterB3");
+        evaluationManager.addEvaluation(oralFlutterB3);
+        evaluationManager.addEvaluation(ecritFlutterB3);
+
+        // Générer des étudiants pour BAC2 et BAC3
+        Student student1 = new Student(1, "Doe", "John", 2);  // Étudiant BAC2
+        Student student2 = new Student(2, "Smith", "Jane", 3);  // Étudiant BAC3
         studentManager.addStudent(student1);
         studentManager.addStudent(student2);
-        studentManager.addStudent(student3);
-
-        // Ajouter des notes pour les étudiants pour les évaluations "Oral" et "Written"
-        gradeManager.addGrade(3, 1, 15.5f);  // John Doe, Oral
-        gradeManager.addGrade(4, 1, 18.0f);  // John Doe, Written
-
-        gradeManager.addGrade(3, 2, 12.0f);  // Jane Smith, Oral
-        gradeManager.addGrade(4, 2, 14.5f);  // Jane Smith, Written
-
-        gradeManager.addGrade(3, 3, 17.0f);  // Michael Brown, Oral
-        gradeManager.addGrade(4, 3, 16.0f);  // Michael Brown, Written
-
     }
 }

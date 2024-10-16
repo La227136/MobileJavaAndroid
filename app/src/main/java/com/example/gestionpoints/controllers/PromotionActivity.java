@@ -28,8 +28,8 @@ public class PromotionActivity extends BaseActivity implements FooterFragment.Fo
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-       // DataGenerationTest testDataGenerator = new DataGenerationTest(this);
-       // testDataGenerator.generateTestData();
+     // DataGenerationTest testDataGenerator = new DataGenerationTest(this);
+     // testDataGenerator.generateTestData();
 
         promotionManager = new PromotionManager(this);
         promotions = promotionManager.getAllPromotions();

@@ -5,10 +5,10 @@ import java.io.Serializable;
 public class Promotion implements Serializable {
 
     private boolean mIsSelected = false;
-    private int mId;
+    private Integer mId;
     private String mName;
 
-    public int getId() {
+    public Integer getId() {
         return mId;
     }
 

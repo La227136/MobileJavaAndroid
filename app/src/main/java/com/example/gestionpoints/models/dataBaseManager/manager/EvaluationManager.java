@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.example.gestionpoints.models.dataBaseManager.baseHelper.BulletinBaseHelper;
 import com.example.gestionpoints.models.dataBaseManager.cursorWrapper.EvaluationCursorWrapper;
@@ -53,12 +54,7 @@ public class EvaluationManager {
 
     public List<Evaluation> getEvaluationsForPromotion(Promotion promotion) {
         List<Evaluation> evaluations = new ArrayList<>();
-
-        // Vérifier si la promotion est nulle ou si son ID est invalide
-        if (promotion == null || promotion.getId() == 0) {
-            return evaluations; // Retourner une liste vide si la promotion est invalide
-        }
-
+        Log.d("zoulou", "getEvaluationsForPromotion: " + promotion.getId());
         // Requête pour récupérer les évaluations en fonction de l'ID de la promotion
         Cursor cursor = mDatabase.query(
                 EvaluationTable.NAME,         // Nom de la table
@@ -74,7 +70,9 @@ public class EvaluationManager {
 
         try {
             cursorWrapper.moveToFirst();
+
             while (!cursorWrapper.isAfterLast()) {
+
                 evaluations.add(cursorWrapper.getEvaluation());
                 cursorWrapper.moveToNext();
             }

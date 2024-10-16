@@ -25,7 +25,7 @@ public class Evaluation implements Serializable {
     }
 
     // Getters et Setters
-
+// todo normal c est un long ??
     public long getId() {
         return id;
     }
