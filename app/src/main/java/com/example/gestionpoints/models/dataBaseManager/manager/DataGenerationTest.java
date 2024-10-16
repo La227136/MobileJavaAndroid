@@ -24,7 +24,7 @@ public class DataGenerationTest {
     public void generateTestData() {
 
         // Générer la promotion BAC2
-        Promotion promotion1 = new Promotion("BAC1", 1);
+        Promotion promotion1 = new Promotion("BAC1",1);
         promotionManager.addPromotion(promotion1);
 
         // Générer la promotion BAC2

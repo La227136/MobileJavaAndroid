@@ -62,9 +62,12 @@ public class PromotionListFragment extends Fragment {
             promotionItem.setOnLongClickListener(v -> {
                 if (promotion.isSelected()) {
                     promotion.setIsSelected(false);
+                    promotionItem.setSelected(false);  // Désélectionner l'élément
 
                 } else {
                     promotion.setIsSelected(true);
+                    promotion.setIsSelected(true);
+                    promotionItem.setSelected(true);  // Sélectionner l'élément
                     selectedPromotions.add(promotion.getId());
                 }
                 return true;
