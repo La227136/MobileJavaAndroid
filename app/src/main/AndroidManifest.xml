@@ -28,6 +28,11 @@
         <activity
             android:name=".controllers.PointsActivity"
             android:exported="true" />
+
+        <activity
+            android:name=".controllers.EvalDetailsSettingsActivity"
+            android:exported="true" />
     </application>
+
 
 </manifest>

@@ -1,6 +1,8 @@
 package com.example.gestionpoints.models.evaluation;
 
-public class Evaluation {
+import java.io.Serializable;
+
+public class Evaluation implements Serializable {
     private Integer id;
     private Integer parentId;
     private Integer promotionId;

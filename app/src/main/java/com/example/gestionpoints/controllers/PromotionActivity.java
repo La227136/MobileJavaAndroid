@@ -12,6 +12,7 @@ import com.example.gestionpoints.controllers.Fragments.FooterFragment;
 import com.example.gestionpoints.controllers.Fragments.PromotionListFragment;
 import com.example.gestionpoints.models.dataBaseManager.manager.DataGenerationTest;
 import com.example.gestionpoints.models.dataBaseManager.manager.PromotionManager;
+import com.example.gestionpoints.models.evaluation.Evaluation;
 import com.example.gestionpoints.models.promotion.Promotion;
 
 import java.util.ArrayList;
@@ -27,8 +28,8 @@ public class PromotionActivity extends BaseActivity implements FooterFragment.Fo
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        //DataGenerationTest testDataGenerator = new DataGenerationTest(this);
-        //testDataGenerator.generateTestData();
+       // DataGenerationTest testDataGenerator = new DataGenerationTest(this);
+       // testDataGenerator.generateTestData();
 
         promotionManager = new PromotionManager(this);
         promotions = promotionManager.getAllPromotions();
@@ -54,7 +55,6 @@ public class PromotionActivity extends BaseActivity implements FooterFragment.Fo
 
     @Override
     public Fragment getFragmentToLaunch() {
-        Log.d("PromotionActivityzzzzz", "getFragmentToLaunch: " + promotions.size());
         return PromotionListFragment.newInstance(promotions);
     }
 
@@ -82,7 +82,7 @@ public class PromotionActivity extends BaseActivity implements FooterFragment.Fo
     }
 
     @Override
-    public void onItemClick(View view) {
+    public void onItemClick(View view, Evaluation evaluation) {
 
     }
 }

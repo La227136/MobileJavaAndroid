@@ -36,6 +36,10 @@ public class DataGenerationTest {
 
         Evaluation oral = new Evaluation(3, 1, 1, 20, "Oral");
         Evaluation written = new Evaluation(4, 1, 1, 20, "Written");
+        evaluationManager.addEvaluation(oral);
+        evaluationManager.addEvaluation(written);
+
+
 
         // Generate students
         Student student1 = new Student(1, "Doe", "John", 1);

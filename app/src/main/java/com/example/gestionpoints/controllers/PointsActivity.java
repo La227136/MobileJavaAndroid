@@ -59,7 +59,7 @@ public class PointsActivity extends BaseActivity {
 
 
     @Override
-    public void onItemClick(View view) {
+    public void onItemClick(View view, Evaluation evaluation) {
     }
 
 

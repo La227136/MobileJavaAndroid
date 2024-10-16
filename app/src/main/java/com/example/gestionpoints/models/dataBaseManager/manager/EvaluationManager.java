@@ -9,6 +9,7 @@ import com.example.gestionpoints.models.dataBaseManager.baseHelper.BulletinBaseH
 import com.example.gestionpoints.models.dataBaseManager.cursorWrapper.EvaluationCursorWrapper;
 import com.example.gestionpoints.models.dataBaseManager.dbSchema.BulletinDBSchema.EvaluationTable;
 import com.example.gestionpoints.models.evaluation.Evaluation;
+import com.example.gestionpoints.models.promotion.Promotion;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +51,39 @@ public class EvaluationManager {
         return evaluations;
     }
 
+    public List<Evaluation> getEvaluationsForPromotion(Promotion promotion) {
+        List<Evaluation> evaluations = new ArrayList<>();
+
+        // Vérifier si la promotion est nulle ou si son ID est invalide
+        if (promotion == null || promotion.getId() == 0) {
+            return evaluations; // Retourner une liste vide si la promotion est invalide
+        }
+
+        // Requête pour récupérer les évaluations en fonction de l'ID de la promotion
+        Cursor cursor = mDatabase.query(
+                EvaluationTable.NAME,         // Nom de la table
+                null,                         // Colonnes à sélectionner (null signifie toutes les colonnes)
+                EvaluationTable.Cols.PROMOTION_ID + " = ?", // Clause WHERE
+                new String[]{String.valueOf(promotion.getId())},  // Valeur de l'ID de la promotion
+                null,                         // Group by
+                null,                         // Having
+                null                          // Order by
+        );
+
+        EvaluationCursorWrapper cursorWrapper = new EvaluationCursorWrapper(cursor);
+
+        try {
+            cursorWrapper.moveToFirst();
+            while (!cursorWrapper.isAfterLast()) {
+                evaluations.add(cursorWrapper.getEvaluation());
+                cursorWrapper.moveToNext();
+            }
+        } finally {
+            cursorWrapper.close();
+        }
+
+        return evaluations;
+    }
 
     public void addEvaluation(Evaluation evaluation) {
         mDatabase.insert(EvaluationTable.NAME, null, getContentValues(evaluation));

@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import com.example.gestionpoints.R;
 import com.example.gestionpoints.controllers.Fragments.FooterFragment;
 import com.example.gestionpoints.controllers.Fragments.LearningActivitesFragment;
+import com.example.gestionpoints.models.evaluation.Evaluation;
 import com.example.gestionpoints.models.promotion.Promotion;
 
 public class EvalSettingsActivity extends BaseActivity implements FooterFragment.FooterListener  {
@@ -63,10 +64,11 @@ public class EvalSettingsActivity extends BaseActivity implements FooterFragment
     }
 
     @Override
-    public void onItemClick(View view) {
-        Intent intent = new Intent(EvalSettingsActivity.this, PromotionActivity.class);
-        intent.putExtra("promotion", promotion);
-        startActivity(intent);
+    public void onItemClick(View view, Evaluation evaluation) {
+        Intent evalDetailsSettingsActivity = new Intent(getApplicationContext(), EvalDetailsSettingsActivity.class);
+        evalDetailsSettingsActivity.putExtra("evaluation", evaluation);
+        startActivity(evalDetailsSettingsActivity);
 
     }
+
 }
