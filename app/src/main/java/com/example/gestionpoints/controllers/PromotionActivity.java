@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.gestionpoints.R;
+import com.example.gestionpoints.controllers.Fragments.AddPromotionDialogFragment;
 import com.example.gestionpoints.controllers.Fragments.FooterFragment;
 import com.example.gestionpoints.controllers.Fragments.PromotionListFragment;
 import com.example.gestionpoints.models.dataBaseManager.manager.DataGenerationTest;
@@ -23,6 +24,10 @@ public class PromotionActivity extends BaseActivity implements FooterFragment.Fo
 //
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+     // DataGenerationTest testDataGenerator = new DataGenerationTest(this);
+     // testDataGenerator.generateTestData();
+
         promotionManager = new PromotionManager(this);
         promotions = promotionManager.getAllPromotions();
         super.onCreate(savedInstanceState);

@@ -55,7 +55,16 @@ public class PromotionListFragment extends Fragment {
         for (Promotion promotion : promotions) {
             View promotionItem = inflater.inflate(R.layout.list_item_promotion, promotionListContainer, false);
             promotionItem.setOnLongClickListener(v -> {
-                promotion.setIsSelected(!promotion.isSelected());
+                if (promotion.isSelected()) {
+                    promotion.setIsSelected(false);
+                    promotionItem.setSelected(false);  // Désélectionner l'élément
+
+                } else {
+                    promotion.setIsSelected(true);
+                    promotion.setIsSelected(true);
+                    promotionItem.setSelected(true);  // Sélectionner l'élément
+
+                }
                 return true;
             });
             retrieveView(promotionItem);
