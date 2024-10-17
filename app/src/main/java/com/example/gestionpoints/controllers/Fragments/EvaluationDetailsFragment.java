@@ -36,7 +36,6 @@ public class EvaluationDetailsFragment extends Fragment{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         evaluation = (Evaluation) getArguments().getSerializable("evaluation");
-        Log.d("tttttt", evaluation.getName());
         super.onCreate(savedInstanceState);
     }
 

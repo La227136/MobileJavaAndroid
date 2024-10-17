@@ -12,8 +12,8 @@ import com.example.gestionpoints.models.dataBaseManager.manager.DataGenerationTe
 
 public class BulletinBaseHelper extends SQLiteOpenHelper {
     private static final int VERSION = 1;
-    private static final String DATABASE_NAME = "aaaaaaaaabulletinDataBase.db";
-    private Context mContext;  // Stockez le contexte ici
+    private static final String DATABASE_NAME = "bulletinDataBase.db";
+    private Context mContext;
 
     public BulletinBaseHelper(Context context) {
         super(context, DATABASE_NAME, null, VERSION);
@@ -73,6 +73,5 @@ public class BulletinBaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // Logic for upgrading the database if needed
     }
 }

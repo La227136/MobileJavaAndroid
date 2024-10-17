@@ -54,16 +54,41 @@ public class EvaluationManager {
 
     public List<Evaluation> getEvaluationsForPromotion(Promotion promotion) {
         List<Evaluation> evaluations = new ArrayList<>();
-        Log.d("zoulou", "getEvaluationsForPromotion: " + promotion.getId());
-        // Requête pour récupérer les évaluations en fonction de l'ID de la promotion
         Cursor cursor = mDatabase.query(
-                EvaluationTable.NAME,         // Nom de la table
-                null,                         // Colonnes à sélectionner (null signifie toutes les colonnes)
-                EvaluationTable.Cols.PROMOTION_ID + " = ?", // Clause WHERE
-                new String[]{String.valueOf(promotion.getId())},  // Valeur de l'ID de la promotion
-                null,                         // Group by
-                null,                         // Having
-                null                          // Order by
+                EvaluationTable.NAME,
+                null,
+                EvaluationTable.Cols.PROMOTION_ID + " = ?",
+                new String[]{String.valueOf(promotion.getId())},
+                null,
+                null,
+                null
+        );
+
+        EvaluationCursorWrapper cursorWrapper = new EvaluationCursorWrapper(cursor);
+
+        try {
+            cursorWrapper.moveToFirst();
+
+            while (!cursorWrapper.isAfterLast()) {
+                evaluations.add(cursorWrapper.getEvaluation());
+                cursorWrapper.moveToNext();
+            }
+        } finally {
+            cursorWrapper.close();
+        }
+
+        return evaluations;
+    }
+    public List<Evaluation> getEvaluationForParentEvaluation(Evaluation evaluation) {
+        List<Evaluation> evaluations = new ArrayList<>();
+        Cursor cursor = mDatabase.query(
+                EvaluationTable.NAME,
+                null,
+                EvaluationTable.Cols.PARENT_ID + " = ?",
+                new String[]{String.valueOf(evaluation.getId())},
+                null,
+                null,
+                null
         );
 
         EvaluationCursorWrapper cursorWrapper = new EvaluationCursorWrapper(cursor);
@@ -81,6 +106,7 @@ public class EvaluationManager {
         }
 
         return evaluations;
+
     }
 
     public void addEvaluation(Evaluation evaluation) {
