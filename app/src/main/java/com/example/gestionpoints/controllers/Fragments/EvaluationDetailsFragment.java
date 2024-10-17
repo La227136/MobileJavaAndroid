@@ -13,7 +13,6 @@ import androidx.fragment.app.Fragment;
 import com.example.gestionpoints.R;
 import com.example.gestionpoints.models.dataBaseManager.manager.EvaluationManager;
 import com.example.gestionpoints.models.evaluation.Evaluation;
-import com.example.gestionpoints.models.promotion.Promotion;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,32 +48,42 @@ public class EvaluationDetailsFragment extends Fragment{
         learningActivitiesContainer = v.findViewById(R.id.learningActivitiesContainer);
 
         if (evaluation != null) {
-            EvaluationManager evaluationManager = new EvaluationManager(getContext());
-            List<Evaluation> evaluationList = evaluationManager.getE(evaluation);
-            int i =0;
-            for (Evaluation evaluation : evaluationList) {
-                int leftMargin = 80 * i;
-
-                View classeView = inflater.inflate(R.layout.list_item_learning_activity, learningActivitiesContainer, false);
-                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                params.setMargins(leftMargin, 0, 0, 0);  // Appliquer une marge à gauche seulement
-                classeView.setLayoutParams(params);
-                // MarginUtils.setMargin(classeView);
-                ((TextView) classeView.findViewById(R.id.learningActivityTextView)).setText(evaluation.getName());
-               // classeView.setOnClickListener((view) -> {
-               //     listener.onItemClick(view, evaluation);
-               // });
-
-                learningActivitiesContainer.addView(classeView);
-
-
-                i++;
-            }
+            displayEval(inflater, evaluation);
         }
 
 
         return v;
 
+    }
+
+    private void displayEval(LayoutInflater inflater,Evaluation evaluationOrSub) {
+        EvaluationManager evaluationManager = new EvaluationManager(getContext());
+        List<Evaluation> evaluationList = evaluationManager.getEvaluationForParentEvaluation(evaluationOrSub);
+        int i =0;
+        for (Evaluation evaluation : evaluationList) {
+            List<Evaluation> subEvaluationList =evaluationManager.getEvaluationForParentEvaluation(evaluation);
+            Log.d("huh", subEvaluationList + "  : " + subEvaluationList.size() );
+            if(!subEvaluationList.isEmpty()){
+                displayEval(inflater,evaluation);
+                subEvaluationList = null;
+            }
+            int leftMargin = 80 * i;
+
+            View classeView = inflater.inflate(R.layout.list_item_learning_activity, learningActivitiesContainer, false);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            params.setMargins(leftMargin, 0, 0, 0);  // Appliquer une marge à gauche seulement
+            classeView.setLayoutParams(params);
+            // MarginUtils.setMargin(classeView);
+            ((TextView) classeView.findViewById(R.id.learningActivityTextView)).setText(evaluation.getName());
+           // classeView.setOnClickListener((view) -> {
+           //     listener.onItemClick(view, evaluation);
+           // });
+
+            learningActivitiesContainer.addView(classeView);
+
+
+            i++;
+        }
     }
 }

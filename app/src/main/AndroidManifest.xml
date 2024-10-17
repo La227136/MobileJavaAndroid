@@ -13,7 +13,7 @@
         android:theme="@style/Theme.GestionPoints"
         tools:targetApi="31">
         <activity
-            android:name=".controllers.PromotionActivity"
+            android:name=".controllers.PromotionsActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,15 +22,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".controllers.EvalSettingsActivity"
+            android:name=".controllers.SettingsActivity.LearningActivitiesSettingsActivity"
             android:exported="true" />
 
         <activity
-            android:name=".controllers.PointsActivity"
+            android:name=".controllers.PointsActivity.LearningActivitiesPointsActivity"
             android:exported="true" />
 
         <activity
-            android:name=".controllers.EvalDetailsSettingsActivity"
+            android:name=".controllers.SettingsActivity.EvaluationsSettingsActivity"
             android:exported="true" />
     </application>
 

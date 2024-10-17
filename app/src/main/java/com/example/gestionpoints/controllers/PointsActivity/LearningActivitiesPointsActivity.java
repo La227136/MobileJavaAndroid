@@ -1,18 +1,17 @@
-package com.example.gestionpoints.controllers;
+package com.example.gestionpoints.controllers.PointsActivity;
 
 import android.os.Bundle;
 import android.view.View;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.gestionpoints.R;
+import com.example.gestionpoints.controllers.BaseActivity;
 import com.example.gestionpoints.controllers.Fragments.LearningActivitesFragment;
-import com.example.gestionpoints.models.dataBaseManager.manager.EvaluationManager;
 import com.example.gestionpoints.models.evaluation.Evaluation;
 import com.example.gestionpoints.models.promotion.Promotion;
 
 
-public class PointsActivity extends BaseActivity {
+public class LearningActivitiesPointsActivity extends BaseActivity {
     private Promotion promotion;
 
     @Override
@@ -37,13 +36,10 @@ public class PointsActivity extends BaseActivity {
     }
 
     @Override
-    public Fragment getFragmentToLaunch() {
+    public Fragment getMiddleFragmentToLaunch() {
         return LearningActivitesFragment.newInstance(promotion);
     }
 
-    @Override
-    public void onItemClick(View view, Evaluation evaluation) {
-    }
 
 
 }

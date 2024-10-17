@@ -1,8 +1,6 @@
 package com.example.gestionpoints.controllers.Fragments;
 
-import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +13,8 @@ import androidx.fragment.app.Fragment;
 
 import com.example.gestionpoints.R;
 import com.example.gestionpoints.Utils.MarginUtils;
-import com.example.gestionpoints.controllers.EvalSettingsActivity;
-import com.example.gestionpoints.controllers.PointsActivity;
+import com.example.gestionpoints.controllers.SettingsActivity.LearningActivitiesSettingsActivity;
+import com.example.gestionpoints.controllers.PointsActivity.LearningActivitiesPointsActivity;
 import com.example.gestionpoints.models.promotion.Promotion;
 
 import java.util.ArrayList;
@@ -53,6 +51,7 @@ public class PromotionListFragment extends Fragment {
 
         promotionListContainer = view.findViewById(R.id.promotion_list_container);
         for (Promotion promotion : promotions) {
+
             View promotionItem = inflater.inflate(R.layout.list_item_promotion, promotionListContainer, false);
             promotionItem.setOnLongClickListener(v -> {
                 promotion.setIsSelected(!promotion.isSelected());
@@ -62,8 +61,8 @@ public class PromotionListFragment extends Fragment {
             retrieveView(promotionItem);
             MarginUtils.setMargin(promotionItem);
             promotionLevelTextView.setText(promotion.getName());
-            setBtnListeners(evalBtn, promotion, EvalSettingsActivity.class);
-            setBtnListeners(pointsBtn, promotion, PointsActivity.class);
+            setBtnListeners(evalBtn, promotion, LearningActivitiesSettingsActivity.class);
+            setBtnListeners(pointsBtn, promotion, LearningActivitiesPointsActivity.class);
             promotionListContainer.addView(promotionItem);
         }
 

@@ -1,17 +1,16 @@
-package com.example.gestionpoints.controllers;
+package com.example.gestionpoints.controllers.SettingsActivity;
 
 import android.os.Bundle;
 import android.view.View;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.gestionpoints.R;
+import com.example.gestionpoints.controllers.BaseActivity;
 import com.example.gestionpoints.controllers.Fragments.EvaluationDetailsFragment;
 import com.example.gestionpoints.controllers.Fragments.FooterFragment;
 import com.example.gestionpoints.models.evaluation.Evaluation;
-import com.example.gestionpoints.models.promotion.Promotion;
 
-public class EvalDetailsSettingsActivity extends BaseActivity implements FooterFragment.FooterListener {
+public class EvaluationsSettingsActivity extends BaseActivity implements FooterFragment.FooterListener {
 
     private Evaluation evaluation;
 
@@ -28,14 +27,10 @@ public class EvalDetailsSettingsActivity extends BaseActivity implements FooterF
     }
 
     @Override
-    public Fragment getFragmentToLaunch() {
+    public Fragment getMiddleFragmentToLaunch() {
         return EvaluationDetailsFragment.newInstance(evaluation);
     }
 
-    @Override
-    public void onItemClick(View view, Evaluation evaluation) {
-
-    }
 
     @Override
     public void onAddButtonClick() {

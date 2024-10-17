@@ -1,7 +1,6 @@
 package com.example.gestionpoints.controllers;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -14,7 +13,7 @@ import androidx.fragment.app.Fragment;
 import com.example.gestionpoints.R;
 import com.example.gestionpoints.controllers.Fragments.FooterFragment;
 
-public abstract class BaseActivity extends AppCompatActivity implements OnItemClickListener {
+public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,11 +21,10 @@ public abstract class BaseActivity extends AppCompatActivity implements OnItemCl
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
         setupWindowInsets();
-        setupHeader();
+        setupTitle();
         setupMiddlePage();
         setupFooter();
     }
-
 
     private void setupWindowInsets() {
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.middlePageContainer), (v, insets) -> {
@@ -36,8 +34,16 @@ public abstract class BaseActivity extends AppCompatActivity implements OnItemCl
         });
     }
 
-    public void setupHeader() {
+    public void setupTitle() {
         ((TextView) (findViewById(R.id.pageTitle))).setText(getTitlePage());
+    }
+
+    public void setupMiddlePage() {
+        setupFragment(R.id.middlePageContainer, getMiddleFragmentToLaunch());
+    }
+
+    public void setupFooter() {
+        setupFragment(R.id.footerContainer, new FooterFragment());
     }
 
     public void setupFragment(int containerId, Fragment fragment) {
@@ -48,15 +54,6 @@ public abstract class BaseActivity extends AppCompatActivity implements OnItemCl
                     .commit();
         }
     }
-
-    public void setupMiddlePage() {
-        setupFragment(R.id.middlePageContainer, getFragmentToLaunch());
-    }
-
-    public void setupFooter() {
-        setupFragment(R.id.footerContainer, new FooterFragment());
-    }
-
-    public abstract Fragment getFragmentToLaunch();
+    public abstract Fragment getMiddleFragmentToLaunch();
     public abstract String getTitlePage();
 }
