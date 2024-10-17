@@ -15,14 +15,12 @@ public class EvaluationDetailsFragment extends Fragment{
 
     private static final String ARG_PROMOTION = "evaluation";
     private Evaluation evaluation;
-    // On peut pas mettre des trucs dans le constructeur car quand on tourne telephone ca va tout casser
     public static EvaluationDetailsFragment newInstance(Evaluation evaluation) {
         EvaluationDetailsFragment fragment = new EvaluationDetailsFragment();
         Bundle args = new Bundle();
         args.putSerializable(ARG_PROMOTION, evaluation);
         fragment.setArguments(args);
         return fragment;
-        //
     }
 
 

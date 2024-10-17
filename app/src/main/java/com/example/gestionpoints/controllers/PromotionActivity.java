@@ -23,23 +23,9 @@ public class PromotionActivity extends BaseActivity implements FooterFragment.Fo
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // DataGenerationTest testDataGenerator = new DataGenerationTest(this);
-        // testDataGenerator.generateTestData();
         promotionManager = new PromotionManager(this);
         promotions = promotionManager.getAllPromotions();
         super.onCreate(savedInstanceState);
-
-    }
-
-
-    @Override
-    public String getTitlePage() {
-        return "Promotions";
-    }
-
-    @Override
-    public Fragment getFragmentToLaunch() {
-        return PromotionListFragment.newInstance(promotions);
     }
 
     @Override
@@ -68,6 +54,15 @@ public class PromotionActivity extends BaseActivity implements FooterFragment.Fo
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.middlePageContainer, PromotionListFragment.newInstance(promotions))
                 .commit();
+    }
+    @Override
+    public String getTitlePage() {
+        return "Promotions";
+    }
+
+    @Override
+    public Fragment getFragmentToLaunch() {
+        return PromotionListFragment.newInstance(promotions);
     }
 
     @Override

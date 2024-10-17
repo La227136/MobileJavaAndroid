@@ -19,17 +19,11 @@ public abstract class BaseActivity extends AppCompatActivity implements OnItemCl
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         EdgeToEdge.enable(this);
-
         setContentView(R.layout.activity_main);
-
         setupWindowInsets();
-
         setupHeader();
-
         setupMiddlePage();
-
         setupFooter();
     }
 
@@ -42,44 +36,27 @@ public abstract class BaseActivity extends AppCompatActivity implements OnItemCl
         });
     }
 
-    public  void setupHeader(){
-        TextView pageTitle = findViewById(R.id.pageTitle);
-        if (pageTitle != null) {
-            pageTitle.setText("Promotions");
-            Log.d("caca", "TextView with id pageTitle found.");
-        } else {
-            Log.d("caca", "TextView with id pageTitle not found.");
-        }
-        ((TextView)(findViewById(R.id.pageTitle))).setText("Promotions");
-
+    public void setupHeader() {
+        ((TextView) (findViewById(R.id.pageTitle))).setText(getTitlePage());
     }
 
-    public abstract String getTitlePage();
-
-
-
-    public void setupMiddlePage() {
-        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.middlePageContainer);
-        if (fragment == null) {
-            fragment = getFragmentToLaunch();
+    public void setupFragment(int containerId, Fragment fragment) {
+        Fragment existingFragment = getSupportFragmentManager().findFragmentById(containerId);
+        if (existingFragment == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.middlePageContainer, fragment)
+                    .add(containerId, fragment)
                     .commit();
         }
+    }
+
+    public void setupMiddlePage() {
+        setupFragment(R.id.middlePageContainer, getFragmentToLaunch());
     }
 
     public void setupFooter() {
-
-        Fragment fragment = this.getSupportFragmentManager().findFragmentById(R.id.footerContainer);
-        if (fragment == null) {
-            fragment = new FooterFragment();
-            this.getSupportFragmentManager().beginTransaction()
-                    .add(R.id.footerContainer, fragment)
-                    .commit();
-        }
+        setupFragment(R.id.footerContainer, new FooterFragment());
     }
 
     public abstract Fragment getFragmentToLaunch();
-
-
+    public abstract String getTitlePage();
 }
