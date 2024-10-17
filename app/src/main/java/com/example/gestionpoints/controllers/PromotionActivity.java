@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class PromotionActivity extends BaseActivity implements FooterFragment.FooterListener {
     ArrayList<Promotion> promotions = new ArrayList<>();
     PromotionManager promotionManager;
-
+//
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         promotionManager = new PromotionManager(this);

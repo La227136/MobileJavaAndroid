@@ -22,9 +22,6 @@ public class PointsActivity extends BaseActivity {
      //   Evaluation evaluation = new Evaluation(promotion.getId(),null,2,3,"d");
       //  evaluationManager.addEvaluation(evaluation);
         promotion = (Promotion) getIntent().getSerializableExtra("promotion");
-
-
-
         super.onCreate(savedInstanceState);
     }
 
