@@ -16,8 +16,6 @@ import com.example.gestionpoints.models.promotion.Promotion;
 
 public class EvalSettingsActivity extends BaseActivity implements FooterFragment.FooterListener  {
 
-    int layoutResId = R.layout.activity_main;
-    int viewResId = R.id.middlePageContainer;
 
     private Promotion promotion;
     @Override
@@ -28,21 +26,15 @@ public class EvalSettingsActivity extends BaseActivity implements FooterFragment
         super.onCreate(savedInstanceState);
     }
 
-    @Override
-    public int getViewResId() {
-        return viewResId;
-    }
-
-    @Override
-    public int getLayoutResId() {
-        return layoutResId;
-    }
-
-
 
     @Override
     public void setupHeader() {
+  super.setupHeader();
+    }
 
+    @Override
+    public String getTitlePage() {
+        return "Evaluations";
     }
 
     @Override

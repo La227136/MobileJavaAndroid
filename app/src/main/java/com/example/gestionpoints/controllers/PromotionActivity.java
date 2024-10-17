@@ -18,39 +18,23 @@ import com.example.gestionpoints.models.promotion.Promotion;
 import java.util.ArrayList;
 
 public class PromotionActivity extends BaseActivity implements FooterFragment.FooterListener {
-    int layoutResId = R.layout.activity_main;
-    int viewResId = R.id.middlePageContainer;
     ArrayList<Promotion> promotions = new ArrayList<>();
     PromotionManager promotionManager;
-    PromotionListFragment promotionListFragment;
-    FragmentManager fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-       // DataGenerationTest testDataGenerator = new DataGenerationTest(this);
-       // testDataGenerator.generateTestData();
-
+        // DataGenerationTest testDataGenerator = new DataGenerationTest(this);
+        // testDataGenerator.generateTestData();
         promotionManager = new PromotionManager(this);
         promotions = promotionManager.getAllPromotions();
         super.onCreate(savedInstanceState);
 
     }
 
-    @Override
-    public int getViewResId() {
-        return viewResId;
-    }
 
     @Override
-    public int getLayoutResId() {
-        return layoutResId;
-    }
-
-
-    @Override
-    public void setupHeader() {
-
+    public String getTitlePage() {
+        return "Promotions";
     }
 
     @Override
@@ -62,22 +46,27 @@ public class PromotionActivity extends BaseActivity implements FooterFragment.Fo
     public void onAddButtonClick() {
         Promotion promotion = new Promotion("promotion");
         promotionManager.addPromotion(promotion);
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.middlePageContainer, PromotionListFragment.newInstance(promotionManager.getAllPromotions()))
-                .commit();
+        promotions = promotionManager.getAllPromotions();
+        replaceFragement(promotions);
     }
 
     @Override
     public void onDeleteButtonClick() {
-        promotions = promotionManager.getAllPromotions();
+        boolean update = false;
         for (Promotion promotion : promotions) {
-            for (int i = 0; i < PromotionListFragment.selectedPromotions.size(); i++) {
-                if (promotion.getId() == PromotionListFragment.selectedPromotions.get(i))
-                    promotionManager.deletePromotion(promotion);
+            if (promotion.isSelected()) {
+                promotionManager.deletePromotion(promotion);
+                promotions = promotionManager.getAllPromotions();
+                update = true;
             }
         }
+        if (update)
+            replaceFragement(promotions);
+    }
+
+    private void replaceFragement(ArrayList<Promotion> promotions) {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.middlePageContainer, PromotionListFragment.newInstance(promotionManager.getAllPromotions()))
+                .replace(R.id.middlePageContainer, PromotionListFragment.newInstance(promotions))
                 .commit();
     }
 

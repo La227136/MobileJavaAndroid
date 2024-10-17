@@ -30,9 +30,7 @@ public class PromotionListFragment extends Fragment {
     private TextView promotionLevelTextView;
     private Button evalBtn;
     private Button pointsBtn;
-    public static List<Integer> selectedPromotions = new ArrayList<>();
 
-    // On peut pas mettre des trucs dans le constructeur car quand on tourne telephone ca va tout casser
     public static PromotionListFragment newInstance(ArrayList<Promotion> promotions) {
         PromotionListFragment fragment = new PromotionListFragment();
         Bundle args = new Bundle();
@@ -49,29 +47,20 @@ public class PromotionListFragment extends Fragment {
         }
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_promotion_list, container, false);
 
         promotionListContainer = view.findViewById(R.id.promotion_list_container);
-        // Affichage des promotions
         for (Promotion promotion : promotions) {
             View promotionItem = inflater.inflate(R.layout.list_item_promotion, promotionListContainer, false);
             promotionItem.setOnLongClickListener(v -> {
-                if (promotion.isSelected()) {
-                    promotion.setIsSelected(false);
-
-                } else {
-                    promotion.setIsSelected(true);
-                    selectedPromotions.add(promotion.getId());
-                }
+                promotion.setIsSelected(!promotion.isSelected());
                 return true;
             });
             retrieveView(promotionItem);
             MarginUtils.setMargin(promotionItem);
-
             promotionLevelTextView.setText(promotion.getName());
             setBtnListeners(evalBtn, promotion, EvalSettingsActivity.class);
             setBtnListeners(pointsBtn, promotion, PointsActivity.class);

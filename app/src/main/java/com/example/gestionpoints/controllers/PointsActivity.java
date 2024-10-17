@@ -14,8 +14,6 @@ import com.example.gestionpoints.models.promotion.Promotion;
 
 public class PointsActivity extends BaseActivity {
     private Promotion promotion;
-    int layoutResId = R.layout.activity_main;
-    int viewResId = R.id.middlePageContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,26 +35,14 @@ public class PointsActivity extends BaseActivity {
     }
 
     @Override
-    public void setupHeader() {
-
+    public String getTitlePage() {
+        return "Points";
     }
 
     @Override
     public Fragment getFragmentToLaunch() {
         return LearningActivitesFragment.newInstance(promotion);
     }
-
-
-    @Override
-    public int getViewResId() {
-        return viewResId;
-    }
-
-    @Override
-    public int getLayoutResId() {
-        return layoutResId;
-    }
-
 
     @Override
     public void onItemClick(View view, Evaluation evaluation) {

@@ -14,8 +14,6 @@ import com.example.gestionpoints.models.promotion.Promotion;
 public class EvalDetailsSettingsActivity extends BaseActivity implements FooterFragment.FooterListener {
 
     private Evaluation evaluation;
-    int layoutResId = R.layout.activity_main;
-    int viewResId = R.id.middlePageContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,14 +23,10 @@ public class EvalDetailsSettingsActivity extends BaseActivity implements FooterF
     }
 
     @Override
-    public int getViewResId() {
-        return viewResId;
+    public String getTitlePage() {
+        return "Evaluations";
     }
 
-    @Override
-    public int getLayoutResId() {
-        return layoutResId;
-    }
     @Override
     public Fragment getFragmentToLaunch() {
         return EvaluationDetailsFragment.newInstance(evaluation);

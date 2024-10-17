@@ -1,6 +1,7 @@
 package com.example.gestionpoints.controllers;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -21,7 +22,7 @@ public abstract class BaseActivity extends AppCompatActivity implements OnItemCl
 
         EdgeToEdge.enable(this);
 
-        setContentView(getLayoutResId());
+        setContentView(R.layout.activity_main);
 
         setupWindowInsets();
 
@@ -34,22 +35,26 @@ public abstract class BaseActivity extends AppCompatActivity implements OnItemCl
 
 
     private void setupWindowInsets() {
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(getViewResId()), (v, insets) -> {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.middlePageContainer), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
     }
 
-
-    public abstract int getViewResId();
-
-    public abstract int getLayoutResId();
-
-
     public  void setupHeader(){
-        ((TextView)(findViewById(R.id.pageTitle))).setText("dfsfsd");
+        TextView pageTitle = findViewById(R.id.pageTitle);
+        if (pageTitle != null) {
+            pageTitle.setText("Promotions");
+            Log.d("caca", "TextView with id pageTitle found.");
+        } else {
+            Log.d("caca", "TextView with id pageTitle not found.");
+        }
+        ((TextView)(findViewById(R.id.pageTitle))).setText("Promotions");
+
     }
+
+    public abstract String getTitlePage();
 
 
 
