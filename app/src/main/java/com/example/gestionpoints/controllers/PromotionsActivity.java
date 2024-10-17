@@ -6,6 +6,7 @@ import android.view.View;
 import androidx.fragment.app.Fragment;
 
 import com.example.gestionpoints.R;
+import com.example.gestionpoints.controllers.Fragments.AddPromotionDialogFragment;
 import com.example.gestionpoints.controllers.Fragments.FooterFragment;
 import com.example.gestionpoints.controllers.Fragments.PromotionListFragment;
 import com.example.gestionpoints.models.dataBaseManager.manager.PromotionManager;
@@ -41,10 +42,13 @@ public class PromotionsActivity extends BaseActivity implements FooterFragment.F
     // Override from FooterListener
     @Override
     public void onAddButtonClick() {
-        Promotion promotion = new Promotion("promotion");
-        promotionManager.addPromotion(promotion);
-        promotions = promotionManager.getAllPromotions();
-        replaceFragement(promotions);
+        AddPromotionDialogFragment dialogFragment = new AddPromotionDialogFragment();
+        dialogFragment.setAddPromotionListener(newPromotion -> {
+            promotionManager.addPromotion(newPromotion);
+            promotions = promotionManager.getAllPromotions();
+            replaceFragement(promotions);
+        });
+        dialogFragment.show(getSupportFragmentManager(), "AddPromotionDialogFragment");
     }
 
     @Override
@@ -66,6 +70,4 @@ public class PromotionsActivity extends BaseActivity implements FooterFragment.F
                 .replace(R.id.middlePageContainer, PromotionListFragment.newInstance(promotions))
                 .commit();
     }
-
-
 }

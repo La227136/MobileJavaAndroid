@@ -21,16 +21,8 @@ public class LearningActivitiesSettingsActivity extends BaseActivity implements 
     private Promotion promotion;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-       // listener = this;
         promotion = (Promotion) getIntent().getSerializableExtra("promotion");
-
         super.onCreate(savedInstanceState);
-    }
-
-
-    @Override
-    public void setupTitle() {
-  super.setupTitle();
     }
 
     @Override
@@ -47,8 +39,7 @@ public class LearningActivitiesSettingsActivity extends BaseActivity implements 
     // Implémentation du bouton add spécifique à cette activité
     @Override
     public void onAddButtonClick() {
-        Toast.makeText(this, "BTN CLIQUE EVAL", Toast.LENGTH_SHORT).show();
-        Log.d("EvalSettingsActivity", "YOOOO: ");
+
     }
 
     @Override
@@ -61,7 +52,6 @@ public class LearningActivitiesSettingsActivity extends BaseActivity implements 
         Intent evalDetailsSettingsActivity = new Intent(getApplicationContext(), EvaluationsSettingsActivity.class);
         evalDetailsSettingsActivity.putExtra("evaluation", evaluation);
         startActivity(evalDetailsSettingsActivity);
-
     }
 
 }

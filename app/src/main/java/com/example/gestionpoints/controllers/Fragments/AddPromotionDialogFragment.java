@@ -22,9 +22,6 @@ public class AddPromotionDialogFragment extends DialogFragment {
 
     private AddPromotionListener listener;
 
-    public static AddPromotionDialogFragment newInstance() {
-        return new AddPromotionDialogFragment();
-    }
 
     @Nullable
     @Override
