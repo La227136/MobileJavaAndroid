@@ -18,7 +18,7 @@
         android:gravity="center" />
 
     <EditText
-        android:id="@+id/promotionNameInput"
+        android:id="@+id/itemNameInput"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="Promotion Name"
@@ -29,11 +29,11 @@
         android:padding="8dp" />
 
     <Button
-        android:id="@+id/addPromotionButton"
+        android:id="@+id/addItemButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Add Promotion"
-        app:layout_constraintTop_toBottomOf="@id/promotionNameInput"
+        app:layout_constraintTop_toBottomOf="@id/itemNameInput"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="16dp" />

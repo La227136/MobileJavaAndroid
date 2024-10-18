@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.gestionpoints.R;
 import com.example.gestionpoints.controllers.BaseActivity;
+import com.example.gestionpoints.controllers.Fragments.AddLearningActivitiesFragment;
 import com.example.gestionpoints.controllers.Fragments.FooterFragment;
 import com.example.gestionpoints.controllers.Fragments.LearningActivitesFragment;
 import com.example.gestionpoints.controllers.Fragments.PromotionListFragment;
@@ -54,7 +55,13 @@ public class LearningActivitiesSettingsActivity extends BaseActivity implements 
     // Implémentation du bouton add spécifique à cette activité
     @Override
     public void onAddButtonClick() {
-
+        AddLearningActivitiesFragment dialogFragment = new AddLearningActivitiesFragment(promotion.getId());
+        dialogFragment.setAddLearningActivityListener(newLearningActivity -> {
+            evaluationManager.addEvaluation(newLearningActivity);
+            learningActivities = evaluationManager.getAllEvaluations();
+            replaceFragement(promotion);
+        });
+        dialogFragment.show(getSupportFragmentManager(), "AddLearningActivitiesFragment");
     }
 
     @Override

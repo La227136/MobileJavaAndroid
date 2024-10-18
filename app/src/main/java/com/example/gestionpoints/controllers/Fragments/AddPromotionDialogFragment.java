@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
+
 import com.example.gestionpoints.R;
 import com.example.gestionpoints.models.promotion.Promotion;
 
@@ -26,10 +26,10 @@ public class AddPromotionDialogFragment extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.dialog_add_promotion, container, false);
+        View view = inflater.inflate(R.layout.dialog_add_item, container, false);
 
-        EditText promotionNameInput = view.findViewById(R.id.promotionNameInput);
-        Button addPromotionButton = view.findViewById(R.id.addPromotionButton);
+        EditText promotionNameInput = view.findViewById(R.id.itemNameInput);
+        Button addPromotionButton = view.findViewById(R.id.addItemButton);
 
         addPromotionButton.setOnClickListener(v -> {
             String promotionName = promotionNameInput.getText().toString();
