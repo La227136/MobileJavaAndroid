@@ -79,6 +79,7 @@ public class PromotionsActivity extends BaseActivity implements FooterFragment.F
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putSerializable("promotions", promotions);
+
     }
 
 }
