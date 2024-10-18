@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.example.gestionpoints.R;
+import com.example.gestionpoints.Utils.MarginUtils;
 import com.example.gestionpoints.models.dataBaseManager.manager.EvaluationManager;
 import com.example.gestionpoints.models.evaluation.Evaluation;
 
@@ -65,12 +66,13 @@ public class EvaluationDetailsFragment extends Fragment {
 
     private void display(LayoutInflater inflater, Evaluation evaluation, int level) {
         View classeView = inflater.inflate(R.layout.list_item_learning_activity, learningActivitiesContainer, false);
+
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        params.setMargins(40 * level, 0, 0, 0);
         classeView.setLayoutParams(params);
         ((TextView) classeView.findViewById(R.id.learningActivityTextView)).setText(evaluation.getName());
         learningActivitiesContainer.addView(classeView);
+        params.setMargins(16 + (90 * level), 10, 16, 0);
     }
 }
 
