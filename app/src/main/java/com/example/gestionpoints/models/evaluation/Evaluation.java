@@ -17,15 +17,13 @@ public class Evaluation implements Serializable {
         this.maxGrade = maxGrade;
         this.name = name;
     }
-    public Evaluation(Integer parentId, Integer promotionId, float maxGrade, String name)
-    {
-     this.parentId = parentId;
+
+    public Evaluation(Integer parentId, Integer promotionId, float maxGrade, String name) {
+        this.parentId = parentId;
         this.promotionId = promotionId;
         this.maxGrade = maxGrade;
         this.name = name;
     }
-
-    // Getters et Setters
 
     public Integer getId() {
         return id;

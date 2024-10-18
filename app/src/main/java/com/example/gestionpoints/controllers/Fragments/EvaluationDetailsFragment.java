@@ -26,6 +26,10 @@ public class EvaluationDetailsFragment extends Fragment {
     private Evaluation learningActivity;
     private LinearLayout learningActivitiesContainer;
     private EvaluationManager evaluationManager;
+    public interface AddSubEvaluationListener {
+        void onAddSubEvaluation(Evaluation parentEvaluation);
+    }
+    private AddSubEvaluationListener listener;
 
     public static EvaluationDetailsFragment newInstance(Evaluation evaluation) {
         EvaluationDetailsFragment fragment = new EvaluationDetailsFragment();
@@ -34,7 +38,15 @@ public class EvaluationDetailsFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
-
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof AddSubEvaluationListener) {
+            listener = (AddSubEvaluationListener) context;
+        } else {
+            throw new RuntimeException(context.toString() + " must implement AddSubEvaluationListener");
+        }
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,10 +86,8 @@ public class EvaluationDetailsFragment extends Fragment {
         classeView.setLayoutParams(params);
         ((TextView) classeView.findViewById(R.id.mainEvaluationTextView)).setText(evaluation.getName());
         ((TextView) classeView.findViewById(R.id.ponderationTextView)).setText(String.valueOf(evaluation.getMaxGrade()));
-        ((Button) classeView.findViewById(R.id.addSubEvaluationButton)).setOnClickListener(v -> {
-            Evaluation subEvaluation = new Evaluation(evaluation.getId(),evaluation.getPromotionId(),20,"newSubEvaluation");
-            evaluationManager.addEvaluation(subEvaluation);
-
+        classeView.findViewById(R.id.addSubEvaluationButton).setOnClickListener(v -> {
+            listener.onAddSubEvaluation(evaluation);
         });
 
         learningActivitiesContainer.addView(classeView);

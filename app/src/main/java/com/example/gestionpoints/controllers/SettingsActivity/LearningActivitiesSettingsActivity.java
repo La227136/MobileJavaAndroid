@@ -48,11 +48,10 @@ public class LearningActivitiesSettingsActivity extends BaseActivity implements 
     }
 
 
-    // Implémentation du bouton add spécifique à cette activité
     @Override
     public void onAddButtonClick() {
         AddLearningActivitiesDialogFragment dialogFragment = new AddLearningActivitiesDialogFragment(promotion.getId());
-        dialogFragment.setAddLearningActivityListener(newLearningActivity -> {
+        dialogFragment.setAddItemListener(newLearningActivity -> {
             evaluationManager.addEvaluation(newLearningActivity);
             learningActivities = evaluationManager.getEvaluationsForPromotion(promotion);
             replaceFragement(promotion);
@@ -60,11 +59,11 @@ public class LearningActivitiesSettingsActivity extends BaseActivity implements 
         dialogFragment.show(getSupportFragmentManager(), "AddLearningActivitiesFragment");
     }
 
+
     @Override
     public void onDeleteButtonClick() {
         boolean update = false;
         for (Evaluation learningActivitie : learningActivities) {
-            Log.d("caca", "onDeleteButtonClick: " + learningActivitie.isSelected());
             if (learningActivitie.isSelected()) {
                 evaluationManager.deleteEvaluation(learningActivitie);
                 learningActivities = evaluationManager.getEvaluationsForPromotion(promotion);

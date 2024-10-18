@@ -14,45 +14,26 @@ import androidx.fragment.app.DialogFragment;
 import com.example.gestionpoints.R;
 import com.example.gestionpoints.models.evaluation.Evaluation;
 
-public class AddLearningActivitiesDialogFragment extends DialogFragment {
+public class AddLearningActivitiesDialogFragment extends AddItemDialogFragment<Evaluation> {
 
-    public interface AddLearningActivityListener {
-        void onLearningActivityAdded(Evaluation evaluation);
+    private int parentId;
+
+    public AddLearningActivitiesDialogFragment(int parentId) {
+        this.parentId = parentId;
     }
 
-    private AddLearningActivityListener listener;
-
-    int id;
-
-    public AddLearningActivitiesDialogFragment(int id) {
-        this.id = id;
-    }
-
-
-
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.dialog_add_item, container, false);
-
-        EditText itemNameInput = view.findViewById(R.id.itemNameInput);
-        Button addItemButton = view.findViewById(R.id.addItemButton);
-
-        addItemButton.setOnClickListener(v -> {
-            String evaluationName = itemNameInput.getText().toString();
-            if (!evaluationName.isEmpty()) {
-                Evaluation newLearningActivity = new Evaluation(null,id,20, evaluationName);
-                if (listener != null) {
-                    listener.onLearningActivityAdded(newLearningActivity);
-                }
-                dismiss();  // Fermer la boîte de dialogue après avoir ajouté la promotion
-            }
-        });
-
-        return view;
+    protected Evaluation createNewItem(String name) {
+        return new Evaluation(null, parentId, 20, name);
     }
 
-    public void setAddLearningActivityListener(AddLearningActivityListener listener) {
-        this.listener = listener;
+    @Override
+    protected String getTitle() {
+        return "Activité d'apprentissage";
+    }
+
+    @Override
+    protected String getName() {
+        return "l'activité d'apprentissage";
     }
 }

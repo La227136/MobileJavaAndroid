@@ -19,11 +19,12 @@ import java.util.ArrayList;
 public class PromotionsActivity extends BaseActivity implements FooterFragment.FooterListener {
     ArrayList<Promotion> promotions;
     PromotionManager promotionManager;
-//
+
+    //
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-     //DataGenerationTest testDataGenerator = new DataGenerationTest(this);
-     // testDataGenerator.generateTestData();
+        // DataGenerationTest testDataGenerator = new DataGenerationTest(this);
+        //testDataGenerator.generateTestData();
         promotionManager = new PromotionManager(this);
         if (savedInstanceState != null) {
             promotions = (ArrayList<Promotion>) savedInstanceState.getSerializable("promotions");
@@ -48,7 +49,7 @@ public class PromotionsActivity extends BaseActivity implements FooterFragment.F
     @Override
     public void onAddButtonClick() {
         AddPromotionDialogFragment dialogFragment = new AddPromotionDialogFragment();
-        dialogFragment.setAddPromotionListener(newPromotion -> {
+        dialogFragment.setAddItemListener(newPromotion -> {
             promotionManager.addPromotion(newPromotion);
             promotions = promotionManager.getAllPromotions();
             replaceFragement(promotions);
@@ -75,6 +76,7 @@ public class PromotionsActivity extends BaseActivity implements FooterFragment.F
                 .replace(R.id.middlePageContainer, PromotionListFragment.newInstance(promotions))
                 .commit();
     }
+
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
