@@ -30,6 +30,7 @@ public class LearningActivitesFragment extends Fragment {
     LinearLayout learningActivitiesContainer;
     private OnItemClickListener listener; // Référence à l'activité parent
     private List<Evaluation> learningActivities;
+    private boolean isLongClick = false;  // Variable pour éviter que les deux événements se déclenchent
 
     public static LearningActivitesFragment newInstance(Promotion promotion,List<Evaluation> learningActivities) {
         LearningActivitesFragment fragment = new LearningActivitesFragment();
@@ -59,7 +60,6 @@ public class LearningActivitesFragment extends Fragment {
         }
     }
 
-    private boolean isLongClick = false;  // Variable pour éviter que les deux événements se déclenchent
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -71,21 +71,23 @@ public class LearningActivitesFragment extends Fragment {
         if (promotion != null) {
             for (Evaluation evaluation : learningActivities) {
                 if (evaluation.getParentId() == 0) {
-                    View classeView = inflater.inflate(R.layout.list_item_learning_activity, learningActivitiesContainer, false);
-                    MarginUtils.setMargin(classeView);
-                    ((TextView) classeView.findViewById(R.id.learningActivityTextView)).setText(evaluation.getName());
-                    classeView.setOnClickListener((view) -> {
+                    View learningActivityItem = inflater.inflate(R.layout.list_item_learning_activity, learningActivitiesContainer, false);
+                    MarginUtils.setMargin(learningActivityItem);
+                    ((TextView) learningActivityItem.findViewById(R.id.learningActivityTextView)).setText(evaluation.getName());
+                    learningActivityItem.setOnClickListener((view) -> {
                         if (!isLongClick) {
                             listener.onItemClick(view, evaluation);
                         }
                         isLongClick = false;
                     });
-                    classeView.setOnLongClickListener((view) -> {
+                    learningActivityItem.setOnLongClickListener((view) -> {
                         isLongClick = true;
                         evaluation.setSelected(!evaluation.isSelected());
+                        learningActivityItem.setSelected(evaluation.isSelected());
                         return true;
                     });
-                    learningActivitiesContainer.addView(classeView);
+                    learningActivityItem.setSelected(evaluation.isSelected());
+                    learningActivitiesContainer.addView(learningActivityItem);
                 }
             }
         }
