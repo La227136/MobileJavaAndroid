@@ -75,7 +75,9 @@ public class EvaluationDetailsFragment extends Fragment {
         ((TextView) classeView.findViewById(R.id.mainEvaluationTextView)).setText(evaluation.getName());
         ((TextView) classeView.findViewById(R.id.ponderationTextView)).setText(String.valueOf(evaluation.getMaxGrade()));
         ((Button) classeView.findViewById(R.id.addSubEvaluationButton)).setOnClickListener(v -> {
-            Toast.makeText(getContext(), "Add sub evaluation", Toast.LENGTH_SHORT).show();
+            Evaluation subEvaluation = new Evaluation(evaluation.getId(),evaluation.getPromotionId(),20,"newSubEvaluation");
+            evaluationManager.addEvaluation(subEvaluation);
+
         });
 
         learningActivitiesContainer.addView(classeView);

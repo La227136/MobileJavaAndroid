@@ -26,8 +26,8 @@ public class Evaluation implements Serializable {
     }
 
     // Getters et Setters
-// todo normal c est un long ??
-    public long getId() {
+
+    public Integer getId() {
         return id;
     }
 
@@ -43,7 +43,7 @@ public class Evaluation implements Serializable {
         this.parentId = parentId;
     }
 
-    public long getPromotionId() {
+    public Integer getPromotionId() {
         return promotionId;
     }
 

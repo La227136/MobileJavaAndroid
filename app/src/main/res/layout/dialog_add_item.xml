@@ -26,14 +26,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="16dp"
-        android:padding="8dp" />
+        android:padding="8dp"
+        />
+
+    <EditText
+        android:id="@+id/ponderationNameInput"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Promotion Description"
+        app:layout_constraintTop_toBottomOf="@id/itemNameInput"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"
+        android:padding="8dp"
+        android:visibility="gone"/>
 
     <Button
         android:id="@+id/addItemButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Add Promotion"
-        app:layout_constraintTop_toBottomOf="@id/itemNameInput"
+        app:layout_constraintTop_toBottomOf="@id/ponderationNameInput"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="16dp" />
