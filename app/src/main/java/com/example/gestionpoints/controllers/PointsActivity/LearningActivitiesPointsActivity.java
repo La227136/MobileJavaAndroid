@@ -37,7 +37,7 @@ public class LearningActivitiesPointsActivity extends BaseActivity {
 
     @Override
     public Fragment getMiddleFragmentToLaunch() {
-        return LearningActivitesFragment.newInstance(promotion);
+        return LearningActivitesFragment.newInstance(promotion,null);
     }
 
 

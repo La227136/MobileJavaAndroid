@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -26,18 +27,15 @@ public class LearningActivitesFragment extends Fragment {
 
     private static final String ARG_PROMOTION = "promotion";
     private Promotion promotion;
-
-
     LinearLayout learningActivitiesContainer;
-
-
     private OnItemClickListener listener; // Référence à l'activité parent
+    private List<Evaluation> learningActivities;
 
-    // On peut pas mettre des trucs dans le constructeur car quand on tourne telephone ca va tout casser
-    public static LearningActivitesFragment newInstance(Promotion promotion) {
+    public static LearningActivitesFragment newInstance(Promotion promotion,List<Evaluation> learningActivities) {
         LearningActivitesFragment fragment = new LearningActivitesFragment();
         Bundle args = new Bundle();
         args.putSerializable(ARG_PROMOTION, promotion);
+        args.putSerializable("learningActivities", (java.io.Serializable) learningActivities);
         fragment.setArguments(args);
         return fragment;
     }
@@ -56,9 +54,12 @@ public class LearningActivitesFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
+            learningActivities = (List<Evaluation>) getArguments().getSerializable("learningActivities");
             promotion = (Promotion) getArguments().getSerializable(ARG_PROMOTION);
         }
     }
+
+    private boolean isLongClick = false;  // Variable pour éviter que les deux événements se déclenchent
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -68,26 +69,29 @@ public class LearningActivitesFragment extends Fragment {
         learningActivitiesContainer = v.findViewById(R.id.learningActivitiesContainer);
 
         if (promotion != null) {
-            EvaluationManager evaluationManager = new EvaluationManager(getContext());
-            List<Evaluation> evaluationList = evaluationManager.getEvaluationsForPromotion(promotion);
-            for (Evaluation evaluation : evaluationList) {
-                if(evaluation.getParentId() == 0) {
+            for (Evaluation evaluation : learningActivities) {
+                if (evaluation.getParentId() == 0) {
                     View classeView = inflater.inflate(R.layout.list_item_learning_activity, learningActivitiesContainer, false);
                     MarginUtils.setMargin(classeView);
                     ((TextView) classeView.findViewById(R.id.learningActivityTextView)).setText(evaluation.getName());
                     classeView.setOnClickListener((view) -> {
-                        listener.onItemClick(view, evaluation);
+                        if (!isLongClick) {
+                            listener.onItemClick(view, evaluation);
+                        }
+                        isLongClick = false;
+                    });
+                    classeView.setOnLongClickListener((view) -> {
+                        isLongClick = true;
+                        evaluation.setSelected(!evaluation.isSelected());
+                        return true;
                     });
                     learningActivitiesContainer.addView(classeView);
                 }
-
-
             }
         }
 
-
         return v;
-
     }
+
 
 }

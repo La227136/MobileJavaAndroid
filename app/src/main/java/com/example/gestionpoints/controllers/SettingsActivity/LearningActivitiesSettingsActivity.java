@@ -35,9 +35,8 @@ public class LearningActivitiesSettingsActivity extends BaseActivity implements 
             learningActivities = (ArrayList<Evaluation>) savedInstanceState.getSerializable("learningActivities");
         } else {
             promotion = (Promotion) getIntent().getSerializableExtra("promotion");
-            learningActivities = evaluationManager.getAllEvaluations();
+            learningActivities = evaluationManager.getEvaluationsForPromotion(promotion);;
         }
-
         super.onCreate(savedInstanceState);
     }
 
@@ -48,7 +47,7 @@ public class LearningActivitiesSettingsActivity extends BaseActivity implements 
 
     @Override
     public Fragment getMiddleFragmentToLaunch() {
-        return LearningActivitesFragment.newInstance(promotion);
+        return LearningActivitesFragment.newInstance(promotion, learningActivities);
     }
 
 
@@ -58,7 +57,7 @@ public class LearningActivitiesSettingsActivity extends BaseActivity implements 
         AddLearningActivitiesFragment dialogFragment = new AddLearningActivitiesFragment(promotion.getId());
         dialogFragment.setAddLearningActivityListener(newLearningActivity -> {
             evaluationManager.addEvaluation(newLearningActivity);
-            learningActivities = evaluationManager.getAllEvaluations();
+            learningActivities = evaluationManager.getEvaluationsForPromotion(promotion);
             replaceFragement(promotion);
         });
         dialogFragment.show(getSupportFragmentManager(), "AddLearningActivitiesFragment");
@@ -68,9 +67,10 @@ public class LearningActivitiesSettingsActivity extends BaseActivity implements 
     public void onDeleteButtonClick() {
         boolean update = false;
         for (Evaluation learningActivitie : learningActivities) {
+            Log.d("caca", "onDeleteButtonClick: " + learningActivitie.isSelected());
             if (learningActivitie.isSelected()) {
                 evaluationManager.deleteEvaluation(learningActivitie);
-                learningActivities = evaluationManager.getAllEvaluations();
+                learningActivities = evaluationManager.getEvaluationsForPromotion(promotion);
                 update = true;
             }
         }
@@ -80,7 +80,7 @@ public class LearningActivitiesSettingsActivity extends BaseActivity implements 
 
     private void replaceFragement(Promotion promotion) {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.middlePageContainer, LearningActivitesFragment.newInstance(promotion))
+                .replace(R.id.middlePageContainer, LearningActivitesFragment.newInstance(promotion, learningActivities))
                 .commit();
     }
 
@@ -90,6 +90,8 @@ public class LearningActivitiesSettingsActivity extends BaseActivity implements 
         evalDetailsSettingsActivity.putExtra("evaluation", evaluation);
         startActivity(evalDetailsSettingsActivity);
     }
+
+
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
