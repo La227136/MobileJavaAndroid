@@ -58,13 +58,8 @@ public class PromotionListFragment extends Fragment {
 
     private View createPromotionItemView(LayoutInflater inflater, Promotion promotion) {
         View promotionItem = inflater.inflate(R.layout.list_item_promotion, promotionListContainer, false);
-
-        promotionItem.setOnLongClickListener(v -> {
-            promotion.setIsSelected(!promotion.isSelected());
-            promotionItem.setSelected(promotion.isSelected());
-            return true;
-        });
-
+        setLongClicklistener(promotion, promotionItem);
+        promotionItem.setSelected(promotion.isSelected());
         retrieveView(promotionItem);
         MarginUtils.setMargin(promotionItem);
         promotionLevelTextView.setText(promotion.getName());
@@ -72,6 +67,14 @@ public class PromotionListFragment extends Fragment {
         setBtnListeners(pointsBtn, promotion, LearningActivitiesPointsActivity.class);
 
         return promotionItem;
+    }
+
+    private  void setLongClicklistener(Promotion promotion, View promotionItem) {
+        promotionItem.setOnLongClickListener(v -> {
+            promotion.setIsSelected(!promotion.isSelected());
+            promotionItem.setSelected(promotion.isSelected());
+            return true;
+        });
     }
 
     private void setBtnListeners(Button button, Promotion promotion, Class<?> targetActivity) {

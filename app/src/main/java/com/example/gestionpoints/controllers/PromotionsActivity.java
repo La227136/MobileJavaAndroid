@@ -25,7 +25,11 @@ public class PromotionsActivity extends BaseActivity implements FooterFragment.F
      // DataGenerationTest testDataGenerator = new DataGenerationTest(this);
      // testDataGenerator.generateTestData();
         promotionManager = new PromotionManager(this);
-        promotions = promotionManager.getAllPromotions();
+        if (savedInstanceState != null) {
+            promotions = (ArrayList<Promotion>) savedInstanceState.getSerializable("promotions");
+        } else {
+            promotions = promotionManager.getAllPromotions();
+        }
         super.onCreate(savedInstanceState);
     }
 
@@ -71,4 +75,12 @@ public class PromotionsActivity extends BaseActivity implements FooterFragment.F
                 .replace(R.id.middlePageContainer, PromotionListFragment.newInstance(promotions))
                 .commit();
     }
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable("promotions", promotions);
+    }
+
 }
+
+
