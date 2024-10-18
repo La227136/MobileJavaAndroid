@@ -17,73 +17,60 @@ import com.example.gestionpoints.models.evaluation.Evaluation;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EvaluationDetailsFragment extends Fragment{
+public class EvaluationDetailsFragment extends Fragment {
 
-    private static final String ARG_PROMOTION = "evaluation";
-    private Evaluation evaluation;
+    private static final String ARG_EVALUATION = "evaluation";
+    private Evaluation learningActivity;
     private LinearLayout learningActivitiesContainer;
+    private EvaluationManager evaluationManager;
 
     public static EvaluationDetailsFragment newInstance(Evaluation evaluation) {
         EvaluationDetailsFragment fragment = new EvaluationDetailsFragment();
         Bundle args = new Bundle();
-        args.putSerializable(ARG_PROMOTION, evaluation);
+        args.putSerializable(ARG_EVALUATION, evaluation);
         fragment.setArguments(args);
         return fragment;
     }
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        evaluation = (Evaluation) getArguments().getSerializable("evaluation");
         super.onCreate(savedInstanceState);
+        evaluationManager = new EvaluationManager(getContext());
+        if (getArguments() != null) {
+            learningActivity = (Evaluation) getArguments().getSerializable(ARG_EVALUATION);
+        }
     }
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
         View v = inflater.inflate(R.layout.fragment_learning_activities, container, false);
-
         learningActivitiesContainer = v.findViewById(R.id.learningActivitiesContainer);
 
-        if (evaluation != null) {
-            displayEval(inflater, evaluation);
+        if (learningActivity != null) {
+            List<Evaluation> evaluationList = evaluationManager.getEvaluationForParentEvaluation(learningActivity);
+            displayEval(inflater, evaluationList, 0);
         }
-
-
         return v;
-
     }
 
-    private void displayEval(LayoutInflater inflater,Evaluation evaluationOrSub) {
-        EvaluationManager evaluationManager = new EvaluationManager(getContext());
-        List<Evaluation> evaluationList = evaluationManager.getEvaluationForParentEvaluation(evaluationOrSub);
-        int i =0;
+    private void displayEval(LayoutInflater inflater, List<Evaluation> evaluationList, int level) {
         for (Evaluation evaluation : evaluationList) {
-            List<Evaluation> subEvaluationList =evaluationManager.getEvaluationForParentEvaluation(evaluation);
-            Log.d("huh", subEvaluationList + "  : " + subEvaluationList.size() );
-            if(!subEvaluationList.isEmpty()){
-                displayEval(inflater,evaluation);
-                subEvaluationList = null;
+            display(inflater, evaluation, level);
+            List<Evaluation> subEvaluations = evaluationManager.getEvaluationForParentEvaluation(evaluation);
+            if (subEvaluations != null && !subEvaluations.isEmpty()) {
+                displayEval(inflater, subEvaluations, level + 1);
             }
-            int leftMargin = 80 * i;
-
-            View classeView = inflater.inflate(R.layout.list_item_learning_activity, learningActivitiesContainer, false);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            params.setMargins(leftMargin, 0, 0, 0);  // Appliquer une marge à gauche seulement
-            classeView.setLayoutParams(params);
-            // MarginUtils.setMargin(classeView);
-            ((TextView) classeView.findViewById(R.id.learningActivityTextView)).setText(evaluation.getName());
-           // classeView.setOnClickListener((view) -> {
-           //     listener.onItemClick(view, evaluation);
-           // });
-
-            learningActivitiesContainer.addView(classeView);
-
-
-            i++;
         }
+    }
+
+    private void display(LayoutInflater inflater, Evaluation evaluation, int level) {
+        View classeView = inflater.inflate(R.layout.list_item_learning_activity, learningActivitiesContainer, false);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        params.setMargins(40 * level, 0, 0, 0);
+        classeView.setLayoutParams(params);
+        ((TextView) classeView.findViewById(R.id.learningActivityTextView)).setText(evaluation.getName());
+        learningActivitiesContainer.addView(classeView);
     }
 }
+
