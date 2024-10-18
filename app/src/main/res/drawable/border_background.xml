@@ -3,9 +3,9 @@
     <!-- État sélectionné -->
     <item android:state_selected="true">
         <shape android:shape="rectangle">
-            <solid android:color="#FFD700"/>  <!-- Couleur or lorsque sélectionné -->
+            <solid android:color="#47294d "/>  <!-- Couleur or lorsque sélectionné -->
             <corners android:radius="8dp" /> <!-- Coins arrondis -->
-            <stroke android:width="2dp" android:color="#FFA500" /> <!-- Bordure -->
+            <stroke android:width="2dp" android:color="#313332" /> <!-- Bordure -->
         </shape>
     </item>
 

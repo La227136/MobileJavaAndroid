@@ -9,6 +9,7 @@ import com.example.gestionpoints.R;
 import com.example.gestionpoints.controllers.Fragments.AddPromotionDialogFragment;
 import com.example.gestionpoints.controllers.Fragments.FooterFragment;
 import com.example.gestionpoints.controllers.Fragments.PromotionListFragment;
+import com.example.gestionpoints.models.dataBaseManager.manager.DataGenerationTest;
 import com.example.gestionpoints.models.dataBaseManager.manager.PromotionManager;
 import com.example.gestionpoints.models.evaluation.Evaluation;
 import com.example.gestionpoints.models.promotion.Promotion;
@@ -16,7 +17,7 @@ import com.example.gestionpoints.models.promotion.Promotion;
 import java.util.ArrayList;
 
 public class PromotionsActivity extends BaseActivity implements FooterFragment.FooterListener {
-    ArrayList<Promotion> promotions = new ArrayList<>();
+    ArrayList<Promotion> promotions;
     PromotionManager promotionManager;
 //
     @Override
@@ -31,7 +32,7 @@ public class PromotionsActivity extends BaseActivity implements FooterFragment.F
     // Override from BaseActivity
     @Override
     public String getTitlePage() {
-        return "Promotions";
+        return "Blocs";
     }
 
     @Override

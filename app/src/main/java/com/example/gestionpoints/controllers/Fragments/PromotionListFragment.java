@@ -48,25 +48,30 @@ public class PromotionListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_promotion_list, container, false);
-
         promotionListContainer = view.findViewById(R.id.promotion_list_container);
-        for (Promotion promotion : promotions) {
 
-            View promotionItem = inflater.inflate(R.layout.list_item_promotion, promotionListContainer, false);
-            promotionItem.setOnLongClickListener(v -> {
-                promotion.setIsSelected(!promotion.isSelected());
-                promotionItem.setSelected(promotion.isSelected());
-                return true;
-            });
-            retrieveView(promotionItem);
-            MarginUtils.setMargin(promotionItem);
-            promotionLevelTextView.setText(promotion.getName());
-            setBtnListeners(evalBtn, promotion, LearningActivitiesSettingsActivity.class);
-            setBtnListeners(pointsBtn, promotion, LearningActivitiesPointsActivity.class);
-            promotionListContainer.addView(promotionItem);
-        }
-
+        promotions.forEach(promotion -> {
+            promotionListContainer.addView(createPromotionItemView(inflater, promotion));
+        });
         return view;
+    }
+
+    private View createPromotionItemView(LayoutInflater inflater, Promotion promotion) {
+        View promotionItem = inflater.inflate(R.layout.list_item_promotion, promotionListContainer, false);
+
+        promotionItem.setOnLongClickListener(v -> {
+            promotion.setIsSelected(!promotion.isSelected());
+            promotionItem.setSelected(promotion.isSelected());
+            return true;
+        });
+
+        retrieveView(promotionItem);
+        MarginUtils.setMargin(promotionItem);
+        promotionLevelTextView.setText(promotion.getName());
+        setBtnListeners(evalBtn, promotion, LearningActivitiesSettingsActivity.class);
+        setBtnListeners(pointsBtn, promotion, LearningActivitiesPointsActivity.class);
+
+        return promotionItem;
     }
 
     private void setBtnListeners(Button button, Promotion promotion, Class<?> targetActivity) {
