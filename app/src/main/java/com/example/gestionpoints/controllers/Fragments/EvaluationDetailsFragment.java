@@ -2,23 +2,18 @@ package com.example.gestionpoints.controllers.Fragments;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
 import com.example.gestionpoints.R;
-import com.example.gestionpoints.Utils.MarginUtils;
 import com.example.gestionpoints.models.dataBaseManager.manager.EvaluationManager;
 import com.example.gestionpoints.models.evaluation.Evaluation;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class EvaluationDetailsFragment extends Fragment {
@@ -36,6 +31,7 @@ public class EvaluationDetailsFragment extends Fragment {
         EvaluationDetailsFragment fragment = new EvaluationDetailsFragment();
         Bundle args = new Bundle();
         args.putSerializable(ARG_EVALUATION, evaluation);
+
         fragment.setArguments(args);
         return fragment;
     }
@@ -63,8 +59,7 @@ public class EvaluationDetailsFragment extends Fragment {
         learningActivitiesContainer = v.findViewById(R.id.learningActivitiesContainer);
 
         if (learningActivity != null) {
-            List<Evaluation> evaluationList = evaluationManager.getEvaluationForParentEvaluation(learningActivity);
-            displayEval(inflater, evaluationList, 0);
+            displayEval(inflater, evaluationManager.getEvaluationForParentEvaluation(learningActivity), 0);
         }
         return v;
     }
@@ -89,6 +84,11 @@ public class EvaluationDetailsFragment extends Fragment {
         ((TextView) classeView.findViewById(R.id.ponderationTextView)).setText(String.valueOf(evaluation.getMaxGrade()));
         classeView.findViewById(R.id.addSubEvaluationButton).setOnClickListener(v -> {
             listener.onAddSubEvaluation(evaluation);
+        });
+        classeView.setOnLongClickListener((view) -> {
+            evaluation.setSelected(!evaluation.isSelected());
+            classeView.setSelected(evaluation.isSelected());
+            return true;
         });
 
         learningActivitiesContainer.addView(classeView);

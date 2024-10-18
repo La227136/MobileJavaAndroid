@@ -24,17 +24,23 @@ public class LearningActivitiesSettingsActivity extends BaseActivity implements 
     private EvaluationManager evaluationManager;
     private Promotion promotion;
     private ArrayList<Evaluation> learningActivities = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-       evaluationManager = new EvaluationManager(this);
+        evaluationManager = new EvaluationManager(this);
+        initializeAttributes(savedInstanceState);
+        super.onCreate(savedInstanceState);
+    }
+
+    private void initializeAttributes(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
             promotion = (Promotion) savedInstanceState.getSerializable("promotions");
             learningActivities = (ArrayList<Evaluation>) savedInstanceState.getSerializable("learningActivities");
         } else {
             promotion = (Promotion) getIntent().getSerializableExtra("promotion");
-            learningActivities = evaluationManager.getEvaluationsForPromotion(promotion);;
+            learningActivities = evaluationManager.getEvaluationsForPromotion(promotion);
+            ;
         }
-        super.onCreate(savedInstanceState);
     }
 
     @Override
