@@ -8,6 +8,7 @@ public class Evaluation implements Serializable {
     private Integer promotionId;
     private float maxGrade;
     private String name;
+    private boolean isSelected;
 
     public Evaluation(Integer id, Integer parentId, Integer promotionId, float maxGrade, String name) {
         this.id = id;
@@ -60,5 +61,13 @@ public class Evaluation implements Serializable {
 
     public String getName() {
         return name;
+    }
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
     }
 }

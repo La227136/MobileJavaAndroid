@@ -24,8 +24,8 @@ public class EvaluationManager {
     }
 
 
-    public List<Evaluation> getAllEvaluations() {
-        List<Evaluation> evaluations = new ArrayList<>();
+    public ArrayList<Evaluation> getAllEvaluations() {
+        ArrayList<Evaluation> evaluations = new ArrayList<>();
 
         Cursor cursor = mDatabase.query(
                 EvaluationTable.NAME,
@@ -52,8 +52,8 @@ public class EvaluationManager {
         return evaluations;
     }
 
-    public List<Evaluation> getEvaluationsForPromotion(Promotion promotion) {
-        List<Evaluation> evaluations = new ArrayList<>();
+    public ArrayList<Evaluation> getEvaluationsForPromotion(Promotion promotion) {
+        ArrayList<Evaluation> evaluations = new ArrayList<>();
         Cursor cursor = mDatabase.query(
                 EvaluationTable.NAME,
                 null,
