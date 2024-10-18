@@ -14,7 +14,7 @@ import androidx.fragment.app.DialogFragment;
 import com.example.gestionpoints.R;
 import com.example.gestionpoints.models.evaluation.Evaluation;
 
-public class AddLearningActivitiesFragment extends DialogFragment {
+public class AddLearningActivitiesDialogFragment extends DialogFragment {
 
     public interface AddLearningActivityListener {
         void onLearningActivityAdded(Evaluation evaluation);
@@ -24,7 +24,7 @@ public class AddLearningActivitiesFragment extends DialogFragment {
 
     int id;
 
-    public AddLearningActivitiesFragment(int id) {
+    public AddLearningActivitiesDialogFragment(int id) {
         this.id = id;
     }
 
