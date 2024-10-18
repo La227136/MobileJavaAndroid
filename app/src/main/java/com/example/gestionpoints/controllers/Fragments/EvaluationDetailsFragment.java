@@ -5,8 +5,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -65,12 +67,17 @@ public class EvaluationDetailsFragment extends Fragment {
     }
 
     private void display(LayoutInflater inflater, Evaluation evaluation, int level) {
-        View classeView = inflater.inflate(R.layout.list_item_learning_activity, learningActivitiesContainer, false);
+        View classeView = inflater.inflate(R.layout.list_item_main_evaluation, learningActivitiesContainer, false);
 
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         classeView.setLayoutParams(params);
-        ((TextView) classeView.findViewById(R.id.learningActivityTextView)).setText(evaluation.getName());
+        ((TextView) classeView.findViewById(R.id.mainEvaluationTextView)).setText(evaluation.getName());
+        ((TextView) classeView.findViewById(R.id.ponderationTextView)).setText(String.valueOf(evaluation.getMaxGrade()));
+        ((Button) classeView.findViewById(R.id.addSubEvaluationButton)).setOnClickListener(v -> {
+            Toast.makeText(getContext(), "Add sub evaluation", Toast.LENGTH_SHORT).show();
+        });
+
         learningActivitiesContainer.addView(classeView);
         params.setMargins(16 + (90 * level), 10, 16, 0);
     }
