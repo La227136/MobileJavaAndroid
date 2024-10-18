@@ -14,6 +14,7 @@ import com.example.gestionpoints.R;
 import com.example.gestionpoints.models.dataBaseManager.manager.EvaluationManager;
 import com.example.gestionpoints.models.evaluation.Evaluation;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class EvaluationDetailsFragment extends Fragment {
@@ -22,16 +23,17 @@ public class EvaluationDetailsFragment extends Fragment {
     private Evaluation learningActivity;
     private LinearLayout learningActivitiesContainer;
     private EvaluationManager evaluationManager;
+
     public interface AddSubEvaluationListener {
         void onAddSubEvaluation(Evaluation parentEvaluation);
+        void OnLongClick(View view, Evaluation evaluation);
     }
     private AddSubEvaluationListener listener;
 
-    public static EvaluationDetailsFragment newInstance(Evaluation evaluation) {
+public static EvaluationDetailsFragment newInstance(Evaluation evaluations) {
         EvaluationDetailsFragment fragment = new EvaluationDetailsFragment();
         Bundle args = new Bundle();
-        args.putSerializable(ARG_EVALUATION, evaluation);
-
+        args.putSerializable(ARG_EVALUATION, evaluations);
         fragment.setArguments(args);
         return fragment;
     }
@@ -76,7 +78,6 @@ public class EvaluationDetailsFragment extends Fragment {
 
     private void display(LayoutInflater inflater, Evaluation evaluation, int level) {
         View classeView = inflater.inflate(R.layout.list_item_main_evaluation, learningActivitiesContainer, false);
-
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         classeView.setLayoutParams(params);
@@ -86,8 +87,8 @@ public class EvaluationDetailsFragment extends Fragment {
             listener.onAddSubEvaluation(evaluation);
         });
         classeView.setOnLongClickListener((view) -> {
-            evaluation.setSelected(!evaluation.isSelected());
-            classeView.setSelected(evaluation.isSelected());
+            classeView.setSelected(!classeView.isSelected());
+          listener.OnLongClick(view, evaluation);
             return true;
         });
 

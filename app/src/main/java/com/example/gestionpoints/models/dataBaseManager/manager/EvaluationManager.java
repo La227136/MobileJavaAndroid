@@ -79,6 +79,39 @@ public class EvaluationManager {
 
         return evaluations;
     }
+    public List<Evaluation> getAllChildrenEvaluations(int parentId) {
+        List<Evaluation> evaluations = new ArrayList<>();
+        String sqlQuery = "WITH RECURSIVE all_children AS ("
+                + "SELECT id, parent_id, promotion_id, max_grade, evaluation_name "
+                + "FROM Evaluation WHERE id = ? "
+                + "UNION ALL "
+                + "SELECT e.id, e.parent_id, e.promotion_id, e.max_grade, e.evaluation_name "
+                + "FROM Evaluation e "
+                + "INNER JOIN all_children ac ON e.parent_id = ac.id "
+                + ") "
+                + "SELECT * FROM all_children;";
+
+        Cursor cursor = mDatabase.rawQuery(sqlQuery, new String[]{String.valueOf(parentId)});
+
+        if (cursor != null) {
+            try {
+                while (cursor.moveToNext()) {
+                    int id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
+                    Integer parentID = cursor.isNull(cursor.getColumnIndexOrThrow("parent_id")) ? null : cursor.getInt(cursor.getColumnIndexOrThrow("parent_id"));
+                    int promotionID = cursor.getInt(cursor.getColumnIndexOrThrow("promotion_id"));
+                    float maxGrade = cursor.getFloat(cursor.getColumnIndexOrThrow("max_grade"));
+                    String evaluationName = cursor.getString(cursor.getColumnIndexOrThrow("evaluation_name"));
+
+                    Evaluation evaluation = new Evaluation(id, parentID, promotionID, maxGrade, evaluationName);
+                    evaluations.add(evaluation);
+                }
+            } finally {
+                cursor.close();
+            }
+        }
+
+        return evaluations;
+    }
     public List<Evaluation> getEvaluationForParentEvaluation(Evaluation evaluation) {
         List<Evaluation> evaluations = new ArrayList<>();
         Cursor cursor = mDatabase.query(

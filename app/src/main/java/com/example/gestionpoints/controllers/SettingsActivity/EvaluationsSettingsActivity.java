@@ -1,6 +1,8 @@
 package com.example.gestionpoints.controllers.SettingsActivity;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 
 import androidx.fragment.app.Fragment;
 
@@ -13,18 +15,21 @@ import com.example.gestionpoints.models.dataBaseManager.manager.EvaluationManage
 import com.example.gestionpoints.models.dataBaseManager.manager.PromotionManager;
 import com.example.gestionpoints.models.evaluation.Evaluation;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class EvaluationsSettingsActivity extends BaseActivity implements FooterFragment.FooterListener, EvaluationDetailsFragment.AddSubEvaluationListener {
 
     private Evaluation learningActivity;
     private EvaluationManager evaluationManager;
+    ArrayList<Evaluation> selecteEvaluations = new ArrayList<>();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         evaluationManager = new EvaluationManager(this);
         learningActivity = (Evaluation) getIntent().getSerializableExtra("evaluation");
+
         super.onCreate(savedInstanceState);
     }
 
@@ -51,7 +56,14 @@ public class EvaluationsSettingsActivity extends BaseActivity implements FooterF
 
     @Override
     public void onDeleteButtonClick() {
-
+        boolean isDeleted = false;
+        for (Evaluation evaluation : selecteEvaluations) {
+            if (evaluation.isSelected()) {
+                isDeleted = true;
+                evaluationManager.deleteEvaluation(evaluation);
+            }
+        }
+        replaceFragment();
     }
 
     public void onAddSubEvaluation(Evaluation parentEvaluation) {
@@ -62,6 +74,12 @@ public class EvaluationsSettingsActivity extends BaseActivity implements FooterF
         });
         dialogFragment.show(getSupportFragmentManager(), "AddEvaluationDialogFragment");
 
+    }
+
+    @Override
+    public void OnLongClick(View view, Evaluation evaluation) {
+        evaluation.setSelected(!evaluation.isSelected());
+        selecteEvaluations.add(evaluation);
     }
 
     private void replaceFragment() {
