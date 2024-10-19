@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.gestionpoints.R;
 import com.example.gestionpoints.models.dataBaseManager.manager.EvaluationManager;
+import com.example.gestionpoints.models.dataBaseManager.manager.GradeManager;
 import com.example.gestionpoints.models.evaluation.Evaluation;
 import com.example.gestionpoints.models.grade.Grade;
 import com.example.gestionpoints.models.student.Student;
@@ -24,6 +25,7 @@ import java.util.List;
 public class EvaluationPointsFragment extends Fragment {
     private static final String ARG_EVALUATION = "evaluation";
     private static final String ARG_STUDENT = "student";
+    private GradeManager gradeManager;
     private LinearLayout displayGradeContainer;
     private Student student;
     private EvaluationManager evaluationManager;
@@ -44,6 +46,7 @@ public class EvaluationPointsFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        gradeManager = new GradeManager(getContext());
         evaluationManager = new EvaluationManager(getContext());
         if (getArguments() != null) {
             Log.d("test", "onCreate: ");
@@ -78,7 +81,7 @@ public class EvaluationPointsFragment extends Fragment {
         View classeView = inflater.inflate(R.layout.list_item_evaluation_points, displayGradeContainer, false);
         retrieveView(classeView);
         evaluationName.setText(evaluation.getName());
-        grade = new Grade(student, evaluation,);
+        grade = new Grade(student, evaluation,gradeManager.getGrade(evaluation.getId(),student.getId()));
         gradeEditText.setText(String.valueOf(grade.calculGrade()));
 
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(

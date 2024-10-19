@@ -14,6 +14,11 @@ public class Grade {
         this.grade = grade;
     }
 
+    public Grade(Student student, Evaluation evaluation) {
+        this.student = student;
+        this.evaluation = evaluation;
+    }
+
     public float calculGrade() {
         if (evaluation.getSubEvaluations() == null || evaluation.getSubEvaluations().isEmpty()) {
             return grade;
