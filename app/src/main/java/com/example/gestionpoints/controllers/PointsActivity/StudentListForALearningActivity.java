@@ -27,34 +27,26 @@ public class StudentListForALearningActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
 
-        Log.d("zizi", "onCreate");
         if (savedInstanceState != null) {
 
             promotion = (Promotion) savedInstanceState.getSerializable(KEY_PROMOTION);
-            Log.d("zizi", "onCreate promotion: IF" + promotion.getName());
 
             learningActivity = (Evaluation) savedInstanceState.getSerializable(KEY_LEARNING_ACTIVITY);
-            Log.d("zizi", "onCreate promotion: IF" + learningActivity.getName());
 
         } else {
             promotion = (Promotion) getIntent().getSerializableExtra("promotion");
-            Log.d("zizi", "onCreate promotion: ELSE" + promotion.getName());
             learningActivity = (Evaluation) getIntent().getSerializableExtra("evaluation");
-            Log.d("zizi", "onCreate promotion: ELSE" + learningActivity.getName());
 
         }
-        Log.d("zizi", "onCreate");
         super.onCreate(savedInstanceState);
     }
 
     @Override
     public Fragment getMiddleFragmentToLaunch() {
-        Log.d("zizi", "studentList size: ");
 
         StudentManager studentManager = new StudentManager(this);
         ArrayList<Student> studentList = new ArrayList<>();
         studentList = studentManager.getStudentsForPromotion(promotion);
-        Log.d("zizi", "studentList size: " + studentList.size());
         return StudentListFragment.newInstance(studentList);
     }
 
@@ -64,8 +56,7 @@ public class StudentListForALearningActivity extends BaseActivity {
     }
     @Override
     public String getTitlePage() {
-        Log.d("zizi", "getTitlePage");
-        return "Liste des étudiants de";
+        return "Liste des étudiants de " + learningActivity.getName();
     }
 
     @Override

@@ -54,7 +54,6 @@ public class LearningActivitiesPointsActivity extends BaseActivity implements On
         Intent intent = new Intent(getApplicationContext(), StudentListForALearningActivity.class);
         intent.putExtra("promotion", promotion);
         intent.putExtra("evaluation", learningActivity);
-        Log.d("zizi", learningActivity.getName() + " ICI " + promotion.getName());
         startActivity(intent);
     }
 }
