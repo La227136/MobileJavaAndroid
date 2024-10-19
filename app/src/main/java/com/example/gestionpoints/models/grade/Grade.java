@@ -8,9 +8,10 @@ public class Grade {
     Evaluation evaluation;
     float grade;
 
-    public Grade(Student student, Evaluation evaluation) {
+    public Grade(Student student, Evaluation evaluation, float grade) {
         this.student = student;
         this.evaluation = evaluation;
+        this.grade = grade;
     }
 
     public float calculGrade() {
@@ -19,15 +20,15 @@ public class Grade {
         }
 
         float totalGrade = 0;
-        int count = 0;
+        float maxGrade = 0;
 
         for (Evaluation subEvaluation : evaluation.getSubEvaluations()) {
             Grade subEvaluationPoints = new Grade(student, subEvaluation);
             totalGrade += subEvaluationPoints.calculGrade();
-            count++;
+            maxGrade += subEvaluation.getMaxGrade();
         }
 
-        return totalGrade / count;
+        return totalGrade / maxGrade;
     }
 
     public void setGrade(float grade) {

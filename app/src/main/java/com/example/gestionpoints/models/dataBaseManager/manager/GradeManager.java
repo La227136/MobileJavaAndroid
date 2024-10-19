@@ -2,9 +2,11 @@ package com.example.gestionpoints.models.dataBaseManager.manager;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.gestionpoints.models.dataBaseManager.baseHelper.BulletinBaseHelper;
+import com.example.gestionpoints.models.dataBaseManager.cursorWrapper.GradeWrapper;
 import com.example.gestionpoints.models.dataBaseManager.dbSchema.BulletinDBSchema.GradeTable;
 
 public class GradeManager {
@@ -26,4 +28,31 @@ public class GradeManager {
         mDatabase.insert(GradeTable.NAME, null, getContentValues(evaluationId, studentId, grade));
     }
 
+    public float getGrade(int evaluationId, int studentId) {
+        // Requête pour récupérer la note
+        String whereClause = GradeTable.Cols.EVALUATION_ID + " = ? AND " + GradeTable.Cols.STUDENT_ID + " = ?";
+        String[] whereArgs = {String.valueOf(evaluationId), String.valueOf(studentId)};
+
+        Cursor cursor = mDatabase.query(
+                GradeTable.NAME,   // Nom de la table
+                null,              // Colonnes (null signifie toutes les colonnes)
+                whereClause,       // WHERE clause
+                whereArgs,         // Arguments pour la WHERE clause
+                null,              // groupBy
+                null,              // having
+                null               // orderBy
+        );
+
+        try {
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                GradeWrapper gradeWrapper = new GradeWrapper(cursor);
+                return gradeWrapper.getGrade();  // Retourner la note
+            } else {
+                return -1;  // Retourner une valeur par défaut si aucune note n'est trouvée
+            }
+        } finally {
+            cursor.close();  // Assurez-vous de toujours fermer le curseur
+        }
+    }
 }
