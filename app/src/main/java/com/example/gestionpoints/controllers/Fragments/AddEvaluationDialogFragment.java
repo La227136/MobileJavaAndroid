@@ -12,6 +12,8 @@ import androidx.annotation.Nullable;
 import com.example.gestionpoints.R;
 import com.example.gestionpoints.models.evaluation.Evaluation;
 
+import java.util.List;
+
 public class AddEvaluationDialogFragment extends AddItemDialogFragment<Evaluation> {
     private Integer parentId;
     private Integer promotionId;

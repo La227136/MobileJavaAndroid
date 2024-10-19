@@ -1,6 +1,7 @@
 package com.example.gestionpoints.models.evaluation;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Evaluation implements Serializable {
     private Integer id;
@@ -9,6 +10,7 @@ public class Evaluation implements Serializable {
     private float maxGrade;
     private String name;
     private boolean isSelected;
+    private List<Evaluation> subEvaluations;
 
     public Evaluation(Integer id, Integer parentId, Integer promotionId, float maxGrade, String name) {
         this.id = id;
@@ -18,12 +20,24 @@ public class Evaluation implements Serializable {
         this.name = name;
     }
 
-    public Evaluation(Integer parentId, Integer promotionId, float maxGrade, String name) {
+    public Evaluation(Evaluation evaluation, List<Evaluation> subEvaluations) {
+        this.id = evaluation.getId();
+        this.parentId = evaluation.getParentId();
+        this.promotionId = evaluation.getPromotionId();
+        this.maxGrade = evaluation.getMaxGrade();
+        this.name = evaluation.getName();
+        this.isSelected = evaluation.isSelected();
+        this.subEvaluations = subEvaluations;
+    }
+
+    public Evaluation(Integer parentId, Integer promotionId, float maxGrade, String names) {
         this.parentId = parentId;
         this.promotionId = promotionId;
         this.maxGrade = maxGrade;
         this.name = name;
+        this.subEvaluations = null;
     }
+
 
     public Integer getId() {
         return id;
@@ -67,5 +81,9 @@ public class Evaluation implements Serializable {
 
     public void setSelected(boolean selected) {
         isSelected = selected;
+    }
+
+    public List<Evaluation> getSubEvaluations() {
+        return subEvaluations;
     }
 }
