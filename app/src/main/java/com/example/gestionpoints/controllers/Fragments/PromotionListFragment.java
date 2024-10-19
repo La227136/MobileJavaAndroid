@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.gestionpoints.R;
 import com.example.gestionpoints.Utils.MarginUtils;
+import com.example.gestionpoints.controllers.Fragments.StudentActivity.StudentActivity;
 import com.example.gestionpoints.controllers.SettingsActivity.LearningActivitiesSettingsActivity;
 import com.example.gestionpoints.controllers.PointsActivity.LearningActivitiesPointsActivity;
 import com.example.gestionpoints.models.promotion.Promotion;
@@ -30,6 +31,7 @@ public class PromotionListFragment extends Fragment {
     private TextView promotionLevelTextView;
     private ImageButton evalBtn;
     private ImageButton pointsBtn;
+    private ImageButton studensBtn;
 
     public static PromotionListFragment newInstance(ArrayList<Promotion> promotions) {
         PromotionListFragment fragment = new PromotionListFragment();
@@ -67,7 +69,7 @@ public class PromotionListFragment extends Fragment {
         promotionLevelTextView.setText(promotion.getName());
         setBtnListeners(evalBtn, promotion, LearningActivitiesSettingsActivity.class);
         setBtnListeners(pointsBtn, promotion, LearningActivitiesPointsActivity.class);
-
+        setBtnListeners(studensBtn, promotion, StudentActivity.class);
         return promotionItem;
     }
 
@@ -91,5 +93,6 @@ public class PromotionListFragment extends Fragment {
         promotionLevelTextView = classeView.findViewById(R.id.promotionsTextView);
         evalBtn = classeView.findViewById(R.id.evalBtn);
         pointsBtn = classeView.findViewById(R.id.pointsBtn);
+        studensBtn = classeView.findViewById(R.id.addEtudiant);
     }
 }

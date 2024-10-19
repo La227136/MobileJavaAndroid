@@ -67,16 +67,5 @@ public class DataGenerationTest {
         evaluationManager.addEvaluation(oralFlutterB3);
         evaluationManager.addEvaluation(ecritFlutterB3);
 
-        studentManager.addStudent(new Student(1, "Dupont", "Alice", 3));
-        studentManager.addStudent(new Student(2, "Martin", "Pierre", 3));
-        studentManager.addStudent(new Student(3, "Bernard", "Lucie", 3));
-        studentManager.addStudent(new Student(4, "Thomas", "Julien", 3));
-        studentManager.addStudent(new Student(5, "Petit", "Emma", 3));
-        studentManager.addStudent(new Student(6, "Robert", "Clara", 3));
-        studentManager.addStudent(new Student(7, "Richard", "Lucas", 3));
-        studentManager.addStudent(new Student(8, "Durand", "Sophie", 3));
-        studentManager.addStudent(new Student(9, "Lefevre", "Nicolas", 3));
-        studentManager.addStudent(new Student(10, "Moreau", "Julie", 3));
-
     }
 }

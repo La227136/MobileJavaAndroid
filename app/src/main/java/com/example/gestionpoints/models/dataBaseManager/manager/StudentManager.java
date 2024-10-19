@@ -58,7 +58,6 @@ public class StudentManager {
         ContentValues values = new ContentValues();
         values.put(StudentTable.Cols.LAST_NAME, student.getLastName());
         values.put(StudentTable.Cols.FIRST_NAME, student.getFirstName());
-        values.put(StudentTable.Cols.PROMOTION_ID, student.getPromotionID());
         return values;
     }
 

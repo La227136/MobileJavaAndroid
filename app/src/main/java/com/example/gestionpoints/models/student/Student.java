@@ -1,9 +1,18 @@
 package com.example.gestionpoints.models.student;
 
+import com.example.gestionpoints.models.promotion.Promotion;
+
 import java.io.Serializable;
 import java.util.List;
 
 public class Student {
+    public Student(int id, String lastName, String firstName, int promotionId) {
+         mId = id;
+        mLastName = lastName;
+        mFirstName = firstName;
+        mPromotionID = promotionId;
+    }
+
     public String getLastName() {
         return mLastName;
     }
@@ -20,13 +29,6 @@ public class Student {
         this.mFirstName = mFirstName;
     }
 
-    public int getId() {
-        return mid;
-    }
-
-    public void setId(int mid) {
-        this.mid = mid;
-    }
 
     public int getPromotionID() {
         return mPromotionID;
@@ -38,15 +40,17 @@ public class Student {
 
     private String mLastName;
     private String mFirstName;
-    private int mid;
     private int mPromotionID;
+    private Promotion mPromotion;
+    private int mId;
 
-
-    // TODO y a vrm besoin d'un id ?
-    public Student(int id, String lastName, String firstName, int promotion) {
-        this.mid = id;
+    public Student(String lastName, String firstName, Promotion promotion) {
         this.mLastName = lastName;
         this.mFirstName = firstName;
-        this.mPromotionID = promotion;
+        this.mPromotion = promotion;
+    }
+
+    public int getId() {
+        return mId;
     }
 }
