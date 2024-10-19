@@ -1,10 +1,12 @@
 package com.example.gestionpoints.controllers.Fragments;
 
+import android.media.Image;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.content.Intent;
@@ -26,8 +28,8 @@ public class PromotionListFragment extends Fragment {
     private List<Promotion> promotions;
     private LinearLayout promotionListContainer;
     private TextView promotionLevelTextView;
-    private Button evalBtn;
-    private Button pointsBtn;
+    private ImageButton evalBtn;
+    private ImageButton pointsBtn;
 
     public static PromotionListFragment newInstance(ArrayList<Promotion> promotions) {
         PromotionListFragment fragment = new PromotionListFragment();
@@ -77,7 +79,7 @@ public class PromotionListFragment extends Fragment {
         });
     }
 
-    private void setBtnListeners(Button button, Promotion promotion, Class<?> targetActivity) {
+    private void setBtnListeners(ImageButton button, Promotion promotion, Class<?> targetActivity) {
         button.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), targetActivity);
             intent.putExtra("promotion", promotion);
