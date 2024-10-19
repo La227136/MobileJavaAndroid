@@ -48,4 +48,12 @@ public class Grade implements Serializable {
     public void setGrade(float grade) {
         this.grade = grade;
     }
+
+    public int getEvaluationId() {
+        return evaluation.getId();
+    }
+
+    public int getStudentgId() {
+        return student.getId();
+    }
 }

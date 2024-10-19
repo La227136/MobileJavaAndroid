@@ -83,7 +83,22 @@ public class EvaluationPointsFragment extends Fragment {
         evaluationName.setText(evaluation.getName());
         grade = new Grade(student, evaluation,gradeManager.getGrade(evaluation.getId(),student.getId()),gradeManager);
         gradeEditText.setText(String.valueOf(grade.calculGrade()));
+        gradeEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // Nothing to do
+            }
 
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // Nothing to do
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                gradeManager.updateGrade(grade, Float.parseFloat(s.toString()));
+            }
+        });
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         classeView.setLayoutParams(params);

@@ -8,6 +8,9 @@ import android.database.sqlite.SQLiteDatabase;
 import com.example.gestionpoints.models.dataBaseManager.baseHelper.BulletinBaseHelper;
 import com.example.gestionpoints.models.dataBaseManager.cursorWrapper.GradeWrapper;
 import com.example.gestionpoints.models.dataBaseManager.dbSchema.BulletinDBSchema.GradeTable;
+import com.example.gestionpoints.models.evaluation.Evaluation;
+import com.example.gestionpoints.models.grade.Grade;
+import com.example.gestionpoints.models.student.Student;
 
 import java.io.Serializable;
 
@@ -56,5 +59,14 @@ public class GradeManager implements Serializable {
         } finally {
             cursor.close();  // Assurez-vous de toujours fermer le curseur
         }
+    }
+
+    public void updateGrade(Grade grade,float gradeValue) {
+        mDatabase.update(
+                GradeTable.NAME,
+                getContentValues(grade.getEvaluationId(), grade.getStudentgId(), gradeValue),
+                GradeTable.Cols.EVALUATION_ID + " = ? AND " + GradeTable.Cols.STUDENT_ID + " = ?",
+                new String[]{String.valueOf(grade.getEvaluationId()), String.valueOf(grade.getStudentgId())}
+        );
     }
 }
