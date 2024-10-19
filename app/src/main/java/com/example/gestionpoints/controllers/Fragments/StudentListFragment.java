@@ -1,5 +1,6 @@
 package com.example.gestionpoints.controllers.Fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.gestionpoints.R;
 import com.example.gestionpoints.Utils.MarginUtils;
+import com.example.gestionpoints.controllers.OnItemClickListener;
 import com.example.gestionpoints.models.student.Student;
 
 import java.util.ArrayList;
@@ -24,7 +26,7 @@ public class StudentListFragment extends Fragment {
     private ArrayList<Student> students;
     private LinearLayout studentListContainer;
     LinearLayout learningActivitiesContainer;
-
+    private OnItemClickListener listener;
     // Méthode pour créer une nouvelle instance du fragment avec une liste d'étudiants
     public static StudentListFragment newInstance(ArrayList<Student> students) {
         StudentListFragment fragment = new StudentListFragment();
@@ -32,6 +34,16 @@ public class StudentListFragment extends Fragment {
         args.putSerializable(ARG_STUDENTS, students);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnItemClickListener) {
+            listener = (OnItemClickListener) context;
+        } else {
+            throw new RuntimeException(context.toString() + " doit implémenter BaseActivity.Listener");
+        }
     }
 
     @Override
@@ -69,6 +81,9 @@ public class StudentListFragment extends Fragment {
                 TextView fullNameTextView = studentItem.findViewById(R.id.studentFullNameTextView);
                 fullNameTextView.setText(student.getLastName() + " " + student.getFirstName());
 
+                studentItem.setOnClickListener((view) -> {
+                    listener.onItemClick(student);
+                });
                 // Ajouter la vue de l'étudiant au conteneur
                 studentListContainer.addView(studentItem);
             }

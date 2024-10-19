@@ -2,19 +2,21 @@ package com.example.gestionpoints.controllers.PointsActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.example.gestionpoints.controllers.BaseActivity;
 import com.example.gestionpoints.controllers.Fragments.StudentListFragment;
+import com.example.gestionpoints.controllers.OnItemClickListener;
 import com.example.gestionpoints.models.dataBaseManager.manager.StudentManager;
 import com.example.gestionpoints.models.evaluation.Evaluation;
 import com.example.gestionpoints.models.promotion.Promotion;
 import com.example.gestionpoints.models.student.Student;
 import java.util.ArrayList;
 
-public class StudentListForALearningActivity extends BaseActivity {
+public class StudentListForALearningActivity extends BaseActivity implements OnItemClickListener {
 
     private static final String KEY_PROMOTION = "key_promotion";
     private static final String KEY_LEARNING_ACTIVITY = "key_learning_activity";
@@ -65,5 +67,11 @@ public class StudentListForALearningActivity extends BaseActivity {
         // Sauvegarde des objets `promotion` et `learningActivity`
         outState.putSerializable(KEY_PROMOTION, promotion);
         outState.putSerializable(KEY_LEARNING_ACTIVITY, learningActivity);
+    }
+
+    @Override
+    public void onItemClick(Student student) {
+        Log.d("zzzzzzzzzzzz", "onItemClick: " + student.getFirstName());
+
     }
 }

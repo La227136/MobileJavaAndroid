@@ -14,7 +14,6 @@ import com.example.gestionpoints.R;
 import com.example.gestionpoints.models.dataBaseManager.manager.EvaluationManager;
 import com.example.gestionpoints.models.evaluation.Evaluation;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class EvaluationDetailsFragment extends Fragment {
@@ -77,7 +76,7 @@ public static EvaluationDetailsFragment newInstance(Evaluation evaluations) {
     }
 
     private void display(LayoutInflater inflater, Evaluation evaluation, int level) {
-        View classeView = inflater.inflate(R.layout.list_item_main_evaluation, learningActivitiesContainer, false);
+        View classeView = inflater.inflate(R.layout.list_item_evaluation_settings, learningActivitiesContainer, false);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         classeView.setLayoutParams(params);
