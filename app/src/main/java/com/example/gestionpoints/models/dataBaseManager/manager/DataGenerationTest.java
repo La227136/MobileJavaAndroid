@@ -67,5 +67,22 @@ public class DataGenerationTest {
         evaluationManager.addEvaluation(oralFlutterB3);
         evaluationManager.addEvaluation(ecritFlutterB3);
 
-    }
+        // Ajout des étudiants à BAC3
+        Student student1 = new Student( "Dupont", "Alice", promotion3);
+        Student student2 = new Student( "Martin", "Pierre", promotion3);
+        Student student3 = new Student( "Bernard", "Lucie", promotion3);
+
+        studentManager.addStudent(student1);
+        studentManager.addStudent(student2);
+        studentManager.addStudent(student3);
+
+        gradeManager.addGrade(7, 1, 15.5f); // Note de 15.5 pour Dupont Alice à l'évaluation ORALAndroidB3
+        gradeManager.addGrade(7, 2, 14.0f); // Note de 14.0 pour Martin Pierre à l'évaluation ORALAndroidB3
+        gradeManager.addGrade(7, 3, 16.5f); // Note de 16.5 pour Bernard Lucie à l'évaluation ORALAndroidB3
+
+        gradeManager.addGrade(8, 1, 13.0f); // Note de 13.0 pour Dupont Alice à l'évaluation ECRITAndroidB3
+        gradeManager.addGrade(8, 2, 15.0f); // Note de 15.0 pour Martin Pierre à l'évaluation ECRITAndroidB3
+        gradeManager.addGrade(8, 3, 14.5f); // Note de 14.5 pour Bernard Lucie à l'évaluation ECRITAndroidB3
+
+   }
 }
