@@ -53,4 +53,8 @@ public class Student implements Serializable {
     public int getId() {
         return mId;
     }
+
+    public int getPromotionId() {
+        return mPromotion.getId();
+    }
 }

@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.example.gestionpoints.models.dataBaseManager.baseHelper.BulletinBaseHelper;
 
@@ -91,11 +92,14 @@ public class StudentManager {
         ContentValues values = new ContentValues();
         values.put(StudentTable.Cols.LAST_NAME, student.getLastName());
         values.put(StudentTable.Cols.FIRST_NAME, student.getFirstName());
+        values.put(StudentTable.Cols.PROMOTION_ID, student.getPromotionId());
         return values;
     }
 
     public void addStudent(Student student) {
+
         mDatabase.insert(StudentTable.NAME, null, getContentValues(student));
+
     }
 
     public void updateStudent(Student student) {
