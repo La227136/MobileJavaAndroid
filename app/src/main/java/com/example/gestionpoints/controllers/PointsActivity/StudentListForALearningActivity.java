@@ -1,5 +1,6 @@
 package com.example.gestionpoints.controllers.PointsActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -71,7 +72,9 @@ public class StudentListForALearningActivity extends BaseActivity implements OnI
 
     @Override
     public void onItemClick(Student student) {
-        Log.d("zzzzzzzzzzzz", "onItemClick: " + student.getFirstName());
-
+        Intent intent = new Intent(getApplicationContext(), DisplayGradeOfStudentActivity.class);
+        intent.putExtra("student",student);
+        intent.putExtra("evaluation", learningActivity);
+        startActivity(intent);
     }
 }
