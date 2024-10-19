@@ -11,8 +11,10 @@ import androidx.fragment.app.Fragment;
 import com.example.gestionpoints.controllers.BaseActivity;
 import com.example.gestionpoints.controllers.Fragments.StudentListFragment;
 import com.example.gestionpoints.controllers.OnItemClickListener;
+import com.example.gestionpoints.models.dataBaseManager.manager.GradeManager;
 import com.example.gestionpoints.models.dataBaseManager.manager.StudentManager;
 import com.example.gestionpoints.models.evaluation.Evaluation;
+import com.example.gestionpoints.models.grade.Grade;
 import com.example.gestionpoints.models.promotion.Promotion;
 import com.example.gestionpoints.models.student.Student;
 import java.util.ArrayList;
@@ -21,14 +23,12 @@ public class StudentListForALearningActivity extends BaseActivity implements OnI
 
     private static final String KEY_PROMOTION = "key_promotion";
     private static final String KEY_LEARNING_ACTIVITY = "key_learning_activity";
-
     private Promotion promotion;
     private Evaluation learningActivity;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
 
         if (savedInstanceState != null) {
 
@@ -50,12 +50,12 @@ public class StudentListForALearningActivity extends BaseActivity implements OnI
         StudentManager studentManager = new StudentManager(this);
         ArrayList<Student> studentList = new ArrayList<>();
         studentList = studentManager.getStudentsForPromotion(promotion);
-        return StudentListFragment.newInstance(studentList);
+        return StudentListFragment.newInstance(studentList,learningActivity);
     }
 
     @Override
     public void setupFooter() {
-        // Pas de footer
+
     }
     @Override
     public String getTitlePage() {

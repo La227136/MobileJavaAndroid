@@ -9,7 +9,9 @@ import com.example.gestionpoints.models.dataBaseManager.baseHelper.BulletinBaseH
 import com.example.gestionpoints.models.dataBaseManager.cursorWrapper.GradeWrapper;
 import com.example.gestionpoints.models.dataBaseManager.dbSchema.BulletinDBSchema.GradeTable;
 
-public class GradeManager {
+import java.io.Serializable;
+
+public class GradeManager implements Serializable {
     private SQLiteDatabase mDatabase;
 
     public GradeManager(Context context) {

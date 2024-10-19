@@ -81,7 +81,7 @@ public class EvaluationPointsFragment extends Fragment {
         View classeView = inflater.inflate(R.layout.list_item_evaluation_points, displayGradeContainer, false);
         retrieveView(classeView);
         evaluationName.setText(evaluation.getName());
-        grade = new Grade(student, evaluation,gradeManager.getGrade(evaluation.getId(),student.getId()));
+        grade = new Grade(student, evaluation,gradeManager.getGrade(evaluation.getId(),student.getId()),gradeManager);
         gradeEditText.setText(String.valueOf(grade.calculGrade()));
 
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(

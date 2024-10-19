@@ -71,8 +71,7 @@ public class EvaluationManager {
             cursorWrapper.moveToFirst();
 
             while (!cursorWrapper.isAfterLast()) {
-
-                evaluations.add(cursorWrapper.getEvaluation());
+                evaluations.add(new Evaluation(cursorWrapper.getEvaluation(), getEvaluationForParentEvaluation(cursorWrapper.getEvaluation())));
                 cursorWrapper.moveToNext();
             }
         } finally {

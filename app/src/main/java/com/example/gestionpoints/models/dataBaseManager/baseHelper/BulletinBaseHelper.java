@@ -12,7 +12,7 @@ import com.example.gestionpoints.models.dataBaseManager.manager.DataGenerationTe
 
 public class BulletinBaseHelper extends SQLiteOpenHelper {
     private static final int VERSION = 1;
-    private static final String DATABASE_NAME = "qsdqwqsdbulletinDataBase.db";
+    private static final String DATABASE_NAME = "qsdqjwqsdbulletinDataBase.db";
     private Context mContext;
 
     public BulletinBaseHelper(Context context) {

@@ -16,6 +16,9 @@ import androidx.fragment.app.Fragment;
 import com.example.gestionpoints.R;
 import com.example.gestionpoints.Utils.MarginUtils;
 import com.example.gestionpoints.controllers.OnItemClickListener;
+import com.example.gestionpoints.models.dataBaseManager.manager.GradeManager;
+import com.example.gestionpoints.models.evaluation.Evaluation;
+import com.example.gestionpoints.models.grade.Grade;
 import com.example.gestionpoints.models.student.Student;
 
 import java.util.ArrayList;
@@ -27,17 +30,21 @@ public class StudentListFragment extends Fragment {
     private LinearLayout studentListContainer;
     LinearLayout learningActivitiesContainer;
     private OnItemClickListener listener;
+    private GradeManager gradeManager;
+    private Evaluation learningActivity;
     // Méthode pour créer une nouvelle instance du fragment avec une liste d'étudiants
-    public static StudentListFragment newInstance(ArrayList<Student> students) {
+    public static StudentListFragment newInstance(ArrayList<Student> students, Evaluation learningActivity) {
         StudentListFragment fragment = new StudentListFragment();
         Bundle args = new Bundle();
         args.putSerializable(ARG_STUDENTS, students);
+        args.putSerializable("learningActivity",learningActivity);
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onAttach(Context context) {
+
         super.onAttach(context);
         if (context instanceof OnItemClickListener) {
             listener = (OnItemClickListener) context;
@@ -48,12 +55,14 @@ public class StudentListFragment extends Fragment {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
+        gradeManager = new GradeManager(getContext());
         super.onCreate(savedInstanceState);
         if (students == null) {
             students = new ArrayList<>();
         }
         if (getArguments() != null) {
             students = (ArrayList<Student>) getArguments().getSerializable(ARG_STUDENTS);
+            learningActivity = (Evaluation) getArguments().getSerializable("learningActivity");
         }
     }
 
@@ -79,6 +88,8 @@ public class StudentListFragment extends Fragment {
                  MarginUtils.setMargin(studentItem);
                 // Configurer les informations de chaque étudiant
                 TextView fullNameTextView = studentItem.findViewById(R.id.studentFullNameTextView);
+                TextView studentIdTextView = studentItem.findViewById(R.id.studentGradeTextView);
+                studentIdTextView.setText(String.valueOf(gradeManager.getGrade(learningActivity.getId(),student.getId())));
                 fullNameTextView.setText(student.getLastName() + " " + student.getFirstName());
 
                 studentItem.setOnClickListener((view) -> {
