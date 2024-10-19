@@ -24,33 +24,6 @@ public class EvaluationManager {
     }
 
 
-    public ArrayList<Evaluation> getAllEvaluations() {
-        ArrayList<Evaluation> evaluations = new ArrayList<>();
-
-        Cursor cursor = mDatabase.query(
-                EvaluationTable.NAME,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-        );
-
-        EvaluationCursorWrapper cursorWrapper = new EvaluationCursorWrapper(cursor);
-
-        try {
-            cursorWrapper.moveToFirst();
-            while (!cursorWrapper.isAfterLast()) {
-                evaluations.add(cursorWrapper.getEvaluation());
-                cursorWrapper.moveToNext();
-            }
-        } finally {
-            cursorWrapper.close();
-        }
-
-        return evaluations;
-    }
 
     public ArrayList<Evaluation> getEvaluationsForPromotion(Promotion promotion) {
         ArrayList<Evaluation> evaluations = new ArrayList<>();
@@ -153,11 +126,31 @@ public class EvaluationManager {
                 new String[]{String.valueOf(evaluation.getId())});
     }
 
-
     public void deleteEvaluation(Evaluation evaluation) {
-        mDatabase.delete(EvaluationTable.NAME,
-                EvaluationTable.Cols.ID + " = ?",
-                new String[]{String.valueOf(evaluation.getId())});
+        mDatabase.beginTransaction();
+        try {
+            List<Evaluation> descendants = new ArrayList<>();
+            getAllDescendants(evaluation, descendants);
+            descendants.add(evaluation);
+            for (Evaluation child : descendants) {
+                mDatabase.delete(EvaluationTable.NAME,
+                        EvaluationTable.Cols.ID + " = ?",
+                        new String[]{String.valueOf(child.getId())});
+            }
+
+            mDatabase.setTransactionSuccessful();
+        } finally {
+            mDatabase.endTransaction();
+        }
+    }
+
+
+    private void getAllDescendants(Evaluation evaluation, List<Evaluation> descendants) {
+         List<Evaluation> children = getEvaluationForParentEvaluation(evaluation);
+        for (Evaluation child : children) {
+            descendants.add(child);
+            getAllDescendants(child, descendants);
+        }
     }
 
 
