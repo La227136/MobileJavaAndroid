@@ -2,6 +2,7 @@ package com.example.gestionpoints.controllers.PointsActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.fragment.app.Fragment;
@@ -49,9 +50,10 @@ public class LearningActivitiesPointsActivity extends BaseActivity implements On
 
 
     @Override
-    public void onItemClick(View view, Evaluation evaluation) {
-//        Intent intent = new Intent(, StudentListForALearningActivity.class);
-//        intent.putExtra("promotion", promotion);
-//        startActivity(intent);
+    public void onItemClick(View view, Evaluation learningActivity) {
+        Intent intent = new Intent(getApplicationContext(), StudentListForALearningActivity.class);
+        intent.putExtra("promotion", promotion);
+        intent.putExtra("evaluation", learningActivity);
+        startActivity(intent);
     }
 }

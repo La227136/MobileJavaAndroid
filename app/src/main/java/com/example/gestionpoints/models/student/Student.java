@@ -5,7 +5,7 @@ import com.example.gestionpoints.models.promotion.Promotion;
 import java.io.Serializable;
 import java.util.List;
 
-public class Student {
+public class Student implements Serializable {
     public Student(int id, String lastName, String firstName, int promotionId) {
          mId = id;
         mLastName = lastName;
