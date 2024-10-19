@@ -1,24 +1,22 @@
-package com.example.gestionpoints.controllers.PointsActivity;
+package com.example.gestionpoints.controllers.Activities.GradeActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.gestionpoints.controllers.BaseActivity;
-import com.example.gestionpoints.controllers.Fragments.LearningActivitesFragment;
+import com.example.gestionpoints.controllers.Activities.BaseActivity;
+import com.example.gestionpoints.controllers.Fragments.CommunLearningActivitesFragment;
 import com.example.gestionpoints.controllers.OnItemClickListener;
 import com.example.gestionpoints.models.dataBaseManager.manager.EvaluationManager;
-import com.example.gestionpoints.models.dataBaseManager.manager.PromotionManager;
 import com.example.gestionpoints.models.evaluation.Evaluation;
 import com.example.gestionpoints.models.promotion.Promotion;
 
 import java.util.ArrayList;
 
 
-public class LearningActivitiesPointsActivity extends BaseActivity implements OnItemClickListener {
+public class GradeLearningActivitiesActivity extends BaseActivity implements OnItemClickListener {
     private Promotion promotion;
     private EvaluationManager evaluationManager;
     private ArrayList<Evaluation> learningActivities = new ArrayList<>();
@@ -45,13 +43,13 @@ public class LearningActivitiesPointsActivity extends BaseActivity implements On
 
     @Override
     public Fragment getMiddleFragmentToLaunch() {
-        return LearningActivitesFragment.newInstance(promotion, learningActivities);
+        return CommunLearningActivitesFragment.newInstance(promotion, learningActivities);
     }
 
 
     @Override
     public void onItemClick(View view, Evaluation learningActivity) {
-        Intent intent = new Intent(getApplicationContext(), StudentListForALearningActivity.class);
+        Intent intent = new Intent(getApplicationContext(), GradeStudentListForALearningActivity.class);
         intent.putExtra("promotion", promotion);
         intent.putExtra("evaluation", learningActivity);
         startActivity(intent);

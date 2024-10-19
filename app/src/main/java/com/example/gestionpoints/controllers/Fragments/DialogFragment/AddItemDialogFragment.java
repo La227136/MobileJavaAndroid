@@ -1,4 +1,4 @@
-package com.example.gestionpoints.controllers.Fragments;
+package com.example.gestionpoints.controllers.Fragments.DialogFragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

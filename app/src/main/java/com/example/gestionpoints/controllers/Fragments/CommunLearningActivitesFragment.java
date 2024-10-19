@@ -3,27 +3,24 @@ package com.example.gestionpoints.controllers.Fragments;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
 import com.example.gestionpoints.R;
 import com.example.gestionpoints.Utils.MarginUtils;
 import com.example.gestionpoints.controllers.OnItemClickListener;
-import com.example.gestionpoints.models.dataBaseManager.manager.EvaluationManager;
 import com.example.gestionpoints.models.evaluation.Evaluation;
 import com.example.gestionpoints.models.promotion.Promotion;
 
 import java.util.List;
 
 
-public class LearningActivitesFragment extends Fragment {
+public class CommunLearningActivitesFragment extends Fragment {
 
     private static final String ARG_PROMOTION = "promotion";
     private Promotion promotion;
@@ -32,8 +29,8 @@ public class LearningActivitesFragment extends Fragment {
     private List<Evaluation> learningActivities;
     private boolean isLongClick = false;  // Variable pour éviter que les deux événements se déclenchent
 
-    public static LearningActivitesFragment newInstance(Promotion promotion,List<Evaluation> learningActivities) {
-        LearningActivitesFragment fragment = new LearningActivitesFragment();
+    public static CommunLearningActivitesFragment newInstance(Promotion promotion, List<Evaluation> learningActivities) {
+        CommunLearningActivitesFragment fragment = new CommunLearningActivitesFragment();
         Bundle args = new Bundle();
         args.putSerializable(ARG_PROMOTION, promotion);
         args.putSerializable("learningActivities", (java.io.Serializable) learningActivities);

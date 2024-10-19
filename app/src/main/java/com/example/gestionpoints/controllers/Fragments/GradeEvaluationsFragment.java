@@ -22,7 +22,7 @@ import com.example.gestionpoints.models.student.Student;
 
 import java.util.List;
 
-public class EvaluationPointsFragment extends Fragment {
+public class GradeEvaluationsFragment extends Fragment {
     private static final String ARG_EVALUATION = "evaluation";
     private static final String ARG_STUDENT = "student";
     private GradeManager gradeManager;
@@ -35,8 +35,8 @@ public class EvaluationPointsFragment extends Fragment {
     private EditText gradeEditText;
     private Grade grade;
 
-    public static EvaluationPointsFragment newInstance(Student student, Evaluation learningActivity) {
-        EvaluationPointsFragment fragment = new EvaluationPointsFragment();
+    public static GradeEvaluationsFragment newInstance(Student student, Evaluation learningActivity) {
+        GradeEvaluationsFragment fragment = new GradeEvaluationsFragment();
         Bundle args = new Bundle();
         args.putSerializable(ARG_EVALUATION, learningActivity);
         args.putSerializable(ARG_STUDENT, student);

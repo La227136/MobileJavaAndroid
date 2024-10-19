@@ -1,4 +1,4 @@
-package com.example.gestionpoints.controllers.Fragments;
+package com.example.gestionpoints.controllers.Fragments.DialogFragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,8 +11,6 @@ import androidx.annotation.Nullable;
 
 import com.example.gestionpoints.R;
 import com.example.gestionpoints.models.evaluation.Evaluation;
-
-import java.util.List;
 
 public class AddEvaluationDialogFragment extends AddItemDialogFragment<Evaluation> {
     private Integer parentId;

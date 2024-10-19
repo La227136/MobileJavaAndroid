@@ -16,7 +16,7 @@ import com.example.gestionpoints.models.evaluation.Evaluation;
 
 import java.util.List;
 
-public class EvaluationDetailsFragment extends Fragment {
+public class SettingsEvaluationsFragment extends Fragment {
 
     private static final String ARG_EVALUATION = "evaluation";
     private Evaluation learningActivity;
@@ -29,8 +29,8 @@ public class EvaluationDetailsFragment extends Fragment {
     }
     private AddSubEvaluationListener listener;
 
-public static EvaluationDetailsFragment newInstance(Evaluation evaluations) {
-        EvaluationDetailsFragment fragment = new EvaluationDetailsFragment();
+public static SettingsEvaluationsFragment newInstance(Evaluation evaluations) {
+        SettingsEvaluationsFragment fragment = new SettingsEvaluationsFragment();
         Bundle args = new Bundle();
         args.putSerializable(ARG_EVALUATION, evaluations);
         fragment.setArguments(args);

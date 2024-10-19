@@ -1,21 +1,15 @@
-package com.example.gestionpoints.controllers.PointsActivity;
+package com.example.gestionpoints.controllers.Activities.GradeActivity;
 
 import android.os.Bundle;
 
-import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 
-import com.example.gestionpoints.R;
-import com.example.gestionpoints.controllers.BaseActivity;
-import com.example.gestionpoints.controllers.Fragments.EvaluationPointsFragment;
+import com.example.gestionpoints.controllers.Activities.BaseActivity;
+import com.example.gestionpoints.controllers.Fragments.GradeEvaluationsFragment;
 import com.example.gestionpoints.models.evaluation.Evaluation;
 import com.example.gestionpoints.models.student.Student;
 
-public class DisplayGradeOfStudentActivity extends BaseActivity {
+public class GradeSingleStudentActivity extends BaseActivity {
 private Student student;
 private Evaluation learningActivity;
     @Override
@@ -27,7 +21,7 @@ private Evaluation learningActivity;
 
     @Override
     public Fragment getMiddleFragmentToLaunch() {
-        return EvaluationPointsFragment.newInstance(student, learningActivity);
+        return GradeEvaluationsFragment.newInstance(student, learningActivity);
     }
 
     @Override

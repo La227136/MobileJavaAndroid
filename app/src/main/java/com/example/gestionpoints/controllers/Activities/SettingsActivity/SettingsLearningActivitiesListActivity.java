@@ -1,17 +1,16 @@
-package com.example.gestionpoints.controllers.SettingsActivity;
+package com.example.gestionpoints.controllers.Activities.SettingsActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import androidx.fragment.app.Fragment;
 
 import com.example.gestionpoints.R;
-import com.example.gestionpoints.controllers.BaseActivity;
-import com.example.gestionpoints.controllers.Fragments.AddLearningActivitiesDialogFragment;
+import com.example.gestionpoints.controllers.Activities.BaseActivity;
+import com.example.gestionpoints.controllers.Fragments.DialogFragment.AddLearningActivitiesDialogFragment;
 import com.example.gestionpoints.controllers.Fragments.FooterFragment;
-import com.example.gestionpoints.controllers.Fragments.LearningActivitesFragment;
+import com.example.gestionpoints.controllers.Fragments.CommunLearningActivitesFragment;
 import com.example.gestionpoints.controllers.OnItemClickListener;
 import com.example.gestionpoints.models.dataBaseManager.manager.EvaluationManager;
 import com.example.gestionpoints.models.evaluation.Evaluation;
@@ -19,7 +18,7 @@ import com.example.gestionpoints.models.promotion.Promotion;
 
 import java.util.ArrayList;
 
-public class LearningActivitiesSettingsActivity extends BaseActivity implements FooterFragment.FooterListener, OnItemClickListener {
+public class SettingsLearningActivitiesListActivity extends BaseActivity implements FooterFragment.FooterListener, OnItemClickListener {
 
     private EvaluationManager evaluationManager;
     private Promotion promotion;
@@ -50,7 +49,7 @@ public class LearningActivitiesSettingsActivity extends BaseActivity implements 
 
     @Override
     public Fragment getMiddleFragmentToLaunch() {
-        return LearningActivitesFragment.newInstance(promotion, learningActivities);
+        return CommunLearningActivitesFragment.newInstance(promotion, learningActivities);
     }
 
 
@@ -82,13 +81,13 @@ public class LearningActivitiesSettingsActivity extends BaseActivity implements 
 
     private void replaceFragement(Promotion promotion) {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.middlePageContainer, LearningActivitesFragment.newInstance(promotion, learningActivities))
+                .replace(R.id.middlePageContainer, CommunLearningActivitesFragment.newInstance(promotion, learningActivities))
                 .commit();
     }
 
     @Override
     public void onItemClick(View view, Evaluation evaluation) {
-        Intent evalDetailsSettingsActivity = new Intent(getApplicationContext(), EvaluationsSettingsActivity.class);
+        Intent evalDetailsSettingsActivity = new Intent(getApplicationContext(), SettingsEvaluationsActivity.class);
         evalDetailsSettingsActivity.putExtra("evaluation", evaluation);
         startActivity(evalDetailsSettingsActivity);
     }

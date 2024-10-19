@@ -2,7 +2,6 @@ package com.example.gestionpoints.controllers.Fragments;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,16 +10,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import android.Manifest;
-import com.example.gestionpoints.R;
-import com.example.gestionpoints.controllers.OnItemClickListener;
-import com.example.gestionpoints.models.promotion.Promotion;
-import com.example.gestionpoints.models.student.Student;
 
-public class StudentFragment extends Fragment {
+import com.example.gestionpoints.R;
+import com.example.gestionpoints.models.promotion.Promotion;
+
+public class AddStudentsFragment extends Fragment {
     public interface Listener {
         void onStudentListAdded(String csvText);
         void onStudentAdded(String lastName, String surFirstName, Promotion promotion);
@@ -38,8 +33,8 @@ public class StudentFragment extends Fragment {
     private static final int REQUEST_STORAGE_PERMISSION = 100; // Code pour demander la permission
 
 
-    public static StudentFragment newInstance(Promotion promotion) {
-        StudentFragment fragment = new StudentFragment();
+    public static AddStudentsFragment newInstance(Promotion promotion) {
+        AddStudentsFragment fragment = new AddStudentsFragment();
         Bundle args = new Bundle();
         args.putSerializable(ARG_PROMOTION, promotion);
         fragment.setArguments(args);

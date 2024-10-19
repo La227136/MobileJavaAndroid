@@ -1,11 +1,9 @@
 package com.example.gestionpoints.controllers.Fragments;
 
-import android.media.Image;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -15,9 +13,9 @@ import androidx.fragment.app.Fragment;
 
 import com.example.gestionpoints.R;
 import com.example.gestionpoints.Utils.MarginUtils;
-import com.example.gestionpoints.controllers.Fragments.StudentActivity.StudentActivity;
-import com.example.gestionpoints.controllers.SettingsActivity.LearningActivitiesSettingsActivity;
-import com.example.gestionpoints.controllers.PointsActivity.LearningActivitiesPointsActivity;
+import com.example.gestionpoints.controllers.Activities.AddStudentsActivity.AddStudentsActivity;
+import com.example.gestionpoints.controllers.Activities.SettingsActivity.SettingsLearningActivitiesListActivity;
+import com.example.gestionpoints.controllers.Activities.GradeActivity.GradeLearningActivitiesActivity;
 import com.example.gestionpoints.models.promotion.Promotion;
 
 import java.util.ArrayList;
@@ -67,9 +65,9 @@ public class PromotionListFragment extends Fragment {
         retrieveView(promotionItem);
         MarginUtils.setMargin(promotionItem);
         promotionLevelTextView.setText(promotion.getName());
-        setBtnListeners(evalBtn, promotion, LearningActivitiesSettingsActivity.class);
-        setBtnListeners(pointsBtn, promotion, LearningActivitiesPointsActivity.class);
-        setBtnListeners(studensBtn, promotion, StudentActivity.class);
+        setBtnListeners(evalBtn, promotion, SettingsLearningActivitiesListActivity.class);
+        setBtnListeners(pointsBtn, promotion, GradeLearningActivitiesActivity.class);
+        setBtnListeners(studensBtn, promotion, AddStudentsActivity.class);
         return promotionItem;
     }
 

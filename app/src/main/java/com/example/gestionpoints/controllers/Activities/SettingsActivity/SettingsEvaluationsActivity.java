@@ -1,24 +1,21 @@
-package com.example.gestionpoints.controllers.SettingsActivity;
+package com.example.gestionpoints.controllers.Activities.SettingsActivity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import androidx.fragment.app.Fragment;
 
 import com.example.gestionpoints.R;
-import com.example.gestionpoints.controllers.BaseActivity;
-import com.example.gestionpoints.controllers.Fragments.AddEvaluationDialogFragment;
-import com.example.gestionpoints.controllers.Fragments.EvaluationDetailsFragment;
+import com.example.gestionpoints.controllers.Activities.BaseActivity;
+import com.example.gestionpoints.controllers.Fragments.DialogFragment.AddEvaluationDialogFragment;
+import com.example.gestionpoints.controllers.Fragments.SettingsEvaluationsFragment;
 import com.example.gestionpoints.controllers.Fragments.FooterFragment;
 import com.example.gestionpoints.models.dataBaseManager.manager.EvaluationManager;
-import com.example.gestionpoints.models.dataBaseManager.manager.PromotionManager;
 import com.example.gestionpoints.models.evaluation.Evaluation;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class EvaluationsSettingsActivity extends BaseActivity implements FooterFragment.FooterListener, EvaluationDetailsFragment.AddSubEvaluationListener {
+public class SettingsEvaluationsActivity extends BaseActivity implements FooterFragment.FooterListener, SettingsEvaluationsFragment.AddSubEvaluationListener {
 
     private Evaluation learningActivity;
     private EvaluationManager evaluationManager;
@@ -40,7 +37,7 @@ public class EvaluationsSettingsActivity extends BaseActivity implements FooterF
 
     @Override
     public Fragment getMiddleFragmentToLaunch() {
-        return EvaluationDetailsFragment.newInstance(learningActivity);
+        return SettingsEvaluationsFragment.newInstance(learningActivity);
     }
 
     @Override
@@ -84,7 +81,7 @@ public class EvaluationsSettingsActivity extends BaseActivity implements FooterF
 
     private void replaceFragment() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.middlePageContainer, EvaluationDetailsFragment.newInstance(learningActivity))
+                .replace(R.id.middlePageContainer, SettingsEvaluationsFragment.newInstance(learningActivity))
                 .commit();
     }
 }

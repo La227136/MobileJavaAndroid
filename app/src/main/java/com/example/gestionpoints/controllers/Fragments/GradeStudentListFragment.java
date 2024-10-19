@@ -2,7 +2,6 @@ package com.example.gestionpoints.controllers.Fragments;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,12 +17,11 @@ import com.example.gestionpoints.Utils.MarginUtils;
 import com.example.gestionpoints.controllers.OnItemClickListener;
 import com.example.gestionpoints.models.dataBaseManager.manager.GradeManager;
 import com.example.gestionpoints.models.evaluation.Evaluation;
-import com.example.gestionpoints.models.grade.Grade;
 import com.example.gestionpoints.models.student.Student;
 
 import java.util.ArrayList;
 
-public class StudentListFragment extends Fragment {
+public class GradeStudentListFragment extends Fragment {
 
     private static final String ARG_STUDENTS = "students";
     private ArrayList<Student> students;
@@ -33,8 +31,8 @@ public class StudentListFragment extends Fragment {
     private GradeManager gradeManager;
     private Evaluation learningActivity;
     // Méthode pour créer une nouvelle instance du fragment avec une liste d'étudiants
-    public static StudentListFragment newInstance(ArrayList<Student> students, Evaluation learningActivity) {
-        StudentListFragment fragment = new StudentListFragment();
+    public static GradeStudentListFragment newInstance(ArrayList<Student> students, Evaluation learningActivity) {
+        GradeStudentListFragment fragment = new GradeStudentListFragment();
         Bundle args = new Bundle();
         args.putSerializable(ARG_STUDENTS, students);
         args.putSerializable("learningActivity",learningActivity);

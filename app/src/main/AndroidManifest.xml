@@ -14,13 +14,13 @@
         android:theme="@style/Theme.GestionPoints"
         tools:targetApi="31">
         <activity
-            android:name=".controllers.PointsActivity.DisplayGradeOfStudentActivity"
+            android:name=".controllers.Activities.GradeActivity.GradeSingleStudentActivity"
             android:exported="false" />
         <activity
-            android:name=".controllers.PointsActivity.StudentListForALearningActivity"
+            android:name=".controllers.Activities.GradeActivity.GradeStudentListForALearningActivity"
             android:exported="false" />
         <activity
-            android:name=".controllers.PromotionsActivity"
+            android:name=".controllers.Activities.PromotionsActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,16 +29,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".controllers.SettingsActivity.LearningActivitiesSettingsActivity"
+            android:name=".controllers.Activities.SettingsActivity.SettingsLearningActivitiesListActivity"
             android:exported="true" />
         <activity
-            android:name=".controllers.PointsActivity.LearningActivitiesPointsActivity"
+            android:name=".controllers.Activities.GradeActivity.GradeLearningActivitiesActivity"
             android:exported="true" />
         <activity
-            android:name=".controllers.SettingsActivity.EvaluationsSettingsActivity"
+            android:name=".controllers.Activities.SettingsActivity.SettingsEvaluationsActivity"
             android:exported="true" />
         <activity
-            android:name=".controllers.Fragments.StudentActivity.StudentActivity"
+            android:name=".controllers.Activities.AddStudentsActivity.AddStudentsActivity"
             android:exported="true" />
     </application>
 

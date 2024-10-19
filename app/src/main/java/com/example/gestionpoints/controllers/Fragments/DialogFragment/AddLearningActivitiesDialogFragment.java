@@ -1,17 +1,5 @@
-package com.example.gestionpoints.controllers.Fragments;
+package com.example.gestionpoints.controllers.Fragments.DialogFragment;
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
-
-import com.example.gestionpoints.R;
 import com.example.gestionpoints.models.evaluation.Evaluation;
 
 public class AddLearningActivitiesDialogFragment extends AddItemDialogFragment<Evaluation> {

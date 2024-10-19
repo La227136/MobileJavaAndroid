@@ -1,4 +1,4 @@
-package com.example.gestionpoints.controllers;
+package com.example.gestionpoints.controllers.Activities;
 
 import android.os.Bundle;
 import android.widget.TextView;

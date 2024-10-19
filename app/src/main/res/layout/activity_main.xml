@@ -5,7 +5,7 @@
     android:id="@+id/learningActivityActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".controllers.PromotionsActivity">
+    tools:context=".controllers.Activities.PromotionsActivity">
 
     <!-- TextView en haut de la page pour le titre -->
     <TextView

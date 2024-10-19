@@ -1,30 +1,31 @@
-package com.example.gestionpoints.controllers;
+package com.example.gestionpoints.controllers.Activities;
 
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.fragment.app.Fragment;
 
 import com.example.gestionpoints.R;
-import com.example.gestionpoints.controllers.Fragments.AddPromotionDialogFragment;
+import com.example.gestionpoints.controllers.Fragments.DialogFragment.AddPromotionDialogFragment;
 import com.example.gestionpoints.controllers.Fragments.FooterFragment;
 import com.example.gestionpoints.controllers.Fragments.PromotionListFragment;
 import com.example.gestionpoints.models.dataBaseManager.manager.DataGenerationTest;
 import com.example.gestionpoints.models.dataBaseManager.manager.PromotionManager;
-import com.example.gestionpoints.models.evaluation.Evaluation;
 import com.example.gestionpoints.models.promotion.Promotion;
 
 import java.util.ArrayList;
 
 public class PromotionsActivity extends BaseActivity implements FooterFragment.FooterListener {
+
+
+
     ArrayList<Promotion> promotions;
     PromotionManager promotionManager;
 
-    //
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // DataGenerationTest testDataGenerator = new DataGenerationTest(this);
-         //testDataGenerator.generateTestData();
+          //DataGenerationTest testDataGenerator = new DataGenerationTest(this);
+          //testDataGenerator.generateTestData();
+
         promotionManager = new PromotionManager(this);
         if (savedInstanceState != null) {
             promotions = (ArrayList<Promotion>) savedInstanceState.getSerializable("promotions");

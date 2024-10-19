@@ -1,23 +1,23 @@
-package com.example.gestionpoints.controllers.Fragments.StudentActivity;
+package com.example.gestionpoints.controllers.Activities.AddStudentsActivity;
 
 import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.gestionpoints.controllers.BaseActivity;
-import com.example.gestionpoints.controllers.Fragments.StudentFragment;
+import com.example.gestionpoints.controllers.Activities.BaseActivity;
+import com.example.gestionpoints.controllers.Fragments.AddStudentsFragment;
 import com.example.gestionpoints.models.dataBaseManager.manager.StudentManager;
 import com.example.gestionpoints.models.promotion.Promotion;
 import com.example.gestionpoints.models.student.Student;
 
-public class StudentActivity extends BaseActivity implements StudentFragment.Listener {
+public class AddStudentsActivity extends BaseActivity implements AddStudentsFragment.Listener {
     private Promotion promotion;
     private StudentManager studentManager;
 
     @Override
     public Fragment getMiddleFragmentToLaunch() {
-        return StudentFragment.newInstance(promotion);
+        return AddStudentsFragment.newInstance(promotion);
     }
 
     @Override
