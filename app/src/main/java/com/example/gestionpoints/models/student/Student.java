@@ -3,7 +3,7 @@ package com.example.gestionpoints.models.student;
 import java.io.Serializable;
 import java.util.List;
 
-public class Student {
+public class Student implements Serializable {
     public String getLastName() {
         return mLastName;
     }

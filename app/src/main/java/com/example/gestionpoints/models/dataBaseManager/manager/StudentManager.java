@@ -10,6 +10,7 @@ import com.example.gestionpoints.models.dataBaseManager.baseHelper.BulletinBaseH
 import com.example.gestionpoints.models.dataBaseManager.cursorWrapper.StudentCursorWrapper;
 import com.example.gestionpoints.models.dataBaseManager.dbSchema.BulletinDBSchema.StudentTable;
 import com.example.gestionpoints.models.dataBaseManager.dbSchema.BulletinDBSchema;
+import com.example.gestionpoints.models.promotion.Promotion;
 import com.example.gestionpoints.models.student.Student;
 
 
@@ -53,6 +54,38 @@ public class StudentManager {
         return students;
 
     }
+
+    public ArrayList<Student> getStudentsForPromotion(Promotion promotion) {
+        ArrayList<Student> students = new ArrayList<>();
+
+        String selection = StudentTable.Cols.PROMOTION_ID + " = ?";
+        String[] selectionArgs = {String.valueOf(promotion.getId())};
+
+        Cursor cursor = mDatabase.query(
+                BulletinDBSchema.StudentTable.NAME,
+                null, // Toutes les colonnes
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+
+        StudentCursorWrapper cursorWrapper = new StudentCursorWrapper(cursor);
+
+        try {
+            cursorWrapper.moveToFirst();
+            while (!cursorWrapper.isAfterLast()) {
+                students.add(cursorWrapper.getStudent());
+                cursorWrapper.moveToNext();
+            }
+        } finally {
+            cursorWrapper.close();
+        }
+
+        return students;
+    }
+
 
     private ContentValues getContentValues(Student student) {
         ContentValues values = new ContentValues();
