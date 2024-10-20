@@ -12,9 +12,6 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.example.gestionpoints.R;
-import com.example.gestionpoints.controllers.Activities.AddStudentsActivity.AddStudentsActivity;
-import com.example.gestionpoints.controllers.Activities.SettingsActivity.SettingsLearningActivitiesListActivity;
-import com.example.gestionpoints.controllers.Activities.GradeActivity.GradeLearningActivitiesActivity;
 import com.example.gestionpoints.models.promotion.Promotion;
 
 import java.util.ArrayList;
@@ -26,14 +23,16 @@ public class PromotionListFragment extends Fragment {
     private List<Promotion> promotionList;
     private LinearLayout promotionListContainer;
     private TextView promotionLevelTextView;
-    private ImageButton evalBtn;
-    private ImageButton pointsBtn;
+    private ImageButton settingBtn;
+    private ImageButton gradeBtn;
     private ImageButton addStudentsBtn;
     private Listener listener;
 
     public interface Listener {
         void onPromotionLongClicked(Promotion promotion);
-        void setBtnListener(Promotion promotion, Class<?> targetActivity);
+        void setOnClickSettingBtn(Promotion promotion);
+        void setOnClickGradeBtn(Promotion promotion);
+        void setOnClickAddStudentsBtn(Promotion promotion);
     }
     @Override
     public void onAttach(Context context) {
@@ -86,8 +85,8 @@ public class PromotionListFragment extends Fragment {
 
     private void retrieveView(View classeView) {
         promotionLevelTextView = classeView.findViewById(R.id.promotionsTextView);
-        evalBtn = classeView.findViewById(R.id.evalBtn);
-        pointsBtn = classeView.findViewById(R.id.pointsBtn);
+        settingBtn = classeView.findViewById(R.id.evalBtn);
+        gradeBtn = classeView.findViewById(R.id.pointsBtn);
         addStudentsBtn = classeView.findViewById(R.id.addEtudiant);
     }
 
@@ -97,28 +96,20 @@ public class PromotionListFragment extends Fragment {
     }
 
     private void setListeners(Promotion promotion, View promotionItem) {
-        setLongClicklistener(promotion, promotionItem);
-        setBtnClickListeners(evalBtn, promotion, SettingsLearningActivitiesListActivity.class);
-        setBtnClickListeners(pointsBtn, promotion, GradeLearningActivitiesActivity.class);
-        setBtnClickListeners(addStudentsBtn, promotion, AddStudentsActivity.class);
+        setLongClickListener(promotion, promotionItem);
+        settingBtn.setOnClickListener(v -> listener.setOnClickSettingBtn(promotion));
+        gradeBtn.setOnClickListener(v -> listener.setOnClickGradeBtn(promotion));
+        addStudentsBtn.setOnClickListener(v -> listener.setOnClickAddStudentsBtn(promotion));
     }
 
-    private  void setLongClicklistener(Promotion promotion, View promotionItem) {
+    private  void setLongClickListener(Promotion promotion, View promotionItem) {
         promotionItem.setOnLongClickListener(v -> {
-            if (listener != null) {
-                listener.onPromotionLongClicked(promotion);
-                promotionItem.setSelected(promotion.isSelected());
-            }
-
+            listener.onPromotionLongClicked(promotion);
+            promotionItem.setSelected(promotion.isSelected());
             return true;
         });
     }
 
-    private void setBtnClickListeners(ImageButton button, Promotion promotion, Class<?> targetActivity) {
-        button.setOnClickListener(v -> {
-            listener.setBtnListener(promotion, targetActivity);
-        });
-    }
 
 
 }

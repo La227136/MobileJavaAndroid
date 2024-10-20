@@ -7,6 +7,9 @@ import android.util.Log;
 import androidx.fragment.app.Fragment;
 
 import com.example.gestionpoints.R;
+import com.example.gestionpoints.controllers.Activities.AddStudentsActivity.AddStudentsActivity;
+import com.example.gestionpoints.controllers.Activities.GradeActivity.GradeLearningActivitiesActivity;
+import com.example.gestionpoints.controllers.Activities.SettingsActivity.SettingsLearningActivitiesListActivity;
 import com.example.gestionpoints.controllers.Fragments.DialogFragment.AddPromotionDialogFragment;
 import com.example.gestionpoints.controllers.Fragments.FooterFragment;
 import com.example.gestionpoints.controllers.Fragments.PromotionListFragment;
@@ -97,8 +100,21 @@ public class PromotionsActivity extends BaseActivity implements FooterFragment.F
     }
 
     @Override
-    public void setBtnListener(Promotion promotion, Class<?> targetActivity) {
-        Intent intent = new Intent(getApplicationContext(), targetActivity);
+    public void setOnClickSettingBtn(Promotion promotion) {
+        Intent intent = new Intent(this, SettingsLearningActivitiesListActivity.class);
+        intent.putExtra("promotion", promotion);
+        startActivity(intent);
+    }
+
+    @Override
+    public void setOnClickGradeBtn(Promotion promotion) {
+        Intent intent = new Intent(this, GradeLearningActivitiesActivity.class);
+        intent.putExtra("promotion", promotion);
+        startActivity(intent);
+    }
+    @Override
+    public void setOnClickAddStudentsBtn(Promotion promotion) {
+        Intent intent = new Intent(this, AddStudentsActivity.class);
         intent.putExtra("promotion", promotion);
         startActivity(intent);
     }
