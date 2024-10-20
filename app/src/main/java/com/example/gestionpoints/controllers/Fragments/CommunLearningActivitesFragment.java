@@ -17,6 +17,7 @@ import com.example.gestionpoints.controllers.OnItemClickListener;
 import com.example.gestionpoints.models.evaluation.Evaluation;
 import com.example.gestionpoints.models.promotion.Promotion;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -25,14 +26,15 @@ public class CommunLearningActivitesFragment extends Fragment {
     private Promotion promotion;
     LinearLayout learningActivitiesContainer;
     private OnItemClickListener listener;
-    private List<Evaluation> learningActivities;
+    private ArrayList<Evaluation> learningActivities;
     private boolean isLongClick = false;
+    TextView activityTextView;
 
-    public static CommunLearningActivitesFragment newInstance(Promotion promotion, List<Evaluation> learningActivities) {
+    public static CommunLearningActivitesFragment newInstance(Promotion promotion, ArrayList<Evaluation> learningActivities) {
         CommunLearningActivitesFragment fragment = new CommunLearningActivitesFragment();
         Bundle args = new Bundle();
         args.putSerializable(IntentKeys.PROMOTION, promotion);
-        args.putSerializable(IntentKeys.LEARNING_ACTIVITIES, (java.io.Serializable) learningActivities);
+        args.putSerializable(IntentKeys.LEARNING_ACTIVITIES, learningActivities);
         fragment.setArguments(args);
         return fragment;
     }
@@ -51,7 +53,7 @@ public class CommunLearningActivitesFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            learningActivities = (List<Evaluation>) getArguments().getSerializable(IntentKeys.LEARNING_ACTIVITIES);
+            learningActivities = (ArrayList<Evaluation>) getArguments().getSerializable(IntentKeys.LEARNING_ACTIVITIES);
             promotion = (Promotion) getArguments().getSerializable(IntentKeys.PROMOTION);
         }
     }
@@ -71,22 +73,28 @@ public class CommunLearningActivitesFragment extends Fragment {
     private void displayLearningActivities(LayoutInflater inflater) {
         for (Evaluation evaluation : learningActivities) {
             if (evaluation.getParentId() == 0) {
-                addLearningActivityItem(inflater, evaluation);
+                learningActivitiesContainer.addView(createLearningActivityItem(inflater, evaluation));
+
             }
         }
     }
 
-    private void addLearningActivityItem(LayoutInflater inflater, Evaluation evaluation) {
-        View learningActivityItem = inflater.inflate(R.layout.list_item_learning_activity, learningActivitiesContainer, false);
-        setLearningActivityItemText(learningActivityItem, evaluation);
+    private View createLearningActivityItem(LayoutInflater inflater, Evaluation evaluation) {
+        View learningActivityItem = getPromotionItemView(inflater);
+        retrieveView(learningActivityItem);
+        setLearningActivityData(learningActivityItem, evaluation);
         setupClickListeners(learningActivityItem, evaluation);
-        learningActivityItem.setSelected(evaluation.isSelected());
-        learningActivitiesContainer.addView(learningActivityItem);
+        return learningActivityItem;
     }
-
-    private void setLearningActivityItemText(View learningActivityItem, Evaluation evaluation) {
-        TextView activityTextView = learningActivityItem.findViewById(R.id.learningActivityTextView);
+    private View getPromotionItemView(LayoutInflater inflater) {
+        return inflater.inflate(R.layout.list_item_learning_activity, learningActivitiesContainer, false);
+    }
+    private void retrieveView(View learningActivityItem) {
+        activityTextView = learningActivityItem.findViewById(R.id.learningActivityTextView);
+    }
+    private void setLearningActivityData(View learningActivityItem, Evaluation evaluation) {
         activityTextView.setText(evaluation.getName());
+        learningActivityItem.setSelected(evaluation.isSelected());
     }
 
     private void setupClickListeners(View learningActivityItem, Evaluation evaluation) {
