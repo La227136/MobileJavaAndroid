@@ -51,7 +51,10 @@ public class SettingsLearningActivitiesListActivity extends BaseActivity impleme
     public Fragment getMiddleFragmentToLaunch() {
         return CommunLearningActivitesFragment.newInstance(promotion, learningActivities);
     }
-
+    @Override
+    public void setupFooter(){
+        setupFragment(R.id.footerContainer, new FooterFragment());
+    }
 
     @Override
     public void onAddButtonClick() {

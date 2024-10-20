@@ -16,27 +16,24 @@ public class AddStudentsActivity extends BaseActivity implements AddStudentsFrag
     private StudentManager studentManager;
 
     @Override
-    public Fragment getMiddleFragmentToLaunch() {
-        return AddStudentsFragment.newInstance(promotion);
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         studentManager = new StudentManager(this);
         promotion = (Promotion) getIntent().getSerializableExtra("promotion");
         super.onCreate(savedInstanceState);
     }
 
+    //region BaseActivity related methods
     @Override
     public String getTitlePage() {
         return "Student";
     }
-
     @Override
-    public void setupFooter() {
+    public Fragment getMiddleFragmentToLaunch() {
+        return AddStudentsFragment.newInstance(promotion);
     }
+    //endregion
 
-
+    //region AddStudentsFragment.Listener related methods
     @Override
     public void onStudentListAdded(String csvText) {
         String[] lines = csvText.split("\n");
@@ -48,9 +45,17 @@ public class AddStudentsActivity extends BaseActivity implements AddStudentsFrag
             String[] studentData = line.split(",");
             if (studentData.length >= 2) {
                 String lastName = studentData[0].trim();
-                String surFirstName = studentData[1].trim();
-                Student student = new Student(lastName, surFirstName, promotion);
-                studentManager.addStudent(student);
+                String firstName = studentData[1].trim();
+
+                if (lastName.isEmpty() || firstName.isEmpty()) {
+                    Toast.makeText(this, "Au moins un étudiant n'a pas été ajouté correctement", Toast.LENGTH_SHORT).show();
+                }else {
+                    Student student = new Student(lastName, firstName, promotion);
+                    studentManager.addStudent(student);
+                }
+
+            }else {
+                Toast.makeText(this, "Au moins un étudiant n'a pas été ajouté correctement", Toast.LENGTH_SHORT).show();
             }
         }
         Toast.makeText(this, "Students added", Toast.LENGTH_SHORT).show();
@@ -62,4 +67,5 @@ public class AddStudentsActivity extends BaseActivity implements AddStudentsFrag
         studentManager.addStudent(student);
         Toast.makeText(this, "Student added", Toast.LENGTH_SHORT).show();
     }
+    //endregion
 }

@@ -43,7 +43,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     public void setupFooter() {
-        setupFragment(R.id.footerContainer, new FooterFragment());
     }
 
     public void setupFragment(int containerId, Fragment fragment) {

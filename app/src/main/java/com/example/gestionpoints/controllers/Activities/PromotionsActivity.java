@@ -2,7 +2,6 @@ package com.example.gestionpoints.controllers.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.fragment.app.Fragment;
 
@@ -36,25 +35,29 @@ public class PromotionsActivity extends BaseActivity implements FooterFragment.F
         super.onCreate(savedInstanceState);
     }
 
-    // Override from BaseActivity
+    //region BaseActivity related methods
     @Override
     public String getTitlePage() {
         return "Blocs";
     }
-
     @Override
     public Fragment getMiddleFragmentToLaunch() {
         return PromotionListFragment.newInstance(promotionList);
     }
+    @Override
+    public void setupFooter(){
+        setupFragment(R.id.footerContainer, new FooterFragment());
+    }
+    //endregion
 
-
+    //region FooterFragment.Listener related methods
     @Override
     public void onAddButtonClick() {
         AddPromotionDialogFragment dialogFragment = new AddPromotionDialogFragment();
         dialogFragment.setAddItemListener(newPromotion -> {
             promotionManager.addPromotion(newPromotion);
             promotionList = promotionManager.getAllPromotions();
-            replaceFragement(promotionList);
+            replaceFragment(promotionList);
         });
         dialogFragment.show(getSupportFragmentManager(), "AddPromotionDialogFragment");
     }
@@ -65,20 +68,23 @@ public class PromotionsActivity extends BaseActivity implements FooterFragment.F
         for (Promotion promotion : promotionList) {
             if (promotion.isSelected()) {
                 promotionManager.deletePromotion(promotion);
-                promotionList = promotionManager.getAllPromotions();
                 update = true;
             }
         }
-        if (update)
-            replaceFragement(promotionList);
+        if (update){
+            promotionList = promotionManager.getAllPromotions();
+            replaceFragment(promotionList);
+        }
     }
 
-    private void replaceFragement(ArrayList<Promotion> promotions) {
+    private void replaceFragment(ArrayList<Promotion> promotions) {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.middlePageContainer, PromotionListFragment.newInstance(promotions))
                 .commit();
     }
+    //endregion
 
+    //region PromotionListFragment.Listener related methods
     @Override
     public void onPromotionLongClicked(Promotion promotion) {
         promotion.setIsSelected(!promotion.isSelected());
@@ -104,6 +110,8 @@ public class PromotionsActivity extends BaseActivity implements FooterFragment.F
         intent.putExtra("promotion", promotion);
         startActivity(intent);
     }
+    //endregion
+
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);

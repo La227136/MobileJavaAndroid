@@ -39,6 +39,10 @@ public class SettingsEvaluationsActivity extends BaseActivity implements FooterF
     public Fragment getMiddleFragmentToLaunch() {
         return SettingsEvaluationsFragment.newInstance(learningActivity);
     }
+    @Override
+    public void setupFooter(){
+        setupFragment(R.id.footerContainer, new FooterFragment());
+    }
 
     @Override
     public void onAddButtonClick() {

@@ -51,7 +51,7 @@
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_marginTop="24dp"
-        android:hint="Ajouter du texte ici"
+        android:hint="Le texte doit respecter le format CSV"
         android:padding="12dp"
         android:gravity="top"
         android:background="@android:drawable/editbox_background"
@@ -74,16 +74,5 @@
         android:elevation="4dp"/>
 
     <!-- Bouton pour le drag and drop d'un fichier CSV -->
-    <Button
-        android:id="@+id/add_csv_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="Déposez un fichier CSV ici"
-        android:padding="16dp"
-        android:background="@android:color/holo_blue_light"
-        android:textColor="@android:color/white"
-        android:textSize="16sp"
-        android:elevation="4dp"/>
 
 </LinearLayout>

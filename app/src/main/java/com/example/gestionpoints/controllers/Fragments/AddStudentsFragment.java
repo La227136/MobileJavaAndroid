@@ -25,12 +25,9 @@ public class AddStudentsFragment extends Fragment {
     private Promotion promotion;
     private Button addStudentButton;
     private Button addCsvTextButton;
-    private Button addCsvButton;
     private EditText studentLastNameEditText;
     private EditText studentSurFirstNameEditText;
     private EditText csvEditText;
-    private static final int PICK_CSV_FILE = 1; // Code de demande pour identifier la sélection du fichier
-    private static final int REQUEST_STORAGE_PERMISSION = 100; // Code pour demander la permission
 
 
     public static AddStudentsFragment newInstance(Promotion promotion) {
@@ -47,8 +44,8 @@ public class AddStudentsFragment extends Fragment {
         if (getArguments() != null) {
             promotion = (Promotion) getArguments().getSerializable(ARG_PROMOTION);
         }
-
     }
+
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof Listener) {
@@ -57,15 +54,37 @@ public class AddStudentsFragment extends Fragment {
             throw new RuntimeException(context.toString() + " doit implémenter BaseActivity.Listener");
         }
     }
-    public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle
-            savedInstanceState){
+
+    public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.fragment_student_activity, container, false);
         retrieveView(view);
         setListeners();
         return view;
     }
 
+    private void retrieveView(View view) {
+        addStudentButton = view.findViewById(R.id.btn_add_student);
+        studentLastNameEditText = view.findViewById(R.id.last_name);
+        studentSurFirstNameEditText = view.findViewById(R.id.first_name);
+        csvEditText = view.findViewById(R.id.csv_text);
+        addCsvTextButton = view.findViewById(R.id.btn_csv_text);
+    }
+
     private void setListeners() {
+        setAddStudentButtonListener();
+        setAddCsvTextButton();
+    }
+
+    private void setAddCsvTextButton() {
+        addCsvTextButton.setOnClickListener(v -> {
+            String csvText = csvEditText.getText().toString();
+            if (!csvText.isEmpty()) {
+               listener.onStudentListAdded(csvText);
+            }
+        });
+    }
+
+    private void setAddStudentButtonListener() {
         addStudentButton.setOnClickListener(v -> {
             String lastName = studentLastNameEditText.getText().toString();
             String surFirstName = studentSurFirstNameEditText.getText().toString();
@@ -73,36 +92,6 @@ public class AddStudentsFragment extends Fragment {
                 listener.onStudentAdded(lastName, surFirstName,promotion);
             }
         });
-
-        addCsvButton.setOnClickListener(v -> {
-                    openFilePicker();
-                });
-        addCsvTextButton.setOnClickListener(v -> {
-            String csvText = csvEditText.getText().toString();
-            if (!csvText.isEmpty()) {
-               listener.onStudentListAdded(csvText);
-            }
-        });
-
-
-    }
-    private void openFilePicker() {
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("text/csv");
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
-        try {
-            startActivityForResult(Intent.createChooser(intent, "Sélectionner un fichier CSV"), PICK_CSV_FILE);
-        } catch (android.content.ActivityNotFoundException ex) {
-            Toast.makeText(getContext(), "Veuillez installer un gestionnaire de fichiers.", Toast.LENGTH_SHORT).show();
-        }
     }
 
-    private void retrieveView(View view) {
-        addStudentButton = view.findViewById(R.id.btn_add_student);
-        addCsvButton = view.findViewById(R.id.add_csv_button);
-        studentLastNameEditText = view.findViewById(R.id.last_name);
-        studentSurFirstNameEditText = view.findViewById(R.id.first_name);
-        csvEditText = view.findViewById(R.id.csv_text);
-        addCsvTextButton = view.findViewById(R.id.btn_csv_text);
-    }
 }
