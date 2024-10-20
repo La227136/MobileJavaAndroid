@@ -16,16 +16,20 @@ import com.example.gestionpoints.models.evaluation.Evaluation;
 
 import java.util.ArrayList;
 
-public class SettingsEvaluationsActivity extends BaseActivity implements FooterFragment.FooterListener, SettingsEvaluationsFragment.AddSubEvaluationListener {
+public class SettingsEvaluationsActivity extends BaseActivity implements FooterFragment.FooterListener, SettingsEvaluationsFragment.Listener {
 
+    public static final String ADD_EVALUATION_DIALOG_FRAGMENT = "AddEvaluationDialogFragment";
     private Evaluation learningActivity;
     private EvaluationManager evaluationManager;
     ArrayList<Evaluation> selectedEvaluationList = new ArrayList<>();
+    ArrayList<Evaluation> directSubEvaluation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         evaluationManager = new EvaluationManager(this);
         learningActivity = (Evaluation) getIntent().getSerializableExtra(IntentKeys.LEARNING_ACTIVITY);
+        //TODO erroor peut etre
+        directSubEvaluation =  evaluationManager.getEvaluationForParentEvaluation(learningActivity);
         super.onCreate(savedInstanceState);
     }
 
@@ -36,7 +40,7 @@ public class SettingsEvaluationsActivity extends BaseActivity implements FooterF
 
     @Override
     public Fragment getMiddleFragmentToLaunch() {
-        return SettingsEvaluationsFragment.newInstance(learningActivity);
+        return SettingsEvaluationsFragment.newInstance(directSubEvaluation);
     }
     @Override
     public void setupFooter(){
@@ -48,22 +52,21 @@ public class SettingsEvaluationsActivity extends BaseActivity implements FooterF
         AddEvaluationDialogFragment dialogFragment = new AddEvaluationDialogFragment(learningActivity);
         dialogFragment.setAddItemListener(newEvaluation -> {
             evaluationManager.addEvaluation(newEvaluation);
-
             replaceFragment();
         });
-        dialogFragment.show(getSupportFragmentManager(), "AddEvaluationDialogFragment");
+        dialogFragment.show(getSupportFragmentManager(), ADD_EVALUATION_DIALOG_FRAGMENT);
     }
 
     @Override
     public void onDeleteButtonClick() {
         boolean update = false;
         for (Evaluation evaluation : selectedEvaluationList) {
-
                 update = true;
                 evaluationManager.deleteEvaluation(evaluation);
         }
         if (update) {
             replaceFragment();
+            selectedEvaluationList.clear();
         }
     }
 
@@ -73,23 +76,27 @@ public class SettingsEvaluationsActivity extends BaseActivity implements FooterF
             evaluationManager.addEvaluation(newEvaluation);
         replaceFragment();
         });
-        dialogFragment.show(getSupportFragmentManager(), "AddEvaluationDialogFragment");
-
+        dialogFragment.show(getSupportFragmentManager(), ADD_EVALUATION_DIALOG_FRAGMENT);
     }
 
     @Override
-    public void OnLongClick(View view, Evaluation evaluation) {
+    public void onLongClick(View view, Evaluation evaluation) {
         evaluation.setSelected(!evaluation.isSelected());
-        if (evaluation.isSelected()) {
-            selectedEvaluationList.add(evaluation);
+       if (evaluation.isSelected()) {
+           selectedEvaluationList.add(evaluation);
         } else {
-            selectedEvaluationList.remove(evaluation);
+          selectedEvaluationList.remove(evaluation);
         }
+    }
+    @Override
+    public ArrayList<Evaluation> getChildrenForEvaluation(Evaluation evaluation) {
+        return  evaluationManager.getEvaluationForParentEvaluation(evaluation);
     }
 
     private void replaceFragment() {
+        directSubEvaluation =  evaluationManager.getEvaluationForParentEvaluation(learningActivity);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.middlePageContainer, SettingsEvaluationsFragment.newInstance(learningActivity))
+                .replace(R.id.middlePageContainer, SettingsEvaluationsFragment.newInstance(directSubEvaluation))
                 .commit();
     }
 }
