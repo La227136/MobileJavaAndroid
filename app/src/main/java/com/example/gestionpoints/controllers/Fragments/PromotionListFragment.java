@@ -28,18 +28,18 @@ public class PromotionListFragment extends Fragment {
     private TextView promotionLevelTextView;
     private ImageButton evalBtn;
     private ImageButton pointsBtn;
-    private ImageButton studentsBtn;
-    private PromotionListFragmentListener listener;
+    private ImageButton addStudentsBtn;
+    private Listener listener;
 
-    public interface PromotionListFragmentListener {
+    public interface Listener {
         void onPromotionLongClicked(Promotion promotion);
         void setBtnListener(Promotion promotion, Class<?> targetActivity);
     }
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof PromotionListFragmentListener) {
-            listener = (PromotionListFragmentListener) context;
+        if (context instanceof Listener) {
+            listener = (Listener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement MyFragmentListener");
@@ -79,15 +79,16 @@ public class PromotionListFragment extends Fragment {
         setListeners(promotion, promotionItem);
         return promotionItem;
     }
+
     private View getPromotionItem(LayoutInflater inflater) {
         return inflater.inflate(R.layout.list_item_promotion, promotionListContainer, false);
     }
 
-    private void setListeners(Promotion promotion, View promotionItem) {
-        setLongClicklistener(promotion, promotionItem);
-        setBtnClickListeners(evalBtn, promotion, SettingsLearningActivitiesListActivity.class);
-        setBtnClickListeners(pointsBtn, promotion, GradeLearningActivitiesActivity.class);
-        setBtnClickListeners(studentsBtn, promotion, AddStudentsActivity.class);
+    private void retrieveView(View classeView) {
+        promotionLevelTextView = classeView.findViewById(R.id.promotionsTextView);
+        evalBtn = classeView.findViewById(R.id.evalBtn);
+        pointsBtn = classeView.findViewById(R.id.pointsBtn);
+        addStudentsBtn = classeView.findViewById(R.id.addEtudiant);
     }
 
     private void setPromotionData(Promotion promotion, View promotionItem) {
@@ -95,7 +96,12 @@ public class PromotionListFragment extends Fragment {
         promotionLevelTextView.setText(promotion.getName());
     }
 
-
+    private void setListeners(Promotion promotion, View promotionItem) {
+        setLongClicklistener(promotion, promotionItem);
+        setBtnClickListeners(evalBtn, promotion, SettingsLearningActivitiesListActivity.class);
+        setBtnClickListeners(pointsBtn, promotion, GradeLearningActivitiesActivity.class);
+        setBtnClickListeners(addStudentsBtn, promotion, AddStudentsActivity.class);
+    }
 
     private  void setLongClicklistener(Promotion promotion, View promotionItem) {
         promotionItem.setOnLongClickListener(v -> {
@@ -114,10 +120,5 @@ public class PromotionListFragment extends Fragment {
         });
     }
 
-    private void retrieveView(View classeView) {
-        promotionLevelTextView = classeView.findViewById(R.id.promotionsTextView);
-        evalBtn = classeView.findViewById(R.id.evalBtn);
-        pointsBtn = classeView.findViewById(R.id.pointsBtn);
-        studentsBtn = classeView.findViewById(R.id.addEtudiant);
-    }
+
 }

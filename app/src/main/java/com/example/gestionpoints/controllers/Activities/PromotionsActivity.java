@@ -3,7 +3,6 @@ package com.example.gestionpoints.controllers.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 
 import androidx.fragment.app.Fragment;
 
@@ -16,7 +15,7 @@ import com.example.gestionpoints.models.promotion.Promotion;
 
 import java.util.ArrayList;
 
-public class PromotionsActivity extends BaseActivity implements FooterFragment.FooterListener, PromotionListFragment.PromotionListFragmentListener {
+public class PromotionsActivity extends BaseActivity implements FooterFragment.FooterListener, PromotionListFragment.Listener {
 
 
 
