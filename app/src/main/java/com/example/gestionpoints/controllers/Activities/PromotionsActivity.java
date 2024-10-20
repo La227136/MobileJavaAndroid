@@ -21,14 +21,13 @@ import java.util.ArrayList;
 public class PromotionsActivity extends BaseActivity implements FooterFragment.FooterListener, PromotionListFragment.Listener {
 
 
-
     ArrayList<Promotion> promotionList;
     PromotionManager promotionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-          //DataGenerationTest testDataGenerator = new DataGenerationTest(this);
-          //testDataGenerator.generateTestData();
+        //DataGenerationTest testDataGenerator = new DataGenerationTest(this);
+        //testDataGenerator.generateTestData();
 
         promotionManager = new PromotionManager(this);
         if (savedInstanceState != null) {
@@ -86,35 +85,31 @@ public class PromotionsActivity extends BaseActivity implements FooterFragment.F
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putSerializable("promotions", promotionList);
-
     }
 
     @Override
     public void onPromotionLongClicked(Promotion promotion) {
         promotion.setIsSelected(!promotion.isSelected());
-
-
-        for(Promotion p : promotionList){
-            Log.d("EEEEEEPromotion", p.getName() + " " + p.isSelected());
-        }
     }
+
 
     @Override
     public void setOnClickSettingBtn(Promotion promotion) {
-        Intent intent = new Intent(this, SettingsLearningActivitiesListActivity.class);
-        intent.putExtra("promotion", promotion);
-        startActivity(intent);
+        startActivityWithPromotion(SettingsLearningActivitiesListActivity.class, promotion);
     }
 
     @Override
     public void setOnClickGradeBtn(Promotion promotion) {
-        Intent intent = new Intent(this, GradeLearningActivitiesActivity.class);
-        intent.putExtra("promotion", promotion);
-        startActivity(intent);
+        startActivityWithPromotion(GradeLearningActivitiesActivity.class, promotion);
     }
+
     @Override
     public void setOnClickAddStudentsBtn(Promotion promotion) {
-        Intent intent = new Intent(this, AddStudentsActivity.class);
+        startActivityWithPromotion(AddStudentsActivity.class, promotion);
+    }
+
+    private void startActivityWithPromotion(Class<?> activityClass, Promotion promotion) {
+        Intent intent = new Intent(this, activityClass);
         intent.putExtra("promotion", promotion);
         startActivity(intent);
     }
