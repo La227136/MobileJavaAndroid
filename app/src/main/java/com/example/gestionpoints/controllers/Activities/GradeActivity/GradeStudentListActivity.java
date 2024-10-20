@@ -32,6 +32,12 @@ public class GradeStudentListActivity extends BaseActivity implements GradeStude
         super.onCreate(savedInstanceState);
     }
 
+
+    //region BaseActivity related methods
+    @Override
+    public String getTitlePage() {
+        return "Liste des étudiants de " + learningActivity.getName();
+    }
     @Override
     public Fragment getMiddleFragmentToLaunch() {
         StudentManager studentManager = new StudentManager(this);
@@ -39,24 +45,26 @@ public class GradeStudentListActivity extends BaseActivity implements GradeStude
         studentList = studentManager.getStudentsForPromotion(promotion);
         return GradeStudentListFragment.newInstance(studentList,learningActivity);
     }
+    //endregion
 
+
+    // region Listener related methods
     @Override
-    public String getTitlePage() {
-        return "Liste des étudiants de " + learningActivity.getName();
+    public void onItemClick(Student student) {
+        openGradeSingleStudentActivity(student);
     }
+    private void openGradeSingleStudentActivity(Student student) {
+        Intent intent = new Intent(getApplicationContext(), GradeSingleStudentActivity.class);
+        intent.putExtra(IntentKeys.STUDENT, student);
+        intent.putExtra(IntentKeys.LEARNING_ACTIVITY, learningActivity);
+        startActivity(intent);
+    }
+    //endregion
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putSerializable(IntentKeys.PROMOTION, promotion);
         outState.putSerializable(IntentKeys.LEARNING_ACTIVITY, learningActivity);
-    }
-
-    @Override
-    public void onItemClick(Student student) {
-        Intent intent = new Intent(getApplicationContext(), GradeSingleStudentActivity.class);
-        intent.putExtra(IntentKeys.STUDENT,student);
-        intent.putExtra(IntentKeys.LEARNING_ACTIVITY, learningActivity);
-        startActivity(intent);
     }
 }

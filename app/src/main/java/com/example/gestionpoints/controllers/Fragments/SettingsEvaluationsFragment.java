@@ -68,7 +68,6 @@ public class SettingsEvaluationsFragment extends Fragment {
         learningActivitiesContainer = v.findViewById(R.id.learningActivitiesContainer);
         //TODO gere error potentiel si null
         displayEval(inflater, evaluationListFromLearningActivityDirectChild, 0);
-
         return v;
     }
 

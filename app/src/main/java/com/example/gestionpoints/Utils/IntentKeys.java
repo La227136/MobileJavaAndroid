@@ -8,6 +8,7 @@ public class IntentKeys {
     public static final String LEARNING_ACTIVITY = "learningActivity";
 
     public static final String STUDENT = "student";
+    public static final String STUDENTLIST = "studentList";
     public static final String EVALUATIONLIST = "evaluationList";
 
 }
