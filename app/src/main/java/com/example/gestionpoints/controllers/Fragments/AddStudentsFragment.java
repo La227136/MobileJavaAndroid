@@ -88,9 +88,7 @@ public class AddStudentsFragment extends Fragment {
         addStudentButton.setOnClickListener(v -> {
             String lastName = studentLastNameEditText.getText().toString();
             String surFirstName = studentSurFirstNameEditText.getText().toString();
-            if (!lastName.isEmpty() && !surFirstName.isEmpty()) {
                 listener.onStudentAdded(lastName, surFirstName,promotion);
-            }
         });
     }
 

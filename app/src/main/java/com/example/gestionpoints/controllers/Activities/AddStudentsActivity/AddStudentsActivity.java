@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.gestionpoints.controllers.Activities.BaseActivity;
 import com.example.gestionpoints.controllers.Fragments.AddStudentsFragment;
+import com.example.gestionpoints.models.ExceptionTextField;
 import com.example.gestionpoints.models.dataBaseManager.manager.StudentManager;
 import com.example.gestionpoints.models.promotion.Promotion;
 import com.example.gestionpoints.models.student.Student;
@@ -27,6 +28,7 @@ public class AddStudentsActivity extends BaseActivity implements AddStudentsFrag
     public String getTitlePage() {
         return "Student";
     }
+
     @Override
     public Fragment getMiddleFragmentToLaunch() {
         return AddStudentsFragment.newInstance(promotion);
@@ -34,38 +36,48 @@ public class AddStudentsActivity extends BaseActivity implements AddStudentsFrag
     //endregion
 
     //region AddStudentsFragment.Listener related methods
-    @Override
     public void onStudentListAdded(String csvText) {
-        String[] lines = csvText.split("\n");
-        for (String line : lines) {
-            if (line.trim().isEmpty()) {
-                continue;
-            }
+        try {
+            String[] lines = csvText.split("\n");
 
-            String[] studentData = line.split(",");
-            if (studentData.length >= 2) {
-                String lastName = studentData[0].trim();
-                String firstName = studentData[1].trim();
-
-                if (lastName.isEmpty() || firstName.isEmpty()) {
-                    Toast.makeText(this, "Au moins un étudiant n'a pas été ajouté correctement", Toast.LENGTH_SHORT).show();
-                }else {
-                    Student student = new Student(lastName, firstName, promotion);
-                    studentManager.addStudent(student);
+            for (String line : lines) {
+                if (line.trim().isEmpty()) {
+                    continue;
                 }
-
-            }else {
-                Toast.makeText(this, "Au moins un étudiant n'a pas été ajouté correctement", Toast.LENGTH_SHORT).show();
+                String[] studentData = line.split(",");
+                if (studentData.length != 2) {
+                    throw new ExceptionTextField("Le format du fichier CSV est incorrect. Chaque ligne doit contenir un nom et un prénom séparés par une virgule.");
+                }
+                addStudent(studentData[0].trim(), studentData[1].trim(), promotion);
             }
+        } catch (ExceptionTextField e) {
+            e.ShowToast(this);
         }
-        Toast.makeText(this, "Students added", Toast.LENGTH_SHORT).show();
     }
+
 
     @Override
     public void onStudentAdded(String lastName, String surFirstName, Promotion promotion) {
-        Student student = new Student(lastName, surFirstName, promotion);
-        studentManager.addStudent(student);
-        Toast.makeText(this, "Student added", Toast.LENGTH_SHORT).show();
+        try {
+            addStudent(lastName, surFirstName, promotion);
+        } catch (ExceptionTextField e) {
+            e.ShowToast(this);
+        }
     }
-    //endregion
+
+    private void addStudent(String lastName, String firstName, Promotion promotion) throws ExceptionTextField {
+
+        if (lastName.isEmpty() || firstName.isEmpty()) {
+            throw new ExceptionTextField("Le nom et le prénom ne peuvent pas être vides");
+        }
+
+        if (!lastName.matches("^[a-zA-ZÀ-ÖØ-öø-ÿ\\-]+$") || !firstName.matches("^[a-zA-ZÀ-ÖØ-öø-ÿ\\-]+$")) {
+            throw new ExceptionTextField("Le nom et le prénom ne peuvent contenir que des lettres");
+        }
+
+        Student student = new Student(lastName, firstName, promotion);
+        studentManager.addStudent(student);
+        Toast.makeText(this, "L'étudiant a bien été ajouté", Toast.LENGTH_SHORT).show();
+    }
+//endregion
 }
