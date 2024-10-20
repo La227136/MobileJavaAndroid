@@ -2,6 +2,7 @@ package com.example.gestionpoints.controllers.Activities.SettingsActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.fragment.app.Fragment;
@@ -65,28 +66,24 @@ public class SettingsLearningActivitiesListActivity extends BaseActivity impleme
         AddLearningActivitiesDialogFragment dialogFragment = new AddLearningActivitiesDialogFragment(promotion.getId());
         dialogFragment.setAddItemListener(newLearningActivity -> {
             evaluationManager.addEvaluation(newLearningActivity);
-            learningActivityList = getLearningActivityList();
-            replaceFragment(promotion);
+            replaceFragment();
         });
         dialogFragment.show(getSupportFragmentManager(), "AddLearningActivitiesFragment");
     }
 
     @Override
     public void onDeleteButtonClick() {
-        boolean update = false;
-        for (Evaluation learningActivitie : learningActivityList) {
-            if (learningActivitie.isSelected()) {
-                evaluationManager.deleteEvaluation(learningActivitie);
-                update = true;
-            }
-        }
-        if (update) {
-            learningActivityList = getLearningActivityList();
-            replaceFragment(promotion);
-        }
+      if(!selectedLearningActivity.isEmpty()) {
+          for (Evaluation evaluation : selectedLearningActivity) {
+              evaluationManager.deleteEvaluation(evaluation);
+          }
+          replaceFragment();
+          selectedLearningActivity.clear();
+      }
     }
 
-    private void replaceFragment(Promotion promotion) {
+    private void replaceFragment() {
+        learningActivityList = getLearningActivityList();
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.middlePageContainer, CommunLearningActivitesFragment.newInstance(promotion, learningActivityList))
                 .commit();
@@ -97,7 +94,11 @@ public class SettingsLearningActivitiesListActivity extends BaseActivity impleme
     @Override
     public void onLearningActivityLongClicked(Evaluation learningActivity) {
         learningActivity.setSelected(!learningActivity.isSelected());
-        selectedLearningActivity.add(learningActivity);
+        if (learningActivity.isSelected()) {
+            selectedLearningActivity.add(learningActivity);
+        } else {
+            selectedLearningActivity.remove(learningActivity);
+        }
     }
 
     @Override

@@ -53,8 +53,8 @@ public class EvaluationManager {
         return evaluations;
     }
 
-    public List<Evaluation> getEvaluationForParentEvaluation(Evaluation evaluation) {
-        List<Evaluation> evaluations = new ArrayList<>();
+    public ArrayList<Evaluation> getEvaluationForParentEvaluation(Evaluation evaluation) {
+        ArrayList<Evaluation> evaluations = new ArrayList<>();
         Cursor cursor = mDatabase.query(
                 EvaluationTable.NAME,
                 null,
