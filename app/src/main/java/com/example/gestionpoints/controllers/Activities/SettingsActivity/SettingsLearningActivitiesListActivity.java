@@ -92,24 +92,7 @@ public class SettingsLearningActivitiesListActivity extends BaseActivity impleme
     }
     //endregion
 
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putSerializable(IntentKeys.LEARNING_ACTIVITIES, learningActivities);
-        outState.putSerializable(IntentKeys.PROMOTION, promotion);
-    }
-
-    public ArrayList<Evaluation> getLearningActivityList() {
-        ArrayList<Evaluation> evaluationList = evaluationManager.getEvaluationsForPromotion(promotion);
-        ArrayList<Evaluation> learningActivityList = new ArrayList<>();
-        for (Evaluation evaluation : evaluationList) {
-            if (evaluation.getParentId() == 0)
-                learningActivityList.add(evaluation);
-        }
-        return learningActivityList;
-    }
-
+    //region CommunLearningActivitesFragment.Listener related methods
     @Override
     public void onLearningActivityLongClicked(Evaluation learningActivity) {
         learningActivity.setSelected(!learningActivity.isSelected());
@@ -125,6 +108,22 @@ public class SettingsLearningActivitiesListActivity extends BaseActivity impleme
         evalDetailsIntent.putExtra(IntentKeys.LEARNING_ACTIVITY, evaluation);
         startActivity(evalDetailsIntent);
     }
+    //endregion
 
+    public ArrayList<Evaluation> getLearningActivityList() {
+        ArrayList<Evaluation> evaluationList = evaluationManager.getEvaluationsForPromotion(promotion);
+        ArrayList<Evaluation> learningActivityList = new ArrayList<>();
+        for (Evaluation evaluation : evaluationList) {
+            if (evaluation.getParentId() == 0)
+                learningActivityList.add(evaluation);
+        }
+        return learningActivityList;
+    }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable(IntentKeys.LEARNING_ACTIVITIES, learningActivities);
+        outState.putSerializable(IntentKeys.PROMOTION, promotion);
+    }
 }

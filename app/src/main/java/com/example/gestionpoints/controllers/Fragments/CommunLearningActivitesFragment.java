@@ -32,7 +32,6 @@ public class CommunLearningActivitesFragment extends Fragment {
     public interface Listener {
         void onItemClick(View view, Evaluation evaluation);
         void onLearningActivityLongClicked(Evaluation promotion);
-
     }
 
 
