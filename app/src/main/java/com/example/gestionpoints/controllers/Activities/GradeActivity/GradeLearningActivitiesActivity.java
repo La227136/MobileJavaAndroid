@@ -6,6 +6,7 @@ import android.view.View;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.gestionpoints.Utils.IntentKeys;
 import com.example.gestionpoints.controllers.Activities.BaseActivity;
 import com.example.gestionpoints.controllers.Fragments.CommunLearningActivitesFragment;
 import com.example.gestionpoints.controllers.OnItemClickListener;
@@ -25,7 +26,7 @@ public class GradeLearningActivitiesActivity extends BaseActivity implements OnI
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         evaluationManager = new EvaluationManager(this);
-        promotion = (Promotion) getIntent().getSerializableExtra("promotion");
+        promotion = (Promotion) getIntent().getSerializableExtra(IntentKeys.PROMOTION);
         learningActivities = evaluationManager.getEvaluationsForPromotion(promotion);
         super.onCreate(savedInstanceState);
     }
@@ -50,8 +51,8 @@ public class GradeLearningActivitiesActivity extends BaseActivity implements OnI
     @Override
     public void onItemClick(View view, Evaluation learningActivity) {
         Intent intent = new Intent(getApplicationContext(), GradeStudentListForALearningActivity.class);
-        intent.putExtra("promotion", promotion);
-        intent.putExtra("evaluation", learningActivity);
+        intent.putExtra(IntentKeys.PROMOTION, promotion);
+        intent.putExtra(IntentKeys.LEARNING_ACTIVITY, learningActivity);
         startActivity(intent);
     }
 }

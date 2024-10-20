@@ -6,6 +6,7 @@ import android.view.View;
 import androidx.fragment.app.Fragment;
 
 import com.example.gestionpoints.R;
+import com.example.gestionpoints.Utils.IntentKeys;
 import com.example.gestionpoints.controllers.Activities.BaseActivity;
 import com.example.gestionpoints.controllers.Fragments.DialogFragment.AddEvaluationDialogFragment;
 import com.example.gestionpoints.controllers.Fragments.SettingsEvaluationsFragment;
@@ -25,7 +26,7 @@ public class SettingsEvaluationsActivity extends BaseActivity implements FooterF
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         evaluationManager = new EvaluationManager(this);
-        learningActivity = (Evaluation) getIntent().getSerializableExtra("evaluation");
+        learningActivity = (Evaluation) getIntent().getSerializableExtra(IntentKeys.LEARNING_ACTIVITY);
 
         super.onCreate(savedInstanceState);
     }

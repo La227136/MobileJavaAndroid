@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.gestionpoints.Utils.IntentKeys;
 import com.example.gestionpoints.controllers.Activities.BaseActivity;
 import com.example.gestionpoints.controllers.Fragments.GradeStudentListFragment;
 import com.example.gestionpoints.controllers.OnItemClickListener;
@@ -16,8 +17,7 @@ import java.util.ArrayList;
 
 public class GradeStudentListForALearningActivity extends BaseActivity implements OnItemClickListener {
 
-    private static final String KEY_PROMOTION = "key_promotion";
-    private static final String KEY_LEARNING_ACTIVITY = "key_learning_activity";
+
     private Promotion promotion;
     private Evaluation learningActivity;
 
@@ -27,9 +27,9 @@ public class GradeStudentListForALearningActivity extends BaseActivity implement
 
         if (savedInstanceState != null) {
 
-            promotion = (Promotion) savedInstanceState.getSerializable(KEY_PROMOTION);
+            promotion = (Promotion) savedInstanceState.getSerializable(IntentKeys.PROMOTION);
 
-            learningActivity = (Evaluation) savedInstanceState.getSerializable(KEY_LEARNING_ACTIVITY);
+            learningActivity = (Evaluation) savedInstanceState.getSerializable(IntentKeys.LEARNING_ACTIVITY);
 
         } else {
             promotion = (Promotion) getIntent().getSerializableExtra("promotion");
@@ -60,16 +60,15 @@ public class GradeStudentListForALearningActivity extends BaseActivity implement
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        // Sauvegarde des objets `promotion` et `learningActivity`
-        outState.putSerializable(KEY_PROMOTION, promotion);
-        outState.putSerializable(KEY_LEARNING_ACTIVITY, learningActivity);
+        outState.putSerializable(IntentKeys.PROMOTION, promotion);
+        outState.putSerializable(IntentKeys.LEARNING_ACTIVITY, learningActivity);
     }
 
     @Override
     public void onItemClick(Student student) {
         Intent intent = new Intent(getApplicationContext(), GradeSingleStudentActivity.class);
-        intent.putExtra("student",student);
-        intent.putExtra("evaluation", learningActivity);
+        intent.putExtra(IntentKeys.STUDENT,student);
+        intent.putExtra(IntentKeys.LEARNING_ACTIVITY, learningActivity);
         startActivity(intent);
     }
 }

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 
 import com.example.gestionpoints.R;
+import com.example.gestionpoints.Utils.IntentKeys;
 import com.example.gestionpoints.controllers.Activities.AddStudentsActivity.AddStudentsActivity;
 import com.example.gestionpoints.controllers.Activities.GradeActivity.GradeLearningActivitiesActivity;
 import com.example.gestionpoints.controllers.Activities.SettingsActivity.SettingsLearningActivitiesListActivity;
@@ -28,7 +29,7 @@ public class PromotionsActivity extends BaseActivity implements FooterFragment.F
 
         promotionManager = new PromotionManager(this);
         if (savedInstanceState != null) {
-            promotionList = (ArrayList<Promotion>) savedInstanceState.getSerializable("promotions");
+            promotionList = (ArrayList<Promotion>) savedInstanceState.getSerializable(IntentKeys.PROMOTIONS);
         } else {
             promotionList = promotionManager.getAllPromotions();
         }
@@ -107,7 +108,7 @@ public class PromotionsActivity extends BaseActivity implements FooterFragment.F
 
     private void startActivityWithPromotion(Class<?> activityClass, Promotion promotion) {
         Intent intent = new Intent(this, activityClass);
-        intent.putExtra("promotion", promotion);
+        intent.putExtra(IntentKeys.PROMOTION, promotion);
         startActivity(intent);
     }
     //endregion
@@ -115,7 +116,7 @@ public class PromotionsActivity extends BaseActivity implements FooterFragment.F
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putSerializable("promotions", promotionList);
+        outState.putSerializable(IntentKeys.PROMOTIONS, promotionList);
     }
 
 }

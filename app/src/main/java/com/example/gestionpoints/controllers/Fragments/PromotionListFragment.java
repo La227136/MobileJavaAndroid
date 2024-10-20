@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.example.gestionpoints.R;
+import com.example.gestionpoints.Utils.IntentKeys;
 import com.example.gestionpoints.models.promotion.Promotion;
 
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ import java.util.List;
 
 public class PromotionListFragment extends Fragment {
 
-    private static final String ARG_PROMOTION = "promotion";
+
     private List<Promotion> promotionList;
     private LinearLayout promotionListContainer;
     private TextView promotionLevelTextView;
@@ -48,7 +49,7 @@ public class PromotionListFragment extends Fragment {
     public static PromotionListFragment newInstance(ArrayList<Promotion> promotions) {
         PromotionListFragment fragment = new PromotionListFragment();
         Bundle args = new Bundle();
-        args.putSerializable(ARG_PROMOTION, promotions);
+        args.putSerializable(IntentKeys.PROMOTIONS, promotions);
         fragment.setArguments(args);
         return fragment;
     }
@@ -57,7 +58,7 @@ public class PromotionListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            promotionList = (List<Promotion>) getArguments().getSerializable(ARG_PROMOTION);
+            promotionList = (List<Promotion>) getArguments().getSerializable(IntentKeys.PROMOTIONS);
         }
     }
 

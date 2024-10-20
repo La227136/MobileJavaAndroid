@@ -2,11 +2,13 @@ package com.example.gestionpoints.controllers.Activities.SettingsActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.fragment.app.Fragment;
 
 import com.example.gestionpoints.R;
+import com.example.gestionpoints.Utils.IntentKeys;
 import com.example.gestionpoints.controllers.Activities.BaseActivity;
 import com.example.gestionpoints.controllers.Fragments.DialogFragment.AddLearningActivitiesDialogFragment;
 import com.example.gestionpoints.controllers.Fragments.FooterFragment;
@@ -33,10 +35,10 @@ public class SettingsLearningActivitiesListActivity extends BaseActivity impleme
 
     private void initializeAttributes(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
-            promotion = (Promotion) savedInstanceState.getSerializable("promotions");
-            learningActivities = (ArrayList<Evaluation>) savedInstanceState.getSerializable("learningActivities");
+            promotion = (Promotion) savedInstanceState.getSerializable(IntentKeys.PROMOTION);
+            learningActivities = (ArrayList<Evaluation>) savedInstanceState.getSerializable(IntentKeys.LEARNING_ACTIVITIES);
         } else {
-            promotion = (Promotion) getIntent().getSerializableExtra("promotion");
+            promotion = (Promotion) getIntent().getSerializableExtra(IntentKeys.PROMOTION);
             learningActivities = evaluationManager.getEvaluationsForPromotion(promotion);
         }
     }
@@ -91,19 +93,19 @@ public class SettingsLearningActivitiesListActivity extends BaseActivity impleme
     }
     //endregion
 
-
     @Override
     public void onItemClick(View view, Evaluation evaluation) {
+
         Intent evalDetailsSettingsActivity = new Intent(getApplicationContext(), SettingsEvaluationsActivity.class);
-        evalDetailsSettingsActivity.putExtra("evaluation", evaluation);
+        evalDetailsSettingsActivity.putExtra(IntentKeys.LEARNING_ACTIVITY, evaluation);
         startActivity(evalDetailsSettingsActivity);
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putSerializable("learningActivities", learningActivities);
-        outState.putSerializable("promotions", promotion);
+        outState.putSerializable(IntentKeys.LEARNING_ACTIVITIES, learningActivities);
+        outState.putSerializable(IntentKeys.PROMOTION, promotion);
     }
 
 

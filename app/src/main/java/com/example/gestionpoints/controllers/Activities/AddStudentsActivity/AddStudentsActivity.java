@@ -5,6 +5,7 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.gestionpoints.Utils.IntentKeys;
 import com.example.gestionpoints.controllers.Activities.BaseActivity;
 import com.example.gestionpoints.controllers.Fragments.AddStudentsFragment;
 import com.example.gestionpoints.models.ExceptionTextField;
@@ -19,7 +20,7 @@ public class AddStudentsActivity extends BaseActivity implements AddStudentsFrag
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         studentManager = new StudentManager(this);
-        promotion = (Promotion) getIntent().getSerializableExtra("promotion");
+        promotion = (Promotion) getIntent().getSerializableExtra(IntentKeys.PROMOTION);
         super.onCreate(savedInstanceState);
     }
 
