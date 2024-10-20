@@ -95,7 +95,6 @@ public class SettingsLearningActivitiesListActivity extends BaseActivity impleme
 
     @Override
     public void onItemClick(View view, Evaluation evaluation) {
-
         Intent evalDetailsSettingsActivity = new Intent(getApplicationContext(), SettingsEvaluationsActivity.class);
         evalDetailsSettingsActivity.putExtra(IntentKeys.LEARNING_ACTIVITY, evaluation);
         startActivity(evalDetailsSettingsActivity);

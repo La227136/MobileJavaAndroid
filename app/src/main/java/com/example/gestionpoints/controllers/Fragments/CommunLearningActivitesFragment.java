@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.example.gestionpoints.R;
+import com.example.gestionpoints.Utils.IntentKeys;
 import com.example.gestionpoints.controllers.OnItemClickListener;
 import com.example.gestionpoints.models.evaluation.Evaluation;
 import com.example.gestionpoints.models.promotion.Promotion;
@@ -21,18 +22,17 @@ import java.util.List;
 
 public class CommunLearningActivitesFragment extends Fragment {
 
-    private static final String ARG_PROMOTION = "promotion";
     private Promotion promotion;
     LinearLayout learningActivitiesContainer;
-    private OnItemClickListener listener; // Référence à l'activité parent
+    private OnItemClickListener listener;
     private List<Evaluation> learningActivities;
-    private boolean isLongClick = false;  // Variable pour éviter que les deux événements se déclenchent
+    private boolean isLongClick = false;
 
     public static CommunLearningActivitesFragment newInstance(Promotion promotion, List<Evaluation> learningActivities) {
         CommunLearningActivitesFragment fragment = new CommunLearningActivitesFragment();
         Bundle args = new Bundle();
-        args.putSerializable(ARG_PROMOTION, promotion);
-        args.putSerializable("learningActivities", (java.io.Serializable) learningActivities);
+        args.putSerializable(IntentKeys.PROMOTION, promotion);
+        args.putSerializable(IntentKeys.LEARNING_ACTIVITIES, (java.io.Serializable) learningActivities);
         fragment.setArguments(args);
         return fragment;
     }
@@ -51,8 +51,8 @@ public class CommunLearningActivitesFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            learningActivities = (List<Evaluation>) getArguments().getSerializable("learningActivities");
-            promotion = (Promotion) getArguments().getSerializable(ARG_PROMOTION);
+            learningActivities = (List<Evaluation>) getArguments().getSerializable(IntentKeys.LEARNING_ACTIVITIES);
+            promotion = (Promotion) getArguments().getSerializable(IntentKeys.PROMOTION);
         }
     }
 
