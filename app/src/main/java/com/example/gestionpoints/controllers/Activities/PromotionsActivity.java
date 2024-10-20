@@ -26,7 +26,6 @@ public class PromotionsActivity extends BaseActivity implements FooterFragment.F
     protected void onCreate(Bundle savedInstanceState) {
         //DataGenerationTest testDataGenerator = new DataGenerationTest(this);
         //testDataGenerator.generateTestData();
-        //todelete this comment
         promotionManager = new PromotionManager(this);
         if (savedInstanceState != null) {
             promotionList = (ArrayList<Promotion>) savedInstanceState.getSerializable(IntentKeys.PROMOTIONS);
