@@ -38,10 +38,10 @@ public class SettingsLearningActivitiesListActivity extends BaseActivity impleme
         } else {
             promotion = (Promotion) getIntent().getSerializableExtra("promotion");
             learningActivities = evaluationManager.getEvaluationsForPromotion(promotion);
-            ;
         }
     }
 
+    //region BaseActivity releted methods
     @Override
     public String getTitlePage() {
         return "Learning Activities";
@@ -55,7 +55,9 @@ public class SettingsLearningActivitiesListActivity extends BaseActivity impleme
     public void setupFooter(){
         setupFragment(R.id.footerContainer, new FooterFragment());
     }
+    //endregion
 
+    // region FooterListener related methods
     @Override
     public void onAddButtonClick() {
         AddLearningActivitiesDialogFragment dialogFragment = new AddLearningActivitiesDialogFragment(promotion.getId());
@@ -67,19 +69,19 @@ public class SettingsLearningActivitiesListActivity extends BaseActivity impleme
         dialogFragment.show(getSupportFragmentManager(), "AddLearningActivitiesFragment");
     }
 
-
     @Override
     public void onDeleteButtonClick() {
         boolean update = false;
         for (Evaluation learningActivitie : learningActivities) {
             if (learningActivitie.isSelected()) {
                 evaluationManager.deleteEvaluation(learningActivitie);
-                learningActivities = evaluationManager.getEvaluationsForPromotion(promotion);
                 update = true;
             }
         }
-        if (update)
+        if (update){
+            learningActivities = evaluationManager.getEvaluationsForPromotion(promotion);
             replaceFragement(promotion);
+        }
     }
 
     private void replaceFragement(Promotion promotion) {
@@ -87,6 +89,8 @@ public class SettingsLearningActivitiesListActivity extends BaseActivity impleme
                 .replace(R.id.middlePageContainer, CommunLearningActivitesFragment.newInstance(promotion, learningActivities))
                 .commit();
     }
+    //endregion
+
 
     @Override
     public void onItemClick(View view, Evaluation evaluation) {
@@ -94,7 +98,6 @@ public class SettingsLearningActivitiesListActivity extends BaseActivity impleme
         evalDetailsSettingsActivity.putExtra("evaluation", evaluation);
         startActivity(evalDetailsSettingsActivity);
     }
-
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {

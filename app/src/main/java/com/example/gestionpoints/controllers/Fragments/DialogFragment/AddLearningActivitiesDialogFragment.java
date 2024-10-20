@@ -1,5 +1,7 @@
 package com.example.gestionpoints.controllers.Fragments.DialogFragment;
 
+import android.util.Log;
+
 import com.example.gestionpoints.models.evaluation.Evaluation;
 
 public class AddLearningActivitiesDialogFragment extends AddItemDialogFragment<Evaluation> {
@@ -12,6 +14,7 @@ public class AddLearningActivitiesDialogFragment extends AddItemDialogFragment<E
 
     @Override
     protected Evaluation createNewItem(String name) {
+        Log.d("doiswork", "createNewItem: " + name);
         return new Evaluation(null, parentId, 20, name);
     }
 

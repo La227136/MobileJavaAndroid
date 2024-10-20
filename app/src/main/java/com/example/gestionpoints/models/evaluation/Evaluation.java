@@ -30,7 +30,7 @@ public class Evaluation implements Serializable {
         this.subEvaluations = subEvaluations;
     }
 
-    public Evaluation(Integer parentId, Integer promotionId, float maxGrade, String names) {
+    public Evaluation(Integer parentId, Integer promotionId, float maxGrade, String name) {
         this.parentId = parentId;
         this.promotionId = promotionId;
         this.maxGrade = maxGrade;
