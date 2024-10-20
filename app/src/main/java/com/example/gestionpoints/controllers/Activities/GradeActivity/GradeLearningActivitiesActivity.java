@@ -40,6 +40,7 @@ public class GradeLearningActivitiesActivity extends BaseActivity implements Com
         return learningActivityList;
     }
 
+    // region BaseActivity related methods
     @Override
     public String getTitlePage() {
         return "Points";
@@ -49,8 +50,9 @@ public class GradeLearningActivitiesActivity extends BaseActivity implements Com
     public Fragment getMiddleFragmentToLaunch() {
         return CommunLearningActivitesFragment.newInstance(promotion, learningActivityList);
     }
+    //endregion
 
-
+    //region CommunLearningActivitesFragment.Listener related methods
     @Override
     public void onItemClick(View view, Evaluation learningActivity) {
         openGradeStudentListActivity(learningActivity);
@@ -65,6 +67,6 @@ public class GradeLearningActivitiesActivity extends BaseActivity implements Com
 
     @Override
     public void onLearningActivityLongClicked(Evaluation promotion) {
-
     }
+    //endregion
 }

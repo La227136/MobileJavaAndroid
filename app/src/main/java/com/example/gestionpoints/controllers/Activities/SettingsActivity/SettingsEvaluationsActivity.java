@@ -84,7 +84,7 @@ public class SettingsEvaluationsActivity extends BaseActivity implements FooterF
         AddEvaluationDialogFragment dialogFragment = new AddEvaluationDialogFragment(parentEvaluation);
         dialogFragment.setAddItemListener(newEvaluation -> {
             evaluationManager.addEvaluation(newEvaluation);
-
+            gradeManager.addGrade(newEvaluation.getId(),studentIdList);
         replaceFragment();
         });
         dialogFragment.show(getSupportFragmentManager(), ADD_EVALUATION_DIALOG_FRAGMENT);
