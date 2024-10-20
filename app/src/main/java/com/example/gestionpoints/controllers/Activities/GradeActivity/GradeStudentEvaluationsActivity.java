@@ -6,11 +6,11 @@ import androidx.fragment.app.Fragment;
 
 import com.example.gestionpoints.Utils.IntentKeys;
 import com.example.gestionpoints.controllers.Activities.BaseActivity;
-import com.example.gestionpoints.controllers.Fragments.GradeEvaluationsFragment;
+import com.example.gestionpoints.controllers.Fragments.GradeStudentEvaluationsFragment;
 import com.example.gestionpoints.models.evaluation.Evaluation;
 import com.example.gestionpoints.models.student.Student;
 
-public class GradeSingleStudentActivity extends BaseActivity {
+public class GradeStudentEvaluationsActivity extends BaseActivity {
 private Student student;
 private Evaluation learningActivity;
     @Override
@@ -22,7 +22,7 @@ private Evaluation learningActivity;
 
     @Override
     public Fragment getMiddleFragmentToLaunch() {
-        return GradeEvaluationsFragment.newInstance(student, learningActivity);
+        return GradeStudentEvaluationsFragment.newInstance(student, learningActivity);
     }
 
     @Override

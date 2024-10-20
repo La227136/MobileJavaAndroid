@@ -14,7 +14,7 @@
         android:theme="@style/Theme.GestionPoints"
         tools:targetApi="31">
         <activity
-            android:name=".controllers.Activities.GradeActivity.GradeSingleStudentActivity"
+            android:name=".controllers.Activities.GradeActivity.GradeStudentEvaluationsActivity"
             android:exported="false" />
         <activity
             android:name=".controllers.Activities.GradeActivity.GradeStudentListActivity"

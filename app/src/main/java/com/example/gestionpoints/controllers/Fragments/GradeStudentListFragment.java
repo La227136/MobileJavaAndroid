@@ -22,7 +22,7 @@ import java.util.ArrayList;
 
 public class GradeStudentListFragment extends Fragment {
 
-    private ArrayList<Student> students;
+    private ArrayList<Student> studentList;
     private LinearLayout studentListContainer;
     private Listener listener;
     private GradeManager gradeManager;
@@ -34,11 +34,11 @@ public class GradeStudentListFragment extends Fragment {
         void onItemClick(Student student);
     }
 
-    public static GradeStudentListFragment newInstance(ArrayList<Student> students, Evaluation learningActivity) {
+    public static GradeStudentListFragment newInstance(ArrayList<Student> studentList, Evaluation learningActivity) {
         GradeStudentListFragment fragment = new GradeStudentListFragment();
         Bundle args = new Bundle();
-        args.putSerializable(IntentKeys.STUDENTLIST, students);
-        args.putSerializable("learningActivity",learningActivity);
+        args.putSerializable(IntentKeys.STUDENTLIST, studentList);
+        args.putSerializable(IntentKeys.LEARNING_ACTIVITY,learningActivity);
         fragment.setArguments(args);
         return fragment;
     }
@@ -58,12 +58,12 @@ public class GradeStudentListFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         gradeManager = new GradeManager(getContext());
         super.onCreate(savedInstanceState);
-        if (students == null) {
-            students = new ArrayList<>();
+        if (studentList == null) {
+            studentList = new ArrayList<>();
         }
         if (getArguments() != null) {
-            students = (ArrayList<Student>) getArguments().getSerializable(IntentKeys.STUDENTLIST);
-            learningActivity = (Evaluation) getArguments().getSerializable("learningActivity");
+            studentList = (ArrayList<Student>) getArguments().getSerializable(IntentKeys.STUDENTLIST);
+            learningActivity = (Evaluation) getArguments().getSerializable(IntentKeys.LEARNING_ACTIVITY);
         }
     }
 
@@ -73,15 +73,14 @@ public class GradeStudentListFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_student_list, container, false);
         studentListContainer = view.findViewById(R.id.studentListContainer);
-        if(students != null){
+        if(studentList != null){
           displayStudents(inflater);
         }
-
         return view;
     }
 
     private void displayStudents(LayoutInflater inflater) {
-            for (Student student : students) {
+            for (Student student : studentList) {
               studentListContainer.addView(createStudentItem(inflater, student));
             }
     }
@@ -93,24 +92,20 @@ public class GradeStudentListFragment extends Fragment {
         setUpOnClickListener(studentItem,student);
         return studentItem;
     }
-
+    private View getStudentItem(LayoutInflater inflater) {
+        return inflater.inflate(R.layout.list_item_student, studentListContainer, false);
+    }
+    private void retrieveView(View studentItem) {
+        fullNameTextView = studentItem.findViewById(R.id.studentFullNameTextView);
+        studentIdTextView = studentItem.findViewById(R.id.studentGradeTextView);
+    }
     private void setUpOnClickListener(View studentItem, Student student) {
         studentItem.setOnClickListener((view) -> {
             listener.onItemClick(student);
         });
     }
-
     private void setStudentItemData(Student student) {
         studentIdTextView.setText(String.valueOf(gradeManager.getGrade(learningActivity.getId(), student.getId())));
         fullNameTextView.setText(student.getLastName() + " " + student.getFirstName());
-    }
-
-    private void retrieveView(View studentItem) {
-        fullNameTextView = studentItem.findViewById(R.id.studentFullNameTextView);
-        studentIdTextView = studentItem.findViewById(R.id.studentGradeTextView);
-    }
-
-    private View getStudentItem(LayoutInflater inflater) {
-        return inflater.inflate(R.layout.list_item_student, studentListContainer, false);
     }
 }

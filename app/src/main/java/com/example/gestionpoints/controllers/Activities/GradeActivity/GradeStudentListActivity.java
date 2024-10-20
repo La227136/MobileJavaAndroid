@@ -18,7 +18,7 @@ public class GradeStudentListActivity extends BaseActivity implements GradeStude
 
     private Promotion promotion;
     private Evaluation learningActivity;
-
+    ArrayList<Student> studentList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
@@ -27,11 +27,9 @@ public class GradeStudentListActivity extends BaseActivity implements GradeStude
         } else {
             promotion = (Promotion) getIntent().getSerializableExtra(IntentKeys.PROMOTION);
             learningActivity = (Evaluation) getIntent().getSerializableExtra(IntentKeys.LEARNING_ACTIVITY);
-
         }
         super.onCreate(savedInstanceState);
     }
-
 
     //region BaseActivity related methods
     @Override
@@ -40,8 +38,8 @@ public class GradeStudentListActivity extends BaseActivity implements GradeStude
     }
     @Override
     public Fragment getMiddleFragmentToLaunch() {
+        // todo faire comment dans SettingsLearningActivitiesListActivity pour le save instance et tt
         StudentManager studentManager = new StudentManager(this);
-        ArrayList<Student> studentList;
         studentList = studentManager.getStudentsForPromotion(promotion);
         return GradeStudentListFragment.newInstance(studentList,learningActivity);
     }
@@ -54,7 +52,7 @@ public class GradeStudentListActivity extends BaseActivity implements GradeStude
         openGradeSingleStudentActivity(student);
     }
     private void openGradeSingleStudentActivity(Student student) {
-        Intent intent = new Intent(getApplicationContext(), GradeSingleStudentActivity.class);
+        Intent intent = new Intent(getApplicationContext(), GradeStudentEvaluationsActivity.class);
         intent.putExtra(IntentKeys.STUDENT, student);
         intent.putExtra(IntentKeys.LEARNING_ACTIVITY, learningActivity);
         startActivity(intent);

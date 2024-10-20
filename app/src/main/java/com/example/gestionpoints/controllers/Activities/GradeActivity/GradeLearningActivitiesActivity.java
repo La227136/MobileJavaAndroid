@@ -25,7 +25,7 @@ public class GradeLearningActivitiesActivity extends BaseActivity implements Com
     protected void onCreate(Bundle savedInstanceState) {
         evaluationManager = new EvaluationManager(this);
         promotion = (Promotion) getIntent().getSerializableExtra(IntentKeys.PROMOTION);
-        //TODO maybe null
+        //TODO maybe null rien dans onsavedinstancestate a voir si grave
         learningActivityList = getLearningActivityList();
         super.onCreate(savedInstanceState);
     }
