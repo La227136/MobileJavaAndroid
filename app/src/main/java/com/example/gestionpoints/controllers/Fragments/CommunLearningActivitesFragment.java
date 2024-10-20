@@ -56,39 +56,55 @@ public class CommunLearningActivitesFragment extends Fragment {
         }
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View v = inflater.inflate(R.layout.fragment_learning_activities, container, false);
-
         learningActivitiesContainer = v.findViewById(R.id.learningActivitiesContainer);
-
         if (promotion != null) {
-            for (Evaluation evaluation : learningActivities) {
-                if (evaluation.getParentId() == 0) {
-                    View learningActivityItem = inflater.inflate(R.layout.list_item_learning_activity, learningActivitiesContainer, false);
-                    ((TextView) learningActivityItem.findViewById(R.id.learningActivityTextView)).setText(evaluation.getName());
-                    learningActivityItem.setOnClickListener((view) -> {
-                        if (!isLongClick) {
-                            listener.onItemClick(view, evaluation);
-                        }
-                        isLongClick = false;
-                    });
-                    learningActivityItem.setOnLongClickListener((view) -> {
-                        isLongClick = true;
-                        evaluation.setSelected(!evaluation.isSelected());
-                        learningActivityItem.setSelected(evaluation.isSelected());
-                        return true;
-                    });
-                    learningActivityItem.setSelected(evaluation.isSelected());
-                    learningActivitiesContainer.addView(learningActivityItem);
-                }
-            }
+            displayLearningActivities(inflater);
         }
 
         return v;
     }
+
+    private void displayLearningActivities(LayoutInflater inflater) {
+        for (Evaluation evaluation : learningActivities) {
+            if (evaluation.getParentId() == 0) {
+                addLearningActivityItem(inflater, evaluation);
+            }
+        }
+    }
+
+    private void addLearningActivityItem(LayoutInflater inflater, Evaluation evaluation) {
+        View learningActivityItem = inflater.inflate(R.layout.list_item_learning_activity, learningActivitiesContainer, false);
+        setLearningActivityItemText(learningActivityItem, evaluation);
+        setupClickListeners(learningActivityItem, evaluation);
+        learningActivityItem.setSelected(evaluation.isSelected());
+        learningActivitiesContainer.addView(learningActivityItem);
+    }
+
+    private void setLearningActivityItemText(View learningActivityItem, Evaluation evaluation) {
+        TextView activityTextView = learningActivityItem.findViewById(R.id.learningActivityTextView);
+        activityTextView.setText(evaluation.getName());
+    }
+
+    private void setupClickListeners(View learningActivityItem, Evaluation evaluation) {
+        learningActivityItem.setOnClickListener((view) -> {
+            if (!isLongClick) {
+                listener.onItemClick(view, evaluation);
+            }
+            isLongClick = false;
+        });
+
+        learningActivityItem.setOnLongClickListener((view) -> {
+            isLongClick = true;
+            evaluation.setSelected(!evaluation.isSelected());
+            learningActivityItem.setSelected(evaluation.isSelected());
+            return true;
+        });
+    }
+
 
 
 }

@@ -66,10 +66,14 @@ public class PromotionListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_promotion_list, container, false);
         promotionListContainer = view.findViewById(R.id.promotion_list_container);
-        promotionList.forEach(promotion -> {
-            promotionListContainer.addView(createPromotionItemView(inflater, promotion));
-        });
+        displayPromotionList(inflater);
         return view;
+    }
+
+    private void displayPromotionList(LayoutInflater inflater) {
+       for (Promotion promotion : promotionList) {
+            promotionListContainer.addView(createPromotionItemView(inflater, promotion));
+        }
     }
 
     private View createPromotionItemView(LayoutInflater inflater, Promotion promotion) {
