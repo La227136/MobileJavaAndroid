@@ -19,8 +19,6 @@ import com.example.gestionpoints.models.promotion.Promotion;
 import java.util.ArrayList;
 
 public class PromotionsActivity extends BaseActivity implements FooterFragment.FooterListener, PromotionListFragment.Listener {
-
-
     ArrayList<Promotion> promotionList;
     PromotionManager promotionManager;
 
@@ -49,7 +47,7 @@ public class PromotionsActivity extends BaseActivity implements FooterFragment.F
         return PromotionListFragment.newInstance(promotionList);
     }
 
-    // Override from FooterListener
+
     @Override
     public void onAddButtonClick() {
         AddPromotionDialogFragment dialogFragment = new AddPromotionDialogFragment();
@@ -82,16 +80,9 @@ public class PromotionsActivity extends BaseActivity implements FooterFragment.F
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putSerializable("promotions", promotionList);
-    }
-
-    @Override
     public void onPromotionLongClicked(Promotion promotion) {
         promotion.setIsSelected(!promotion.isSelected());
     }
-
 
     @Override
     public void setOnClickSettingBtn(Promotion promotion) {
@@ -112,6 +103,11 @@ public class PromotionsActivity extends BaseActivity implements FooterFragment.F
         Intent intent = new Intent(this, activityClass);
         intent.putExtra("promotion", promotion);
         startActivity(intent);
+    }
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable("promotions", promotionList);
     }
 
 }
