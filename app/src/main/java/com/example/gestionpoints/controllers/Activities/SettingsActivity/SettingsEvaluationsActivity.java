@@ -20,14 +20,12 @@ public class SettingsEvaluationsActivity extends BaseActivity implements FooterF
 
     private Evaluation learningActivity;
     private EvaluationManager evaluationManager;
-    ArrayList<Evaluation> selecteEvaluations = new ArrayList<>();
-
+    ArrayList<Evaluation> selectedEvaluationList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         evaluationManager = new EvaluationManager(this);
         learningActivity = (Evaluation) getIntent().getSerializableExtra(IntentKeys.LEARNING_ACTIVITY);
-
         super.onCreate(savedInstanceState);
     }
 
@@ -58,14 +56,15 @@ public class SettingsEvaluationsActivity extends BaseActivity implements FooterF
 
     @Override
     public void onDeleteButtonClick() {
-        boolean isDeleted = false;
-        for (Evaluation evaluation : selecteEvaluations) {
-            if (evaluation.isSelected()) {
-                isDeleted = true;
+        boolean update = false;
+        for (Evaluation evaluation : selectedEvaluationList) {
+
+                update = true;
                 evaluationManager.deleteEvaluation(evaluation);
-            }
         }
-        replaceFragment();
+        if (update) {
+            replaceFragment();
+        }
     }
 
     public void onAddSubEvaluation(Evaluation parentEvaluation) {
@@ -81,7 +80,11 @@ public class SettingsEvaluationsActivity extends BaseActivity implements FooterF
     @Override
     public void OnLongClick(View view, Evaluation evaluation) {
         evaluation.setSelected(!evaluation.isSelected());
-        selecteEvaluations.add(evaluation);
+        if (evaluation.isSelected()) {
+            selectedEvaluationList.add(evaluation);
+        } else {
+            selectedEvaluationList.remove(evaluation);
+        }
     }
 
     private void replaceFragment() {

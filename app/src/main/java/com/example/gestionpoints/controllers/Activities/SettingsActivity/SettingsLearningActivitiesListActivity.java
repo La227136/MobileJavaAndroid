@@ -22,7 +22,8 @@ public class SettingsLearningActivitiesListActivity extends BaseActivity impleme
 
     private EvaluationManager evaluationManager;
     private Promotion promotion;
-    private ArrayList<Evaluation> learningActivities = new ArrayList<>();
+    private ArrayList<Evaluation> learningActivityList = new ArrayList<>();
+    ArrayList<Evaluation> selectedLearningActivity = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,10 +35,10 @@ public class SettingsLearningActivitiesListActivity extends BaseActivity impleme
     private void initializeAttributes(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
             promotion = (Promotion) savedInstanceState.getSerializable(IntentKeys.PROMOTION);
-            learningActivities = (ArrayList<Evaluation>) savedInstanceState.getSerializable(IntentKeys.LEARNING_ACTIVITIES);
+            learningActivityList = (ArrayList<Evaluation>) savedInstanceState.getSerializable(IntentKeys.LEARNING_ACTIVITIES);
         } else {
             promotion = (Promotion) getIntent().getSerializableExtra(IntentKeys.PROMOTION);
-            learningActivities = getLearningActivityList();
+            learningActivityList = getLearningActivityList();
         }
     }
 
@@ -49,7 +50,7 @@ public class SettingsLearningActivitiesListActivity extends BaseActivity impleme
 
     @Override
     public Fragment getMiddleFragmentToLaunch() {
-        return CommunLearningActivitesFragment.newInstance(promotion, learningActivities);
+        return CommunLearningActivitesFragment.newInstance(promotion, learningActivityList);
     }
 
     @Override
@@ -64,7 +65,7 @@ public class SettingsLearningActivitiesListActivity extends BaseActivity impleme
         AddLearningActivitiesDialogFragment dialogFragment = new AddLearningActivitiesDialogFragment(promotion.getId());
         dialogFragment.setAddItemListener(newLearningActivity -> {
             evaluationManager.addEvaluation(newLearningActivity);
-            learningActivities = getLearningActivityList();
+            learningActivityList = getLearningActivityList();
             replaceFragment(promotion);
         });
         dialogFragment.show(getSupportFragmentManager(), "AddLearningActivitiesFragment");
@@ -73,21 +74,21 @@ public class SettingsLearningActivitiesListActivity extends BaseActivity impleme
     @Override
     public void onDeleteButtonClick() {
         boolean update = false;
-        for (Evaluation learningActivitie : learningActivities) {
+        for (Evaluation learningActivitie : learningActivityList) {
             if (learningActivitie.isSelected()) {
                 evaluationManager.deleteEvaluation(learningActivitie);
                 update = true;
             }
         }
         if (update) {
-            learningActivities = getLearningActivityList();
+            learningActivityList = getLearningActivityList();
             replaceFragment(promotion);
         }
     }
 
     private void replaceFragment(Promotion promotion) {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.middlePageContainer, CommunLearningActivitesFragment.newInstance(promotion, learningActivities))
+                .replace(R.id.middlePageContainer, CommunLearningActivitesFragment.newInstance(promotion, learningActivityList))
                 .commit();
     }
     //endregion
@@ -96,6 +97,7 @@ public class SettingsLearningActivitiesListActivity extends BaseActivity impleme
     @Override
     public void onLearningActivityLongClicked(Evaluation learningActivity) {
         learningActivity.setSelected(!learningActivity.isSelected());
+        selectedLearningActivity.add(learningActivity);
     }
 
     @Override
@@ -123,7 +125,7 @@ public class SettingsLearningActivitiesListActivity extends BaseActivity impleme
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putSerializable(IntentKeys.LEARNING_ACTIVITIES, learningActivities);
+        outState.putSerializable(IntentKeys.LEARNING_ACTIVITIES, learningActivityList);
         outState.putSerializable(IntentKeys.PROMOTION, promotion);
     }
 }
