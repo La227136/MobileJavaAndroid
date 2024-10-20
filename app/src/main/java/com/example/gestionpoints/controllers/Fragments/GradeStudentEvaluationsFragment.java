@@ -14,6 +14,7 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.example.gestionpoints.R;
+import com.example.gestionpoints.Utils.IntentKeys;
 import com.example.gestionpoints.models.dataBaseManager.manager.EvaluationManager;
 import com.example.gestionpoints.models.dataBaseManager.manager.GradeManager;
 import com.example.gestionpoints.models.evaluation.Evaluation;
@@ -23,8 +24,7 @@ import com.example.gestionpoints.models.student.Student;
 import java.util.List;
 
 public class GradeStudentEvaluationsFragment extends Fragment {
-    private static final String ARG_EVALUATION = "evaluation";
-    private static final String ARG_STUDENT = "student";
+
     private GradeManager gradeManager;
     private LinearLayout displayGradeContainer;
     private Student student;
@@ -38,8 +38,8 @@ public class GradeStudentEvaluationsFragment extends Fragment {
     public static GradeStudentEvaluationsFragment newInstance(Student student, Evaluation learningActivity) {
         GradeStudentEvaluationsFragment fragment = new GradeStudentEvaluationsFragment();
         Bundle args = new Bundle();
-        args.putSerializable(ARG_EVALUATION, learningActivity);
-        args.putSerializable(ARG_STUDENT, student);
+        args.putSerializable(IntentKeys.LEARNING_ACTIVITY, learningActivity);
+        args.putSerializable(IntentKeys.STUDENT, student);
         fragment.setArguments(args);
         return fragment;
     }
@@ -49,8 +49,8 @@ public class GradeStudentEvaluationsFragment extends Fragment {
         gradeManager = new GradeManager(getContext());
         evaluationManager = new EvaluationManager(getContext());
         if (getArguments() != null) {
-            learningActivity = (Evaluation) getArguments().getSerializable(ARG_EVALUATION);
-            student = (Student) getArguments().getSerializable(ARG_STUDENT);
+            learningActivity = (Evaluation) getArguments().getSerializable(IntentKeys.LEARNING_ACTIVITY);
+            student = (Student) getArguments().getSerializable(IntentKeys.STUDENT);
         }
         super.onCreate(savedInstanceState);
     }
