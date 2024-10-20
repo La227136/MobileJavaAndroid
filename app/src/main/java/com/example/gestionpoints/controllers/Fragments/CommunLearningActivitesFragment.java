@@ -109,7 +109,4 @@ public class CommunLearningActivitesFragment extends Fragment {
             return true;
         });
     }
-
-
-
 }
