@@ -20,29 +20,9 @@ public class Grade implements Serializable {
         this.evaluation = evaluation;
         this.grade = grade;
     }
-    public Grade(Student student, Evaluation evaluation, float grade, GradeManager gradeManager) {
-        this.student = student;
-        this.evaluation = evaluation;
-        this.grade = grade;
-        this.gradeManager = gradeManager;
-    }
 
-    public float calculGrade() {
-        if (evaluation.getSubEvaluations() == null || evaluation.getSubEvaluations().isEmpty()) {
-            return grade;
-        }
-        float totalGrade = 0;
-        float maxGrade = 0;
-
-        for (Evaluation subEvaluation : evaluation.getSubEvaluations()) {
-            Grade subEvaluationGrade = new Grade(student, subEvaluation,gradeManager.getGrade(subEvaluation.getId(),student.getId()) );
-            totalGrade += subEvaluationGrade.calculGrade();
-            maxGrade += subEvaluation.getMaxGrade();
-        }
-        if (maxGrade == 0) {
-            return 0;
-        }
-        return(totalGrade / maxGrade) * evaluation.getMaxGrade();
+    public Float calculGrade (){
+        return grade;
     }
 
     public void setGrade(float grade) {

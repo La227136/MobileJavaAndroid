@@ -1,5 +1,6 @@
 package com.example.gestionpoints.controllers.Fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -16,7 +17,6 @@ import androidx.fragment.app.Fragment;
 import com.example.gestionpoints.R;
 import com.example.gestionpoints.Utils.IntentKeys;
 import com.example.gestionpoints.models.dataBaseManager.manager.EvaluationManager;
-import com.example.gestionpoints.models.dataBaseManager.manager.GradeManager;
 import com.example.gestionpoints.models.evaluation.Evaluation;
 import com.example.gestionpoints.models.grade.Grade;
 import com.example.gestionpoints.models.student.Student;
@@ -25,7 +25,7 @@ import java.util.List;
 
 public class GradeStudentEvaluationsFragment extends Fragment {
 
-    private GradeManager gradeManager;
+
     private LinearLayout displayGradeContainer;
     private Student student;
     private EvaluationManager evaluationManager;
@@ -33,8 +33,8 @@ public class GradeStudentEvaluationsFragment extends Fragment {
     private TextView ponderation;
     private TextView evaluationName;
     private EditText gradeEditText;
-    private Grade grade;
-
+    // private Grade grade;
+    private Listener listener;
     public static GradeStudentEvaluationsFragment newInstance(Student student, Evaluation learningActivity) {
         GradeStudentEvaluationsFragment fragment = new GradeStudentEvaluationsFragment();
         Bundle args = new Bundle();
@@ -43,10 +43,23 @@ public class GradeStudentEvaluationsFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
+    public interface Listener {
+        Grade getGrade(Student student, Evaluation evaluation);
+        void updateGrade(Grade grade, float editableGrade);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof Listener) {
+            listener = (Listener) context;
+        } else {
+            throw new RuntimeException(context.toString() + " must implement AddSubEvaluationListener");
+        }
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        gradeManager = new GradeManager(getContext());
         evaluationManager = new EvaluationManager(getContext());
         if (getArguments() != null) {
             learningActivity = (Evaluation) getArguments().getSerializable(IntentKeys.LEARNING_ACTIVITY);
@@ -80,8 +93,10 @@ public class GradeStudentEvaluationsFragment extends Fragment {
         View classeView = inflater.inflate(R.layout.list_item_evaluation_points, displayGradeContainer, false);
         retrieveView(classeView);
         evaluationName.setText(evaluation.getName());
-        grade = new Grade(student, evaluation,gradeManager.getGrade(evaluation.getId(),student.getId()),gradeManager);
+
+        Grade grade = listener.getGrade(student, evaluation);
         gradeEditText.setText(String.valueOf(grade.calculGrade()));
+
         gradeEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -94,10 +109,11 @@ public class GradeStudentEvaluationsFragment extends Fragment {
             }
 
             @Override
-            public void afterTextChanged(Editable s) {
-                gradeManager.updateGrade(grade, Float.parseFloat(s.toString()));
+            public void afterTextChanged(Editable editableGrade) {
+                listener.updateGrade(grade, Float.parseFloat(editableGrade.toString()));
             }
         });
+
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         classeView.setLayoutParams(params);
