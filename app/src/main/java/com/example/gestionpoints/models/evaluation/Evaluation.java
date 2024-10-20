@@ -38,7 +38,6 @@ public class Evaluation implements Serializable {
         this.subEvaluations = null;
     }
 
-
     public Integer getId() {
         return id;
     }

@@ -13,6 +13,7 @@ import com.example.gestionpoints.models.grade.Grade;
 import com.example.gestionpoints.models.student.Student;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class GradeManager implements Serializable {
     private SQLiteDatabase mDatabase;
@@ -29,8 +30,10 @@ public class GradeManager implements Serializable {
         return values;
     }
 
-    public void addGrade(int evaluationId, int studentId, float grade) {
-        mDatabase.insert(GradeTable.NAME, null, getContentValues(evaluationId, studentId, grade));
+    public void addGrade(int evaluationId, List<Integer> studentIds) {
+        for (int studentId : studentIds) {
+            mDatabase.insert(GradeTable.NAME, null, getContentValues(evaluationId, studentId, 0));
+        }
     }
 
     public float getGrade(int evaluationId, int studentId) {

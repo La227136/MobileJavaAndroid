@@ -6,16 +6,17 @@ import com.example.gestionpoints.models.evaluation.Evaluation;
 
 public class AddLearningActivitiesDialogFragment extends AddItemDialogFragment<Evaluation> {
 
-    private int parentId;
+   private Integer promotionId;
 
-    public AddLearningActivitiesDialogFragment(int parentId) {
-        this.parentId = parentId;
+    public AddLearningActivitiesDialogFragment(int promotionId) {
+        Log.d("caca", "AddLearningActivitiesDialogFragment: " + promotionId);
+        this.promotionId = promotionId;
     }
 
     @Override
     protected Evaluation createNewItem(String name) {
         Log.d("doiswork", "createNewItem: " + name);
-        return new Evaluation(null, parentId, 20, name);
+        return new Evaluation(null, promotionId, 20, name);
     }
 
     @Override

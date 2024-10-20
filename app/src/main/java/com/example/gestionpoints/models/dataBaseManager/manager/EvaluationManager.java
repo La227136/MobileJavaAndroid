@@ -83,9 +83,13 @@ public class EvaluationManager {
     }
 
     public void addEvaluation(Evaluation evaluation) {
-        mDatabase.insert(EvaluationTable.NAME, null, getContentValues(evaluation));
+        mDatabase.insert(EvaluationTable.NAME, null, getContentValues(evaluation));;
+        evaluation.setId(getLastId());
     }
 
+    public int getLastId() {
+        return (int) mDatabase.compileStatement("SELECT last_insert_rowid()").simpleQueryForLong();
+    }
 
     public void updateEvaluation(Evaluation evaluation) {
         mDatabase.update(EvaluationTable.NAME, getContentValues(evaluation),

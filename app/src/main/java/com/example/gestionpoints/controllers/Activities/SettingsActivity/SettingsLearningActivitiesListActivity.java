@@ -14,22 +14,32 @@ import com.example.gestionpoints.controllers.Fragments.DialogFragment.AddLearnin
 import com.example.gestionpoints.controllers.Fragments.FooterFragment;
 import com.example.gestionpoints.controllers.Fragments.CommunLearningActivitesFragment;
 import com.example.gestionpoints.models.dataBaseManager.manager.EvaluationManager;
+import com.example.gestionpoints.models.dataBaseManager.manager.GradeManager;
+import com.example.gestionpoints.models.dataBaseManager.manager.StudentManager;
 import com.example.gestionpoints.models.evaluation.Evaluation;
 import com.example.gestionpoints.models.promotion.Promotion;
+import com.example.gestionpoints.models.student.Student;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class SettingsLearningActivitiesListActivity extends BaseActivity implements FooterFragment.FooterListener, CommunLearningActivitesFragment.Listener {
 
     private EvaluationManager evaluationManager;
+    private GradeManager gradeManager;
     private Promotion promotion;
+    private StudentManager studentManager;
     private ArrayList<Evaluation> learningActivityList = new ArrayList<>();
     ArrayList<Evaluation> selectedLearningActivity = new ArrayList<>();
+    private List<Integer> studentIdList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        studentManager = new StudentManager(this);
         evaluationManager = new EvaluationManager(this);
+        gradeManager = new GradeManager(this);
         initializeAttributes(savedInstanceState);
+        studentIdList = studentManager.getStudentIdList(promotion.getId());
         super.onCreate(savedInstanceState);
     }
 
@@ -66,6 +76,7 @@ public class SettingsLearningActivitiesListActivity extends BaseActivity impleme
         AddLearningActivitiesDialogFragment dialogFragment = new AddLearningActivitiesDialogFragment(promotion.getId());
         dialogFragment.setAddItemListener(newLearningActivity -> {
             evaluationManager.addEvaluation(newLearningActivity);
+            gradeManager.addGrade(newLearningActivity.getId(),studentIdList);
             replaceFragment();
         });
         dialogFragment.show(getSupportFragmentManager(), "AddLearningActivitiesFragment");

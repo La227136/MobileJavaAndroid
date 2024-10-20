@@ -12,22 +12,31 @@ import com.example.gestionpoints.controllers.Fragments.DialogFragment.AddEvaluat
 import com.example.gestionpoints.controllers.Fragments.SettingsEvaluationsFragment;
 import com.example.gestionpoints.controllers.Fragments.FooterFragment;
 import com.example.gestionpoints.models.dataBaseManager.manager.EvaluationManager;
+import com.example.gestionpoints.models.dataBaseManager.manager.GradeManager;
+import com.example.gestionpoints.models.dataBaseManager.manager.StudentManager;
 import com.example.gestionpoints.models.evaluation.Evaluation;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class SettingsEvaluationsActivity extends BaseActivity implements FooterFragment.FooterListener, SettingsEvaluationsFragment.Listener {
 
     public static final String ADD_EVALUATION_DIALOG_FRAGMENT = "AddEvaluationDialogFragment";
     private Evaluation learningActivity;
     private EvaluationManager evaluationManager;
+    private GradeManager gradeManager;
+    private StudentManager studentManager;
     ArrayList<Evaluation> selectedEvaluationList = new ArrayList<>();
     ArrayList<Evaluation> directSubEvaluation;
+    private List<Integer> studentIdList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         evaluationManager = new EvaluationManager(this);
+        gradeManager = new GradeManager(this);
+        studentManager = new StudentManager(this);
         learningActivity = (Evaluation) getIntent().getSerializableExtra(IntentKeys.LEARNING_ACTIVITY);
+        studentIdList = studentManager.getStudentIdList(learningActivity.getId());
         //TODO erroor peut etre
         directSubEvaluation =  evaluationManager.getEvaluationForParentEvaluation(learningActivity);
         super.onCreate(savedInstanceState);
@@ -52,6 +61,7 @@ public class SettingsEvaluationsActivity extends BaseActivity implements FooterF
         AddEvaluationDialogFragment dialogFragment = new AddEvaluationDialogFragment(learningActivity);
         dialogFragment.setAddItemListener(newEvaluation -> {
             evaluationManager.addEvaluation(newEvaluation);
+            gradeManager.addGrade(newEvaluation.getId(),studentIdList);
             replaceFragment();
         });
         dialogFragment.show(getSupportFragmentManager(), ADD_EVALUATION_DIALOG_FRAGMENT);
@@ -74,6 +84,7 @@ public class SettingsEvaluationsActivity extends BaseActivity implements FooterF
         AddEvaluationDialogFragment dialogFragment = new AddEvaluationDialogFragment(parentEvaluation);
         dialogFragment.setAddItemListener(newEvaluation -> {
             evaluationManager.addEvaluation(newEvaluation);
+
         replaceFragment();
         });
         dialogFragment.show(getSupportFragmentManager(), ADD_EVALUATION_DIALOG_FRAGMENT);

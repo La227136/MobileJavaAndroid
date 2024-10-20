@@ -86,6 +86,36 @@ public class StudentManager {
 
         return students;
     }
+    public ArrayList<Integer> getStudentIdList(Integer id) {
+        ArrayList<Integer> studentIdList = new ArrayList<>();
+
+        String selection = StudentTable.Cols.PROMOTION_ID + " = ?";
+        String[] selectionArgs = {String.valueOf(id)};
+
+        Cursor cursor = mDatabase.query(
+                BulletinDBSchema.StudentTable.NAME,
+                null, // Toutes les colonnes
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+
+        StudentCursorWrapper cursorWrapper = new StudentCursorWrapper(cursor);
+
+        try {
+            cursorWrapper.moveToFirst();
+            while (!cursorWrapper.isAfterLast()) {
+                studentIdList.add(cursorWrapper.getStudent().getId());
+                cursorWrapper.moveToNext();
+            }
+        } finally {
+            cursorWrapper.close();
+        }
+
+        return studentIdList;
+    }
 
 
     private ContentValues getContentValues(Student student) {
@@ -113,4 +143,5 @@ public class StudentManager {
                 StudentTable.Cols.ID + " = ?",
                 new String[]{String.valueOf(student.getId())});
     }
+
 }
