@@ -26,8 +26,18 @@ public class GradeLearningActivitiesActivity extends BaseActivity implements Com
         evaluationManager = new EvaluationManager(this);
         promotion = (Promotion) getIntent().getSerializableExtra(IntentKeys.PROMOTION);
         //TODO maybe null
-        learningActivityList = evaluationManager.getEvaluationsForPromotion(promotion);
+        learningActivityList = getLearningActivityList();
         super.onCreate(savedInstanceState);
+    }
+
+    public ArrayList<Evaluation> getLearningActivityList() {
+        ArrayList<Evaluation> evaluationList = evaluationManager.getEvaluationsForPromotion(promotion);
+        ArrayList<Evaluation> learningActivityList = new ArrayList<>();
+        for (Evaluation evaluation : evaluationList) {
+            if (evaluation.getParentId() == 0)
+                learningActivityList.add(evaluation);
+        }
+        return learningActivityList;
     }
 
     @Override
