@@ -16,11 +16,11 @@ import androidx.fragment.app.Fragment;
 
 import com.example.gestionpoints.R;
 import com.example.gestionpoints.Utils.IntentKeys;
-import com.example.gestionpoints.models.dataBaseManager.manager.EvaluationManager;
 import com.example.gestionpoints.models.evaluation.Evaluation;
 import com.example.gestionpoints.models.grade.Grade;
 import com.example.gestionpoints.models.student.Student;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GradeStudentEvaluationsFragment extends Fragment {
@@ -28,7 +28,6 @@ public class GradeStudentEvaluationsFragment extends Fragment {
 
     private LinearLayout displayGradeContainer;
     private Student student;
-    private EvaluationManager evaluationManager;
     private Evaluation learningActivity;
     private TextView ponderation;
     private TextView evaluationName;
@@ -46,6 +45,7 @@ public class GradeStudentEvaluationsFragment extends Fragment {
     public interface Listener {
         Grade getGrade(Student student, Evaluation evaluation);
         void updateGrade(Grade grade, float editableGrade);
+        ArrayList<Evaluation> getEvalutionForParentEvaluation(Evaluation evaluation);
     }
 
     @Override
@@ -60,7 +60,6 @@ public class GradeStudentEvaluationsFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        evaluationManager = new EvaluationManager(getContext());
         if (getArguments() != null) {
             learningActivity = (Evaluation) getArguments().getSerializable(IntentKeys.LEARNING_ACTIVITY);
             student = (Student) getArguments().getSerializable(IntentKeys.STUDENT);
@@ -74,7 +73,7 @@ public class GradeStudentEvaluationsFragment extends Fragment {
         displayGradeContainer = v.findViewById(R.id.fragmentGradesDisplayContainer);
 
         if (learningActivity != null) {
-            displayEval(inflater, evaluationManager.getEvaluationForParentEvaluation(learningActivity), 0);
+            displayEval(inflater, listener.getEvalutionForParentEvaluation(learningActivity), 0);
         }
         return v;
     }
@@ -82,7 +81,7 @@ public class GradeStudentEvaluationsFragment extends Fragment {
     private void displayEval(LayoutInflater inflater, List<Evaluation> evaluationList, int level) {
         for (Evaluation evaluation : evaluationList) {
             display(inflater, evaluation, level);
-            List<Evaluation> subEvaluations = evaluationManager.getEvaluationForParentEvaluation(evaluation);
+            List<Evaluation> subEvaluations = listener.getEvalutionForParentEvaluation(evaluation);
             if (subEvaluations != null && !subEvaluations.isEmpty()) {
                 displayEval(inflater, subEvaluations, level + 1);
             }

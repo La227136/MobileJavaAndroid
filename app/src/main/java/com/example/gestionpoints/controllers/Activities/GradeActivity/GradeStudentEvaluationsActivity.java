@@ -7,17 +7,22 @@ import androidx.fragment.app.Fragment;
 import com.example.gestionpoints.Utils.IntentKeys;
 import com.example.gestionpoints.controllers.Activities.BaseActivity;
 import com.example.gestionpoints.controllers.Fragments.GradeStudentEvaluationsFragment;
+import com.example.gestionpoints.models.dataBaseManager.manager.EvaluationManager;
 import com.example.gestionpoints.models.dataBaseManager.manager.GradeManager;
 import com.example.gestionpoints.models.evaluation.Evaluation;
 import com.example.gestionpoints.models.grade.Grade;
 import com.example.gestionpoints.models.student.Student;
 
+import java.util.ArrayList;
+
 public class GradeStudentEvaluationsActivity extends BaseActivity implements GradeStudentEvaluationsFragment.Listener {
 private Student student;
 private Evaluation learningActivity;
 private GradeManager gradeManager;
+private EvaluationManager evaluationManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        evaluationManager = new EvaluationManager(this);
         gradeManager = new GradeManager(this);
         student = (Student) getIntent().getSerializableExtra(IntentKeys.STUDENT);
        learningActivity = (Evaluation) getIntent().getSerializableExtra(IntentKeys.LEARNING_ACTIVITY);
@@ -50,5 +55,10 @@ private GradeManager gradeManager;
     public void updateGrade(Grade grade, float editableGrade) {
         //grade.setGrade(editableGrade);
         gradeManager.updateGrade(grade,editableGrade);
+    }
+
+    @Override
+    public ArrayList<Evaluation> getEvalutionForParentEvaluation(Evaluation evaluation) {
+        return evaluationManager.getEvaluationForParentEvaluation(evaluation);
     }
 }
