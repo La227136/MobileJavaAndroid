@@ -72,10 +72,7 @@ public class CommunLearningActivitesFragment extends Fragment {
 
     private void displayLearningActivities(LayoutInflater inflater) {
         for (Evaluation evaluation : learningActivities) {
-            if (evaluation.getParentId() == 0) {
                 learningActivitiesContainer.addView(createLearningActivityItem(inflater, evaluation));
-
-            }
         }
     }
 

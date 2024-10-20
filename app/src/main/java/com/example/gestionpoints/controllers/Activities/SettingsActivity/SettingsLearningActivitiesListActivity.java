@@ -2,7 +2,6 @@ package com.example.gestionpoints.controllers.Activities.SettingsActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import androidx.fragment.app.Fragment;
@@ -39,7 +38,7 @@ public class SettingsLearningActivitiesListActivity extends BaseActivity impleme
             learningActivities = (ArrayList<Evaluation>) savedInstanceState.getSerializable(IntentKeys.LEARNING_ACTIVITIES);
         } else {
             promotion = (Promotion) getIntent().getSerializableExtra(IntentKeys.PROMOTION);
-            learningActivities = evaluationManager.getEvaluationsForPromotion(promotion);
+            learningActivities = getLearningActivityList();
         }
     }
 
@@ -53,8 +52,9 @@ public class SettingsLearningActivitiesListActivity extends BaseActivity impleme
     public Fragment getMiddleFragmentToLaunch() {
         return CommunLearningActivitesFragment.newInstance(promotion, learningActivities);
     }
+
     @Override
-    public void setupFooter(){
+    public void setupFooter() {
         setupFragment(R.id.footerContainer, new FooterFragment());
     }
     //endregion
@@ -65,8 +65,8 @@ public class SettingsLearningActivitiesListActivity extends BaseActivity impleme
         AddLearningActivitiesDialogFragment dialogFragment = new AddLearningActivitiesDialogFragment(promotion.getId());
         dialogFragment.setAddItemListener(newLearningActivity -> {
             evaluationManager.addEvaluation(newLearningActivity);
-            learningActivities = evaluationManager.getEvaluationsForPromotion(promotion);
-            replaceFragement(promotion);
+            learningActivities = getLearningActivityList();
+            replaceFragment(promotion);
         });
         dialogFragment.show(getSupportFragmentManager(), "AddLearningActivitiesFragment");
     }
@@ -80,13 +80,13 @@ public class SettingsLearningActivitiesListActivity extends BaseActivity impleme
                 update = true;
             }
         }
-        if (update){
-            learningActivities = evaluationManager.getEvaluationsForPromotion(promotion);
-            replaceFragement(promotion);
+        if (update) {
+            learningActivities = getLearningActivityList();
+            replaceFragment(promotion);
         }
     }
 
-    private void replaceFragement(Promotion promotion) {
+    private void replaceFragment(Promotion promotion) {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.middlePageContainer, CommunLearningActivitesFragment.newInstance(promotion, learningActivities))
                 .commit();
@@ -95,9 +95,13 @@ public class SettingsLearningActivitiesListActivity extends BaseActivity impleme
 
     @Override
     public void onItemClick(View view, Evaluation evaluation) {
-        Intent evalDetailsSettingsActivity = new Intent(getApplicationContext(), SettingsEvaluationsActivity.class);
-        evalDetailsSettingsActivity.putExtra(IntentKeys.LEARNING_ACTIVITY, evaluation);
-        startActivity(evalDetailsSettingsActivity);
+        openEvaluationDetails(evaluation);
+    }
+
+    private void openEvaluationDetails(Evaluation evaluation) {
+        Intent evalDetailsIntent = new Intent(getApplicationContext(), SettingsEvaluationsActivity.class);
+        evalDetailsIntent.putExtra(IntentKeys.LEARNING_ACTIVITY, evaluation);
+        startActivity(evalDetailsIntent);
     }
 
     @Override
@@ -107,5 +111,14 @@ public class SettingsLearningActivitiesListActivity extends BaseActivity impleme
         outState.putSerializable(IntentKeys.PROMOTION, promotion);
     }
 
+    public ArrayList<Evaluation> getLearningActivityList() {
+        ArrayList<Evaluation> evaluationList = evaluationManager.getEvaluationsForPromotion(promotion);
+        ArrayList<Evaluation> learningActivityList = new ArrayList<>();
+        for (Evaluation evaluation : evaluationList) {
+            if (evaluation.getParentId() == 0)
+                learningActivityList.add(evaluation);
+        }
+        return learningActivityList;
+    }
 
 }
