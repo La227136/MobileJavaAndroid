@@ -13,7 +13,6 @@ import androidx.fragment.app.Fragment;
 
 import com.example.gestionpoints.R;
 import com.example.gestionpoints.Utils.IntentKeys;
-import com.example.gestionpoints.controllers.OnItemClickListener;
 import com.example.gestionpoints.models.evaluation.Evaluation;
 import com.example.gestionpoints.models.promotion.Promotion;
 
@@ -25,10 +24,17 @@ public class CommunLearningActivitesFragment extends Fragment {
 
     private Promotion promotion;
     LinearLayout learningActivitiesContainer;
-    private OnItemClickListener listener;
+    private Listener listener;
     private ArrayList<Evaluation> learningActivities;
     private boolean isLongClick = false;
     TextView activityTextView;
+
+    public interface Listener {
+        void onItemClick(View view, Evaluation evaluation);
+        void onLearningActivityLongClicked(Evaluation promotion);
+
+    }
+
 
     public static CommunLearningActivitesFragment newInstance(Promotion promotion, ArrayList<Evaluation> learningActivities) {
         CommunLearningActivitesFragment fragment = new CommunLearningActivitesFragment();
@@ -42,8 +48,8 @@ public class CommunLearningActivitesFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnItemClickListener) {
-            listener = (OnItemClickListener) context;
+        if (context instanceof Listener) {
+            listener = (Listener) context;
         } else {
             throw new RuntimeException(context.toString() + " doit implémenter BaseActivity.Listener");
         }
@@ -104,7 +110,7 @@ public class CommunLearningActivitesFragment extends Fragment {
 
         learningActivityItem.setOnLongClickListener((view) -> {
             isLongClick = true;
-            evaluation.setSelected(!evaluation.isSelected());
+            listener.onLearningActivityLongClicked(evaluation);
             learningActivityItem.setSelected(evaluation.isSelected());
             return true;
         });

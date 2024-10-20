@@ -8,14 +8,13 @@ import androidx.fragment.app.Fragment;
 import com.example.gestionpoints.Utils.IntentKeys;
 import com.example.gestionpoints.controllers.Activities.BaseActivity;
 import com.example.gestionpoints.controllers.Fragments.GradeStudentListFragment;
-import com.example.gestionpoints.controllers.OnItemClickListener;
 import com.example.gestionpoints.models.dataBaseManager.manager.StudentManager;
 import com.example.gestionpoints.models.evaluation.Evaluation;
 import com.example.gestionpoints.models.promotion.Promotion;
 import com.example.gestionpoints.models.student.Student;
 import java.util.ArrayList;
 
-public class GradeStudentListForALearningActivity extends BaseActivity implements OnItemClickListener {
+public class GradeStudentListForALearningActivity extends BaseActivity implements GradeStudentListFragment.Listener  {
 
 
     private Promotion promotion;

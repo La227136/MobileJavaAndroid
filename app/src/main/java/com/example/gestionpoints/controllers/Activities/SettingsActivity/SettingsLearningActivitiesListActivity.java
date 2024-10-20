@@ -12,14 +12,13 @@ import com.example.gestionpoints.controllers.Activities.BaseActivity;
 import com.example.gestionpoints.controllers.Fragments.DialogFragment.AddLearningActivitiesDialogFragment;
 import com.example.gestionpoints.controllers.Fragments.FooterFragment;
 import com.example.gestionpoints.controllers.Fragments.CommunLearningActivitesFragment;
-import com.example.gestionpoints.controllers.OnItemClickListener;
 import com.example.gestionpoints.models.dataBaseManager.manager.EvaluationManager;
 import com.example.gestionpoints.models.evaluation.Evaluation;
 import com.example.gestionpoints.models.promotion.Promotion;
 
 import java.util.ArrayList;
 
-public class SettingsLearningActivitiesListActivity extends BaseActivity implements FooterFragment.FooterListener, OnItemClickListener {
+public class SettingsLearningActivitiesListActivity extends BaseActivity implements FooterFragment.FooterListener, CommunLearningActivitesFragment.Listener {
 
     private EvaluationManager evaluationManager;
     private Promotion promotion;
@@ -93,16 +92,6 @@ public class SettingsLearningActivitiesListActivity extends BaseActivity impleme
     }
     //endregion
 
-    @Override
-    public void onItemClick(View view, Evaluation evaluation) {
-        openEvaluationDetails(evaluation);
-    }
-
-    private void openEvaluationDetails(Evaluation evaluation) {
-        Intent evalDetailsIntent = new Intent(getApplicationContext(), SettingsEvaluationsActivity.class);
-        evalDetailsIntent.putExtra(IntentKeys.LEARNING_ACTIVITY, evaluation);
-        startActivity(evalDetailsIntent);
-    }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -120,5 +109,22 @@ public class SettingsLearningActivitiesListActivity extends BaseActivity impleme
         }
         return learningActivityList;
     }
+
+    @Override
+    public void onLearningActivityLongClicked(Evaluation learningActivity) {
+        learningActivity.setSelected(!learningActivity.isSelected());
+    }
+
+    @Override
+    public void onItemClick(View view, Evaluation evaluation) {
+        openEvaluationDetails(evaluation);
+    }
+
+    private void openEvaluationDetails(Evaluation evaluation) {
+        Intent evalDetailsIntent = new Intent(getApplicationContext(), SettingsEvaluationsActivity.class);
+        evalDetailsIntent.putExtra(IntentKeys.LEARNING_ACTIVITY, evaluation);
+        startActivity(evalDetailsIntent);
+    }
+
 
 }

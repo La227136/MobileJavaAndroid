@@ -13,7 +13,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.gestionpoints.R;
-import com.example.gestionpoints.controllers.OnItemClickListener;
 import com.example.gestionpoints.models.dataBaseManager.manager.GradeManager;
 import com.example.gestionpoints.models.evaluation.Evaluation;
 import com.example.gestionpoints.models.student.Student;
@@ -26,10 +25,15 @@ public class GradeStudentListFragment extends Fragment {
     private ArrayList<Student> students;
     private LinearLayout studentListContainer;
     LinearLayout learningActivitiesContainer;
-    private OnItemClickListener listener;
+    private Listener listener;
     private GradeManager gradeManager;
     private Evaluation learningActivity;
-    // Méthode pour créer une nouvelle instance du fragment avec une liste d'étudiants
+
+    public interface Listener {
+        void onItemClick(Student student);
+    }
+
+
     public static GradeStudentListFragment newInstance(ArrayList<Student> students, Evaluation learningActivity) {
         GradeStudentListFragment fragment = new GradeStudentListFragment();
         Bundle args = new Bundle();
@@ -43,8 +47,8 @@ public class GradeStudentListFragment extends Fragment {
     public void onAttach(Context context) {
 
         super.onAttach(context);
-        if (context instanceof OnItemClickListener) {
-            listener = (OnItemClickListener) context;
+        if (context instanceof Listener) {
+            listener = (Listener) context;
         } else {
             throw new RuntimeException(context.toString() + " doit implémenter BaseActivity.Listener");
         }

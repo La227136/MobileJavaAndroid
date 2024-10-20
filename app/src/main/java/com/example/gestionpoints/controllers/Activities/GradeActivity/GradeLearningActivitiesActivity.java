@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment;
 import com.example.gestionpoints.Utils.IntentKeys;
 import com.example.gestionpoints.controllers.Activities.BaseActivity;
 import com.example.gestionpoints.controllers.Fragments.CommunLearningActivitesFragment;
-import com.example.gestionpoints.controllers.OnItemClickListener;
 import com.example.gestionpoints.models.dataBaseManager.manager.EvaluationManager;
 import com.example.gestionpoints.models.evaluation.Evaluation;
 import com.example.gestionpoints.models.promotion.Promotion;
@@ -17,7 +16,7 @@ import com.example.gestionpoints.models.promotion.Promotion;
 import java.util.ArrayList;
 
 
-public class GradeLearningActivitiesActivity extends BaseActivity implements OnItemClickListener {
+public class GradeLearningActivitiesActivity extends BaseActivity implements CommunLearningActivitesFragment.Listener  {
     private Promotion promotion;
     private EvaluationManager evaluationManager;
     private ArrayList<Evaluation> learningActivities = new ArrayList<>();
@@ -54,5 +53,10 @@ public class GradeLearningActivitiesActivity extends BaseActivity implements OnI
         intent.putExtra(IntentKeys.PROMOTION, promotion);
         intent.putExtra(IntentKeys.LEARNING_ACTIVITY, learningActivity);
         startActivity(intent);
+    }
+
+    @Override
+    public void onLearningActivityLongClicked(Evaluation promotion) {
+
     }
 }
