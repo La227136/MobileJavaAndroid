@@ -21,7 +21,7 @@ import java.util.List;
 public class PromotionListFragment extends Fragment {
 
 
-    private List<Promotion> promotionList;
+    private ArrayList<Promotion> promotionList;
     private LinearLayout promotionListContainer;
     private TextView promotionLevelTextView;
     private ImageButton settingBtn;
@@ -58,7 +58,7 @@ public class PromotionListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            promotionList = (List<Promotion>) getArguments().getSerializable(IntentKeys.PROMOTIONS);
+            promotionList = (ArrayList<Promotion>)  getArguments().getSerializable(IntentKeys.PROMOTIONS);
         }
     }
 
