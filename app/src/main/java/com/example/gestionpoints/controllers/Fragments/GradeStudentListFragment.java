@@ -28,7 +28,8 @@ public class GradeStudentListFragment extends Fragment {
     private Listener listener;
     private GradeManager gradeManager;
     private Evaluation learningActivity;
-
+    TextView fullNameTextView;
+    TextView studentIdTextView;
     public interface Listener {
         void onItemClick(Student student);
     }
@@ -72,12 +73,8 @@ public class GradeStudentListFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_student_list, container, false);
-
         studentListContainer = view.findViewById(R.id.studentListContainer);
-
-        // Afficher la liste des étudiants
         displayStudents(inflater);
-
         return view;
     }
 
@@ -85,10 +82,10 @@ public class GradeStudentListFragment extends Fragment {
 
         if (students != null) {
             for (Student student : students) {
-                View studentItem = inflater.inflate(R.layout.list_item_student, studentListContainer, false);
-                // Configurer les informations de chaque étudiant
-                TextView fullNameTextView = studentItem.findViewById(R.id.studentFullNameTextView);
-                TextView studentIdTextView = studentItem.findViewById(R.id.studentGradeTextView);
+                View studentItem = getStudentItem(inflater);
+
+                fullNameTextView = studentItem.findViewById(R.id.studentFullNameTextView);
+                studentIdTextView = studentItem.findViewById(R.id.studentGradeTextView);
                 studentIdTextView.setText(String.valueOf(gradeManager.getGrade(learningActivity.getId(),student.getId())));
                 fullNameTextView.setText(student.getLastName() + " " + student.getFirstName());
 
@@ -99,5 +96,9 @@ public class GradeStudentListFragment extends Fragment {
                 studentListContainer.addView(studentItem);
             }
         }
+    }
+
+    private View getStudentItem(LayoutInflater inflater) {
+        return inflater.inflate(R.layout.list_item_student, studentListContainer, false);
     }
 }

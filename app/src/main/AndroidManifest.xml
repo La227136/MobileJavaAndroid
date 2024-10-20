@@ -17,7 +17,7 @@
             android:name=".controllers.Activities.GradeActivity.GradeSingleStudentActivity"
             android:exported="false" />
         <activity
-            android:name=".controllers.Activities.GradeActivity.GradeStudentListForALearningActivity"
+            android:name=".controllers.Activities.GradeActivity.GradeStudentListActivity"
             android:exported="false" />
         <activity
             android:name=".controllers.Activities.PromotionsActivity"

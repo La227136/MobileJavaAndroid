@@ -19,21 +19,15 @@ import java.util.ArrayList;
 public class GradeLearningActivitiesActivity extends BaseActivity implements CommunLearningActivitesFragment.Listener  {
     private Promotion promotion;
     private EvaluationManager evaluationManager;
-    private ArrayList<Evaluation> learningActivities = new ArrayList<>();
-
+    private ArrayList<Evaluation> learningActivityList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         evaluationManager = new EvaluationManager(this);
         promotion = (Promotion) getIntent().getSerializableExtra(IntentKeys.PROMOTION);
-        learningActivities = evaluationManager.getEvaluationsForPromotion(promotion);
+        //TODO maybe null
+        learningActivityList = evaluationManager.getEvaluationsForPromotion(promotion);
         super.onCreate(savedInstanceState);
-    }
-
-
-    @Override
-    public void setupFooter() {
-
     }
 
     @Override
@@ -43,13 +37,17 @@ public class GradeLearningActivitiesActivity extends BaseActivity implements Com
 
     @Override
     public Fragment getMiddleFragmentToLaunch() {
-        return CommunLearningActivitesFragment.newInstance(promotion, learningActivities);
+        return CommunLearningActivitesFragment.newInstance(promotion, learningActivityList);
     }
 
 
     @Override
     public void onItemClick(View view, Evaluation learningActivity) {
-        Intent intent = new Intent(getApplicationContext(), GradeStudentListForALearningActivity.class);
+        openGradeStudentListActivity(learningActivity);
+    }
+
+    private void openGradeStudentListActivity(Evaluation learningActivity) {
+        Intent intent = new Intent(getApplicationContext(), GradeStudentListActivity.class);
         intent.putExtra(IntentKeys.PROMOTION, promotion);
         intent.putExtra(IntentKeys.LEARNING_ACTIVITY, learningActivity);
         startActivity(intent);

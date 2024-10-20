@@ -34,7 +34,6 @@ public class CommunLearningActivitesFragment extends Fragment {
         void onLearningActivityLongClicked(Evaluation promotion);
     }
 
-
     public static CommunLearningActivitesFragment newInstance(Promotion promotion, ArrayList<Evaluation> learningActivities) {
         CommunLearningActivitesFragment fragment = new CommunLearningActivitesFragment();
         Bundle args = new Bundle();

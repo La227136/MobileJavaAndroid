@@ -14,25 +14,19 @@ import com.example.gestionpoints.models.promotion.Promotion;
 import com.example.gestionpoints.models.student.Student;
 import java.util.ArrayList;
 
-public class GradeStudentListForALearningActivity extends BaseActivity implements GradeStudentListFragment.Listener  {
-
+public class GradeStudentListActivity extends BaseActivity implements GradeStudentListFragment.Listener  {
 
     private Promotion promotion;
     private Evaluation learningActivity;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         if (savedInstanceState != null) {
-
             promotion = (Promotion) savedInstanceState.getSerializable(IntentKeys.PROMOTION);
-
             learningActivity = (Evaluation) savedInstanceState.getSerializable(IntentKeys.LEARNING_ACTIVITY);
-
         } else {
-            promotion = (Promotion) getIntent().getSerializableExtra("promotion");
-            learningActivity = (Evaluation) getIntent().getSerializableExtra("evaluation");
+            promotion = (Promotion) getIntent().getSerializableExtra(IntentKeys.PROMOTION);
+            learningActivity = (Evaluation) getIntent().getSerializableExtra(IntentKeys.LEARNING_ACTIVITY);
 
         }
         super.onCreate(savedInstanceState);
@@ -40,17 +34,12 @@ public class GradeStudentListForALearningActivity extends BaseActivity implement
 
     @Override
     public Fragment getMiddleFragmentToLaunch() {
-
         StudentManager studentManager = new StudentManager(this);
-        ArrayList<Student> studentList = new ArrayList<>();
+        ArrayList<Student> studentList;
         studentList = studentManager.getStudentsForPromotion(promotion);
         return GradeStudentListFragment.newInstance(studentList,learningActivity);
     }
 
-    @Override
-    public void setupFooter() {
-
-    }
     @Override
     public String getTitlePage() {
         return "Liste des étudiants de " + learningActivity.getName();
