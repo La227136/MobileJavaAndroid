@@ -13,7 +13,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.gestionpoints.R;
-import com.example.gestionpoints.Utils.MarginUtils;
 import com.example.gestionpoints.controllers.OnItemClickListener;
 import com.example.gestionpoints.models.dataBaseManager.manager.GradeManager;
 import com.example.gestionpoints.models.evaluation.Evaluation;
@@ -83,7 +82,6 @@ public class GradeStudentListFragment extends Fragment {
         if (students != null) {
             for (Student student : students) {
                 View studentItem = inflater.inflate(R.layout.list_item_student, studentListContainer, false);
-                 MarginUtils.setMargin(studentItem);
                 // Configurer les informations de chaque étudiant
                 TextView fullNameTextView = studentItem.findViewById(R.id.studentFullNameTextView);
                 TextView studentIdTextView = studentItem.findViewById(R.id.studentGradeTextView);

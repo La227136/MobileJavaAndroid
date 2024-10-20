@@ -33,7 +33,13 @@ public class DataGenerationTest {
 
         // Évaluation ProgrammationBAC2 (id: 1) sans parent
         Evaluation programmationBAC2 = new Evaluation(1, null, 2, 20, "ProgrammationBAC2");
+        Evaluation electroniqueBAC2 = new Evaluation(14, null, 2, 20, "Electronique");
+        Evaluation caoBAC2 = new Evaluation(15, null, 2, 20, "caoBAC2");
+
         evaluationManager.addEvaluation(programmationBAC2);
+        evaluationManager.addEvaluation(electroniqueBAC2);
+        evaluationManager.addEvaluation(caoBAC2);
+
 
         // Évaluations JavaB2 (id: 2) et WebB2 (id: 3) avec parent ProgrammationBAC2
         Evaluation javaB2 = new Evaluation(2, 1, 2, 20, "JavaB2");

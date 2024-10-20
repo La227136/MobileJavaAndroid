@@ -12,7 +12,6 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.example.gestionpoints.R;
-import com.example.gestionpoints.Utils.MarginUtils;
 import com.example.gestionpoints.controllers.OnItemClickListener;
 import com.example.gestionpoints.models.evaluation.Evaluation;
 import com.example.gestionpoints.models.promotion.Promotion;
@@ -69,7 +68,6 @@ public class CommunLearningActivitesFragment extends Fragment {
             for (Evaluation evaluation : learningActivities) {
                 if (evaluation.getParentId() == 0) {
                     View learningActivityItem = inflater.inflate(R.layout.list_item_learning_activity, learningActivitiesContainer, false);
-                    MarginUtils.setMargin(learningActivityItem);
                     ((TextView) learningActivityItem.findViewById(R.id.learningActivityTextView)).setText(evaluation.getName());
                     learningActivityItem.setOnClickListener((view) -> {
                         if (!isLongClick) {
