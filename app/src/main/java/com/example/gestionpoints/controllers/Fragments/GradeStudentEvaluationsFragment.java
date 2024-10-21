@@ -116,8 +116,9 @@ public class GradeStudentEvaluationsFragment extends Fragment {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         classeView.setLayoutParams(params);
-        displayGradeContainer.addView(classeView);
         params.setMargins(16 + (90 * level), 10, 16, 0);
+        displayGradeContainer.addView(classeView);
+
     }
 
     private void retrieveView(View view) {
