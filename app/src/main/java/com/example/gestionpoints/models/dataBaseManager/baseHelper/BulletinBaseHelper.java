@@ -12,13 +12,19 @@ import com.example.gestionpoints.models.dataBaseManager.manager.DataGenerationTe
 
 public class BulletinBaseHelper extends SQLiteOpenHelper {
     private static final int VERSION = 1;
-    private static final String DATABASE_NAME = "OOOdaaaObulletinDataBase.db";
+    private static final String DATABASE_NAME = "HHHHHHbulletinDataBase.db";
     private Context mContext;
 
     public BulletinBaseHelper(Context context) {
         super(context, DATABASE_NAME, null, VERSION);
         mContext = context;  // Stockez le contexte reçu
 
+    }
+
+    @Override
+    public void onConfigure(SQLiteDatabase db) {
+        super.onConfigure(db);
+        db.setForeignKeyConstraintsEnabled(true);  // Active les clés étrangères
     }
 
     @Override
@@ -37,7 +43,7 @@ public class BulletinBaseHelper extends SQLiteOpenHelper {
                 + StudentTable.Cols.FIRST_NAME + " TEXT NOT NULL, "
                 + StudentTable.Cols.PROMOTION_ID + " INTEGER NOT NULL, "
                 + "FOREIGN KEY (" + StudentTable.Cols.PROMOTION_ID + ") REFERENCES "
-                + PromotionTable.NAME + "(" + PromotionTable.Cols.ID + ")"
+                + PromotionTable.NAME + "(" + PromotionTable.Cols.ID + ") ON DELETE CASCADE"
                 + ")"
         );
 
@@ -49,9 +55,9 @@ public class BulletinBaseHelper extends SQLiteOpenHelper {
                 + EvaluationTable.Cols.MAX_GRADE + " FLOAT NOT NULL, "
                 + EvaluationTable.Cols.EVALUATION_NAME + " TEXT NOT NULL, "
                 + "FOREIGN KEY (" + EvaluationTable.Cols.PROMOTION_ID + ") REFERENCES "
-                + PromotionTable.NAME + "(" + PromotionTable.Cols.ID + "), "
+                + PromotionTable.NAME + "(" + PromotionTable.Cols.ID + ") ON DELETE CASCADE, "
                 + "FOREIGN KEY (" + EvaluationTable.Cols.PARENT_ID + ") REFERENCES "
-                + EvaluationTable.NAME + "(" + EvaluationTable.Cols.ID + ")"
+                + EvaluationTable.NAME + "(" + EvaluationTable.Cols.ID + ") ON DELETE CASCADE"
                 + ")"
         );
 
@@ -63,9 +69,9 @@ public class BulletinBaseHelper extends SQLiteOpenHelper {
                 + GradeTable.Cols.GRADE + " FLOAT CHECK(" + GradeTable.Cols.GRADE + " >= 0), "
                 + "PRIMARY KEY (" + GradeTable.Cols.EVALUATION_ID + ", " + GradeTable.Cols.STUDENT_ID + "), "
                 + "FOREIGN KEY (" + GradeTable.Cols.EVALUATION_ID + ") REFERENCES "
-                + EvaluationTable.NAME + "(" + EvaluationTable.Cols.ID + "), "
+                + EvaluationTable.NAME + "(" + EvaluationTable.Cols.ID + ") ON DELETE CASCADE, "
                 + "FOREIGN KEY (" + GradeTable.Cols.STUDENT_ID + ") REFERENCES "
-                + StudentTable.NAME + "(" + StudentTable.Cols.ID + ")"
+                + StudentTable.NAME + "(" + StudentTable.Cols.ID + ") ON DELETE CASCADE"
                 + ")"
         );
 
