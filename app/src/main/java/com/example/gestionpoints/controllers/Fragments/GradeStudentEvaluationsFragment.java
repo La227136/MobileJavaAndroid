@@ -109,9 +109,30 @@ public class GradeStudentEvaluationsFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable editableGrade) {
+                Log.d("oooooooooo", "Nouvelle note : " + editableGrade.toString());
                 listener.updateGrade(grade, Float.parseFloat(editableGrade.toString()));
             }
         });
+
+//        gradeEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View v, boolean hasFocus) {
+//                if (!hasFocus) {
+//                    // L'EditText a perdu le focus
+//                    String text = gradeEditText.getText().toString();
+//                    float newGradeValue = 0;
+//                    try {
+//                        newGradeValue = Float.parseFloat(text);
+//                    } catch (NumberFormatException e) {
+//                        // Gérer le cas où l'utilisateur entre une valeur non numérique
+//                        newGradeValue = 0;
+//                    }
+//                    Log.d("oooooooooo", "Nouvelle note : " + newGradeValue);
+//                    listener.updateGrade(grade, newGradeValue);
+//                }
+//            }
+//        });
+
 
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);

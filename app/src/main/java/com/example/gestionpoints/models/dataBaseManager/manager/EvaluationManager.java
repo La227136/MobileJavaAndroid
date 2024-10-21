@@ -115,6 +115,32 @@ public class EvaluationManager {
         }
     }
 
+    public Evaluation getParentEvaluation(Evaluation evaluation) {
+        if (evaluation.getParentId() == 0) {
+            return null; // Pas de parent
+        }
+        Cursor cursor = mDatabase.query(
+                EvaluationTable.NAME,
+                null,
+                EvaluationTable.Cols.ID + " = ?",
+                new String[]{String.valueOf(evaluation.getParentId())},
+                null,
+                null,
+                null
+        );
+
+        EvaluationCursorWrapper cursorWrapper = new EvaluationCursorWrapper(cursor);
+        try {
+            if (cursorWrapper.moveToFirst()) {
+                return cursorWrapper.getEvaluation();
+            } else {
+                return null;
+            }
+        } finally {
+            cursorWrapper.close();
+        }
+    }
+
 
     private void getAllDescendants(Evaluation evaluation, List<Evaluation> descendants) {
          List<Evaluation> children = getEvaluationForParentEvaluation(evaluation);

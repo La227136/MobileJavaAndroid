@@ -21,6 +21,10 @@ public class Grade implements Serializable {
         this.grade = grade;
     }
 
+    public Evaluation getEvaluation() {
+        return evaluation;
+    }
+
     public Float calculGrade (){
         return grade;
     }
