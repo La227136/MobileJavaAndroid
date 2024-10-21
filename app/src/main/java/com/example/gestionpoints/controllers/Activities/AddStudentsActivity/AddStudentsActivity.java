@@ -33,7 +33,7 @@ public class AddStudentsActivity extends BaseActivity implements AddStudentsFrag
     //region BaseActivity related methods
     @Override
     public String getTitlePage() {
-        return "Student";
+        return "Ajouter des étudiants";
     }
 
     @Override

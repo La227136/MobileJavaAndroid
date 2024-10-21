@@ -54,7 +54,7 @@ public class SettingsLearningActivitiesListActivity extends BaseActivity impleme
     //region BaseActivity releted methods
     @Override
     public String getTitlePage() {
-        return "Learning Activities";
+        return "Activités d'aprentissage";
     }
 
     @Override
