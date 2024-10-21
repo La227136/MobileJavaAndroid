@@ -19,10 +19,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GradeStudentEvaluationsActivity extends BaseActivity implements GradeStudentEvaluationsFragment.Listener {
-private Student student;
-private Evaluation learningActivity;
-private GradeManager gradeManager;
-private EvaluationManager evaluationManager;
+    private Student student;
+    private Evaluation learningActivity;
+    private GradeManager gradeManager;
+    private EvaluationManager evaluationManager;
 
 
     @Override
@@ -30,7 +30,7 @@ private EvaluationManager evaluationManager;
         evaluationManager = new EvaluationManager(this);
         gradeManager = new GradeManager(this);
         student = (Student) getIntent().getSerializableExtra(IntentKeys.STUDENT);
-       learningActivity = (Evaluation) getIntent().getSerializableExtra(IntentKeys.LEARNING_ACTIVITY);
+        learningActivity = (Evaluation) getIntent().getSerializableExtra(IntentKeys.LEARNING_ACTIVITY);
         super.onCreate(savedInstanceState);
     }
 
@@ -39,10 +39,12 @@ private EvaluationManager evaluationManager;
     public Fragment getMiddleFragmentToLaunch() {
         return GradeStudentEvaluationsFragment.newInstance(student, learningActivity);
     }
+
     @Override
     public String getTitlePage() {
-        return "Points: "+student.getFirstName() + " " + student.getLastName();
+        return "Points: " + student.getFirstName() + " " + student.getLastName();
     }
+
     @Override
     public void setupFooter() {
         // Pas de footer
@@ -52,12 +54,12 @@ private EvaluationManager evaluationManager;
     // region GradeStudentEvaluationsFragment.Listener related methods
     @Override
     public Grade createGrade(Student student, Evaluation evaluation) {
-        return new Grade(student,evaluation, getGrade(student, evaluation));
+        return new Grade(student, evaluation, getGrade(student, evaluation));
     }
 
     @Override
     public void updateGrade(Grade grade, float editableGrade) {
-        gradeManager.updateGrade(grade,editableGrade);
+        gradeManager.updateGrade(grade, editableGrade);
         updateParentGrades(grade.getEvaluation());
     }
 
@@ -103,6 +105,7 @@ private EvaluationManager evaluationManager;
     public ArrayList<Evaluation> getEvalutionForParentEvaluation(Evaluation evaluation) {
         return evaluationManager.getEvaluationForParentEvaluation(evaluation);
     }
+
     private float getGrade(Student student, Evaluation evaluation) {
         return gradeManager.getGrade(evaluation.getId(), student.getId());
     }

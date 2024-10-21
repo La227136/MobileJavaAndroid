@@ -9,6 +9,7 @@ import com.example.gestionpoints.R;
 import com.example.gestionpoints.Utils.IntentKeys;
 import com.example.gestionpoints.controllers.Activities.BaseActivity;
 import com.example.gestionpoints.controllers.Fragments.DialogFragment.AddEvaluationDialogFragment;
+import com.example.gestionpoints.controllers.Fragments.DialogFragment.AddSubEvaluationDialogFragment;
 import com.example.gestionpoints.controllers.Fragments.SettingsEvaluationsFragment;
 import com.example.gestionpoints.controllers.Fragments.FooterFragment;
 import com.example.gestionpoints.models.dataBaseManager.manager.EvaluationManager;
@@ -81,7 +82,7 @@ public class SettingsEvaluationsActivity extends BaseActivity implements FooterF
     }
 
     public void onAddSubEvaluation(Evaluation parentEvaluation) {
-        AddEvaluationDialogFragment dialogFragment = new AddEvaluationDialogFragment(parentEvaluation);
+        AddSubEvaluationDialogFragment dialogFragment = new AddSubEvaluationDialogFragment(parentEvaluation);
         dialogFragment.setAddItemListener(newEvaluation -> {
             evaluationManager.addEvaluation(newEvaluation);
             gradeManager.addGradeWhenNewEvaluation(newEvaluation.getId(),studentIdList);

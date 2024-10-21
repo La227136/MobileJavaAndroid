@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.gestionpoints.R;
+import com.example.gestionpoints.models.ExceptionTextField;
 
 public abstract class AddItemDialogFragment<T> extends DialogFragment {
 
@@ -33,17 +34,27 @@ public abstract class AddItemDialogFragment<T> extends DialogFragment {
         retrieveView(inflater, container);
         fillText();
         addItemButton.setOnClickListener(v -> {
-            String itemName = itemNameInput.getText().toString();
-            if (!itemName.isEmpty()) {
-                T newItem = createNewItem(itemName);
-                if (listener != null) {
-                    listener.onItemAdded(newItem);
-                }
-                dismiss();
+            String itemName = itemNameInput.getText().toString().trim();
+            try {
+                isErrorTextField(itemName);
+            } catch (ExceptionTextField e) {
+                e.setErrorMessage(itemNameInput);
+                return;
             }
+             if(createNewItem(itemName) == null)
+                 return;
+              T  newItem = createNewItem(itemName);
+            listener.onItemAdded(newItem);
+
+            dismiss();
         });
 
         return view;
+    }
+
+    protected void isErrorTextField(String itemName) throws ExceptionTextField {
+        if (itemName.isEmpty())
+            throw new ExceptionTextField("Le champ ne peut pas être vide");
     }
 
     private void fillText() {
@@ -63,9 +74,10 @@ public abstract class AddItemDialogFragment<T> extends DialogFragment {
         this.listener = listener;
     }
 
-    protected abstract T createNewItem(String name);
+    protected abstract T createNewItem(String name) ;
 
     protected abstract String getTitle();
 
     protected abstract String getName();
+
 }
