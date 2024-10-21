@@ -14,44 +14,44 @@ import com.example.gestionpoints.models.ExceptionTextField;
 import com.example.gestionpoints.models.evaluation.Evaluation;
 
 public abstract class AddBaseEvaluationDialogFragment extends AddItemDialogFragment<Evaluation> {
-    private Integer parentId;
-    private Integer promotionId;
-    private float maxGrade;
-    private EditText editTextGradeEvaluation;
+    private Integer mParentId;
+    private Integer mPromotionId;
+    private float mMaxGrade;
+    private EditText mEditTextGradeEvaluation;
 
     public AddBaseEvaluationDialogFragment(Evaluation evaluation) {
-        this.parentId = evaluation.getId();
-        this.promotionId = evaluation.getPromotionId();
+        this.mParentId = evaluation.getId();
+        this.mPromotionId = evaluation.getPromotionId();
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
-        editTextGradeEvaluation = view.findViewById(R.id.ponderationNameInput);
+        mEditTextGradeEvaluation = view.findViewById(R.id.ponderationNameInput);
         setData();
         return view;
     }
 
     private void setData() {
-        editTextGradeEvaluation.setVisibility(View.VISIBLE);
-        editTextGradeEvaluation.setHint("Ponderation");
+        mEditTextGradeEvaluation.setVisibility(View.VISIBLE);
+        mEditTextGradeEvaluation.setHint("Ponderation");
     }
 
     @Override
     protected Evaluation createNewItem(String name) {
         try {
-            maxGrade = Float.parseFloat(editTextGradeEvaluation.getText().toString());
-            if(maxGrade < 0) {
+            mMaxGrade = Float.parseFloat(mEditTextGradeEvaluation.getText().toString());
+            if(mMaxGrade < 0) {
                 throw new ExceptionTextField("La ponderation doit être un nombre positif");
             }
-            return new Evaluation(parentId, promotionId, maxGrade, name);
+            return new Evaluation(mParentId, mPromotionId, mMaxGrade, name);
 
         } catch (NumberFormatException | ExceptionTextField e) {
             try {
                 throw new ExceptionTextField("La ponderation doit être un nombre positif");
             } catch (ExceptionTextField ex) {
-                ex.setErrorMessage(editTextGradeEvaluation);
+                ex.setErrorMessage(mEditTextGradeEvaluation);
                 return null;
             }
         }

@@ -25,13 +25,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GradeStudentEvaluationsFragment extends Fragment {
-    private LinearLayout displayGradeContainer;
-    private Student student;
-    private Evaluation learningActivity;
-    private TextView ponderation;
-    private TextView evaluationName;
-    //  private EditText gradeEditText;
-    private Listener listener;
+    private LinearLayout mDisplayGradeContainer;
+    private Student mStudent;
+    private Evaluation mLearningActivity;
+    private TextView mPonderation;
+    private TextView mEvaluationName;
+    private Listener mListener;
 
     public static GradeStudentEvaluationsFragment newInstance(Student student, Evaluation learningActivity) {
         GradeStudentEvaluationsFragment fragment = new GradeStudentEvaluationsFragment();
@@ -52,7 +51,7 @@ public class GradeStudentEvaluationsFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof Listener) {
-            listener = (Listener) context;
+            mListener = (Listener) context;
         } else {
             throw new RuntimeException(context.toString() + " must implement AddSubEvaluationListener");
         }
@@ -61,8 +60,8 @@ public class GradeStudentEvaluationsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         if (getArguments() != null) {
-            learningActivity = (Evaluation) getArguments().getSerializable(IntentKeys.LEARNING_ACTIVITY);
-            student = (Student) getArguments().getSerializable(IntentKeys.STUDENT);
+            mLearningActivity = (Evaluation) getArguments().getSerializable(IntentKeys.LEARNING_ACTIVITY);
+            mStudent = (Student) getArguments().getSerializable(IntentKeys.STUDENT);
         }
         super.onCreate(savedInstanceState);
     }
@@ -71,8 +70,8 @@ public class GradeStudentEvaluationsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_grades_display, container, false);
         setupTouchListenersForFocusClear();
-        displayGradeContainer = v.findViewById(R.id.fragmentGradesDisplayContainer);
-        displayEvaluationList(inflater, listener.getEvalutionForParentEvaluation(learningActivity), 0);
+        mDisplayGradeContainer = v.findViewById(R.id.fragmentGradesDisplayContainer);
+        displayEvaluationList(inflater, mListener.getEvalutionForParentEvaluation(mLearningActivity), 0);
         return v;
     }
 
@@ -120,7 +119,7 @@ public class GradeStudentEvaluationsFragment extends Fragment {
     private void displayEvaluationList(LayoutInflater inflater, List<Evaluation> evaluationList, int level) {
         for (Evaluation evaluation : evaluationList) {
             displayEvaluation(inflater, evaluation, level);
-            List<Evaluation> subEvaluations = listener.getEvalutionForParentEvaluation(evaluation);
+            List<Evaluation> subEvaluations = mListener.getEvalutionForParentEvaluation(evaluation);
             if (subEvaluations != null && !subEvaluations.isEmpty()) {
                 displayEvaluationList(inflater, subEvaluations, level + 1);
             }
@@ -128,11 +127,11 @@ public class GradeStudentEvaluationsFragment extends Fragment {
     }
 
     private void displayEvaluation(LayoutInflater inflater, Evaluation evaluation, int level) {
-        View evalItemView = inflater.inflate(R.layout.list_item_evaluation_points, displayGradeContainer, false);
+        View evalItemView = inflater.inflate(R.layout.list_item_evaluation_points, mDisplayGradeContainer, false);
         retrieveView(evalItemView);
         EditText gradeEditText = evalItemView.findViewById(R.id.displayGradeEditText);
 
-        Grade grade = listener.createGrade(student, evaluation);
+        Grade grade = mListener.createGrade(mStudent, evaluation);
         setEvalItemData(evaluation, grade, gradeEditText);
 
 
@@ -150,8 +149,8 @@ public class GradeStudentEvaluationsFragment extends Fragment {
                         if (newGradeValue < 0) {
                             gradeEditText.setError("La note ne peut pas être négative.");
                         } else {
-                            listener.updateGrade(grade, newGradeValue);
-                            listener.replaceFragment();
+                            mListener.updateGrade(grade, newGradeValue);
+                            mListener.replaceFragment();
                         }
                     } catch (NumberFormatException e) {
                         gradeEditText.setError("Veuillez entrer un nombre valide.");
@@ -160,7 +159,7 @@ public class GradeStudentEvaluationsFragment extends Fragment {
             }
         });
         ApplyMargin(level, evalItemView);
-        displayGradeContainer.addView(evalItemView);
+        mDisplayGradeContainer.addView(evalItemView);
     }
 
     private void ApplyMargin(int level, View evalItemView) {
@@ -171,14 +170,14 @@ public class GradeStudentEvaluationsFragment extends Fragment {
     }
 
     private void setEvalItemData(Evaluation evaluation, Grade grade, EditText gradeEditText) {
-        evaluationName.setText(evaluation.getName());
+        mEvaluationName.setText(evaluation.getName());
         gradeEditText.setText(String.valueOf(grade.getRoundedGrade()));
-        ponderation.setText(String.valueOf(evaluation.getMaxGrade()));
+        mPonderation.setText(String.valueOf(evaluation.getMaxGrade()));
     }
 
     private void retrieveView(View view) {
-        ponderation = view.findViewById(R.id.ponderationTextViewGrade);
-        evaluationName = view.findViewById(R.id.evaluationNameTextView);
+        mPonderation = view.findViewById(R.id.ponderationTextViewGrade);
+        mEvaluationName = view.findViewById(R.id.evaluationNameTextView);
         //  gradeEditText = view.findViewById(R.id.displayGradeEditText);
     }
 

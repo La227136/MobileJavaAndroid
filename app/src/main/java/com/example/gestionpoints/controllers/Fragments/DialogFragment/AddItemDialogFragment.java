@@ -21,11 +21,11 @@ public abstract class AddItemDialogFragment<T> extends DialogFragment {
         void onItemAdded(T item);
     }
 
-    private AddItemListener<T> listener;
-    protected View view;
-    protected EditText itemNameInput;
-    protected Button addItemButton;
-    protected TextView titleTextView;
+    private AddItemListener<T> mListener;
+    protected View mView;
+    protected EditText mItemNameInput;
+    protected Button mAddItemButton;
+    protected TextView mTitleTextView;
 
 
     @Nullable
@@ -33,23 +33,23 @@ public abstract class AddItemDialogFragment<T> extends DialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         retrieveView(inflater, container);
         fillText();
-        addItemButton.setOnClickListener(v -> {
-            String itemName = itemNameInput.getText().toString().trim();
+        mAddItemButton.setOnClickListener(v -> {
+            String itemName = mItemNameInput.getText().toString().trim();
             try {
                 isErrorTextField(itemName);
             } catch (ExceptionTextField e) {
-                e.setErrorMessage(itemNameInput);
+                e.setErrorMessage(mItemNameInput);
                 return;
             }
              if(createNewItem(itemName) == null)
                  return;
               T  newItem = createNewItem(itemName);
-            listener.onItemAdded(newItem);
+            mListener.onItemAdded(newItem);
 
             dismiss();
         });
 
-        return view;
+        return mView;
     }
 
     protected void isErrorTextField(String itemName) throws ExceptionTextField {
@@ -58,20 +58,20 @@ public abstract class AddItemDialogFragment<T> extends DialogFragment {
     }
 
     private void fillText() {
-        titleTextView.setText(getTitle());
-        addItemButton.setText("Ajouter " + getName());
-        itemNameInput.setHint("Nom de " + getName());
+        mTitleTextView.setText(getTitle());
+        mAddItemButton.setText("Ajouter " + getName());
+        mItemNameInput.setHint("Nom de " + getName());
     }
 
     protected void retrieveView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container) {
-        view = inflater.inflate(R.layout.dialog_add_item, container, false);
-        itemNameInput = view.findViewById(R.id.itemNameInput);
-        addItemButton = view.findViewById(R.id.addItemButton);
-        titleTextView = view.findViewById(R.id.dialogTitle);
+        mView = inflater.inflate(R.layout.dialog_add_item, container, false);
+        mItemNameInput = mView.findViewById(R.id.itemNameInput);
+        mAddItemButton = mView.findViewById(R.id.addItemButton);
+        mTitleTextView = mView.findViewById(R.id.dialogTitle);
     }
 
     public void setAddItemListener(AddItemListener<T> listener) {
-        this.listener = listener;
+        this.mListener = listener;
     }
 
     protected abstract T createNewItem(String name) ;

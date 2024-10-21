@@ -16,18 +16,17 @@ import com.example.gestionpoints.Utils.IntentKeys;
 import com.example.gestionpoints.models.promotion.Promotion;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class PromotionListFragment extends Fragment {
 
 
-    private ArrayList<Promotion> promotionList;
-    private LinearLayout promotionListContainer;
-    private TextView promotionLevelTextView;
-    private ImageButton settingBtn;
-    private ImageButton gradeBtn;
-    private ImageButton addStudentsBtn;
-    private Listener listener;
+    private ArrayList<Promotion> mPromotionList;
+    private LinearLayout mPromotionListContainer;
+    private TextView mPromotionLevelTextView;
+    private ImageButton mSettingBtn;
+    private ImageButton mGradeBtn;
+    private ImageButton mAddStudentsBtn;
+    private Listener mListener;
 
     public interface Listener {
         void onPromotionLongClicked(Promotion promotion);
@@ -39,7 +38,7 @@ public class PromotionListFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof Listener) {
-            listener = (Listener) context;
+            mListener = (Listener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement MyFragmentListener");
@@ -58,21 +57,21 @@ public class PromotionListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            promotionList = (ArrayList<Promotion>)  getArguments().getSerializable(IntentKeys.PROMOTIONS);
+            mPromotionList = (ArrayList<Promotion>)  getArguments().getSerializable(IntentKeys.PROMOTIONS);
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_promotion_list, container, false);
-        promotionListContainer = view.findViewById(R.id.promotion_list_container);
+        mPromotionListContainer = view.findViewById(R.id.promotion_list_container);
         displayPromotionList(inflater);
         return view;
     }
 
     private void displayPromotionList(LayoutInflater inflater) {
-       for (Promotion promotion : promotionList) {
-            promotionListContainer.addView(createPromotionItemView(inflater, promotion));
+       for (Promotion promotion : mPromotionList) {
+            mPromotionListContainer.addView(createPromotionItemView(inflater, promotion));
         }
     }
 
@@ -85,31 +84,31 @@ public class PromotionListFragment extends Fragment {
     }
 
     private View getPromotionItem(LayoutInflater inflater) {
-        return inflater.inflate(R.layout.list_item_promotion, promotionListContainer, false);
+        return inflater.inflate(R.layout.list_item_promotion, mPromotionListContainer, false);
     }
 
     private void retrieveView(View classeView) {
-        promotionLevelTextView = classeView.findViewById(R.id.promotionsTextView);
-        settingBtn = classeView.findViewById(R.id.evalBtn);
-        gradeBtn = classeView.findViewById(R.id.pointsBtn);
-        addStudentsBtn = classeView.findViewById(R.id.addEtudiant);
+        mPromotionLevelTextView = classeView.findViewById(R.id.promotionsTextView);
+        mSettingBtn = classeView.findViewById(R.id.evalBtn);
+        mGradeBtn = classeView.findViewById(R.id.pointsBtn);
+        mAddStudentsBtn = classeView.findViewById(R.id.addEtudiant);
     }
 
     private void setPromotionData(Promotion promotion, View promotionItem) {
         promotionItem.setSelected(promotion.isSelected());
-        promotionLevelTextView.setText(promotion.getName());
+        mPromotionLevelTextView.setText(promotion.getName());
     }
 
     private void setListeners(Promotion promotion, View promotionItem) {
         setLongClickListener(promotion, promotionItem);
-        settingBtn.setOnClickListener(v -> listener.setOnClickSettingBtn(promotion));
-        gradeBtn.setOnClickListener(v -> listener.setOnClickGradeBtn(promotion));
-        addStudentsBtn.setOnClickListener(v -> listener.setOnClickAddStudentsBtn(promotion));
+        mSettingBtn.setOnClickListener(v -> mListener.setOnClickSettingBtn(promotion));
+        mGradeBtn.setOnClickListener(v -> mListener.setOnClickGradeBtn(promotion));
+        mAddStudentsBtn.setOnClickListener(v -> mListener.setOnClickAddStudentsBtn(promotion));
     }
 
     private  void setLongClickListener(Promotion promotion, View promotionItem) {
         promotionItem.setOnLongClickListener(v -> {
-            listener.onPromotionLongClicked(promotion);
+            mListener.onPromotionLongClicked(promotion);
             promotionItem.setSelected(promotion.isSelected());
             return true;
         });

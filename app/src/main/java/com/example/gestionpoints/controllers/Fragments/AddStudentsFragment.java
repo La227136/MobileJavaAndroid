@@ -1,18 +1,17 @@
 package com.example.gestionpoints.controllers.Fragments;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
 import com.example.gestionpoints.R;
+import com.example.gestionpoints.Utils.IntentKeys;
 import com.example.gestionpoints.models.promotion.Promotion;
 
 public class AddStudentsFragment extends Fragment {
@@ -20,20 +19,19 @@ public class AddStudentsFragment extends Fragment {
         void onStudentListAdded(String csvText);
         void onStudentAdded(String lastName, String surFirstName, Promotion promotion);
     }
-    private static final String ARG_PROMOTION = "promotion";
-    Listener listener;
-    private Promotion promotion;
-    private Button addStudentButton;
-    private Button addCsvTextButton;
-    private EditText studentLastNameEditText;
-    private EditText studentSurFirstNameEditText;
-    private EditText csvEditText;
+    Listener mListener;
+    private Promotion mPromotion;
+    private Button mAddStudentButton;
+    private Button mAddCsvTextButton;
+    private EditText mStudentLastNameEditText;
+    private EditText mStudentSurFirstNameEditText;
+    private EditText mCsvEditText;
 
 
     public static AddStudentsFragment newInstance(Promotion promotion) {
         AddStudentsFragment fragment = new AddStudentsFragment();
         Bundle args = new Bundle();
-        args.putSerializable(ARG_PROMOTION, promotion);
+        args.putSerializable(IntentKeys.PROMOTION, promotion);
         fragment.setArguments(args);
         return fragment;
     }
@@ -42,14 +40,14 @@ public class AddStudentsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            promotion = (Promotion) getArguments().getSerializable(ARG_PROMOTION);
+            mPromotion = (Promotion) getArguments().getSerializable(IntentKeys.PROMOTION);
         }
     }
 
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof Listener) {
-            listener = (Listener) context;
+            mListener = (Listener) context;
         } else {
             throw new RuntimeException(context.toString() + " doit implémenter BaseActivity.Listener");
         }
@@ -63,11 +61,11 @@ public class AddStudentsFragment extends Fragment {
     }
 
     private void retrieveView(View view) {
-        addStudentButton = view.findViewById(R.id.btn_add_student);
-        studentLastNameEditText = view.findViewById(R.id.last_name);
-        studentSurFirstNameEditText = view.findViewById(R.id.first_name);
-        csvEditText = view.findViewById(R.id.csv_text);
-        addCsvTextButton = view.findViewById(R.id.btn_csv_text);
+        mAddStudentButton = view.findViewById(R.id.btn_add_student);
+        mStudentLastNameEditText = view.findViewById(R.id.last_name);
+        mStudentSurFirstNameEditText = view.findViewById(R.id.first_name);
+        mCsvEditText = view.findViewById(R.id.csv_text);
+        mAddCsvTextButton = view.findViewById(R.id.btn_csv_text);
     }
 
     private void setListeners() {
@@ -76,19 +74,19 @@ public class AddStudentsFragment extends Fragment {
     }
 
     private void setAddCsvTextButton() {
-        addCsvTextButton.setOnClickListener(v -> {
-            String csvText = csvEditText.getText().toString();
+        mAddCsvTextButton.setOnClickListener(v -> {
+            String csvText = mCsvEditText.getText().toString();
             if (!csvText.isEmpty()) {
-               listener.onStudentListAdded(csvText);
+               mListener.onStudentListAdded(csvText);
             }
         });
     }
 
     private void setAddStudentButtonListener() {
-        addStudentButton.setOnClickListener(v -> {
-            String lastName = studentLastNameEditText.getText().toString();
-            String surFirstName = studentSurFirstNameEditText.getText().toString();
-                listener.onStudentAdded(lastName, surFirstName,promotion);
+        mAddStudentButton.setOnClickListener(v -> {
+            String lastName = mStudentLastNameEditText.getText().toString();
+            String surFirstName = mStudentSurFirstNameEditText.getText().toString();
+                mListener.onStudentAdded(lastName, surFirstName, mPromotion);
         });
     }
 

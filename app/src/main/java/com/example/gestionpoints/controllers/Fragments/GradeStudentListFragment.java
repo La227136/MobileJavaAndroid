@@ -22,13 +22,13 @@ import java.util.ArrayList;
 
 public class GradeStudentListFragment extends Fragment {
 
-    private ArrayList<Student> studentList;
-    private LinearLayout studentListContainer;
-    private Listener listener;
-    private GradeManager gradeManager;
-    private Evaluation learningActivity;
-    TextView fullNameTextView;
-    TextView studentGradeTextView;
+    private ArrayList<Student> mStudentList;
+    private LinearLayout mStudentListContainer;
+    private Listener mListener;
+    private GradeManager mGradeManager;
+    private Evaluation mLearningActivity;
+    private TextView mFullNameTextView;
+    private TextView mStudentGradeTextView;
 
     public interface Listener {
         void onItemClick(Student student);
@@ -48,7 +48,7 @@ public class GradeStudentListFragment extends Fragment {
 
         super.onAttach(context);
         if (context instanceof Listener) {
-            listener = (Listener) context;
+            mListener = (Listener) context;
         } else {
             throw new RuntimeException(context.toString() + " doit implémenter BaseActivity.Listener");
         }
@@ -56,14 +56,14 @@ public class GradeStudentListFragment extends Fragment {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        gradeManager = new GradeManager(getContext());
+        mGradeManager = new GradeManager(getContext());
         super.onCreate(savedInstanceState);
-        if (studentList == null) {
-            studentList = new ArrayList<>();
+        if (mStudentList == null) {
+            mStudentList = new ArrayList<>();
         }
         if (getArguments() != null) {
-            studentList = (ArrayList<Student>) getArguments().getSerializable(IntentKeys.STUDENTLIST);
-            learningActivity = (Evaluation) getArguments().getSerializable(IntentKeys.LEARNING_ACTIVITY);
+            mStudentList = (ArrayList<Student>) getArguments().getSerializable(IntentKeys.STUDENTLIST);
+            mLearningActivity = (Evaluation) getArguments().getSerializable(IntentKeys.LEARNING_ACTIVITY);
         }
     }
 
@@ -72,16 +72,16 @@ public class GradeStudentListFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_student_list, container, false);
-        studentListContainer = view.findViewById(R.id.studentListContainer);
-        if(studentList != null){
+        mStudentListContainer = view.findViewById(R.id.studentListContainer);
+        if(mStudentList != null){
             displayStudents(inflater);
         }
         return view;
     }
 
     private void displayStudents(LayoutInflater inflater) {
-        for (Student student : studentList) {
-            studentListContainer.addView(createStudentItem(inflater, student));
+        for (Student student : mStudentList) {
+            mStudentListContainer.addView(createStudentItem(inflater, student));
         }
     }
 
@@ -93,20 +93,20 @@ public class GradeStudentListFragment extends Fragment {
         return studentItem;
     }
     private View getStudentItem(LayoutInflater inflater) {
-        return inflater.inflate(R.layout.list_item_student, studentListContainer, false);
+        return inflater.inflate(R.layout.list_item_student, mStudentListContainer, false);
     }
     private void retrieveView(View studentItem) {
-        fullNameTextView = studentItem.findViewById(R.id.studentFullNameTextView);
-        studentGradeTextView = studentItem.findViewById(R.id.studentGradeTextView);
+        mFullNameTextView = studentItem.findViewById(R.id.studentFullNameTextView);
+        mStudentGradeTextView = studentItem.findViewById(R.id.studentGradeTextView);
     }
     private void setUpOnClickListener(View studentItem, Student student) {
         studentItem.setOnClickListener((view) -> {
-            listener.onItemClick(student);
+            mListener.onItemClick(student);
         });
     }
 
     private void setStudentItemData(Student student) {
-        studentGradeTextView.setText(String.valueOf(gradeManager.getRoundedGrade(learningActivity.getId(), student.getId())));
-        fullNameTextView.setText(student.getLastName() + " " + student.getFirstName());
+        mStudentGradeTextView.setText(String.valueOf(mGradeManager.getRoundedGrade(mLearningActivity.getId(), student.getId())));
+        mFullNameTextView.setText(student.getLastName() + " " + student.getFirstName());
     }
 }

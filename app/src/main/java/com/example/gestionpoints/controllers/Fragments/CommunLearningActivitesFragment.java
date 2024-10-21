@@ -17,17 +17,16 @@ import com.example.gestionpoints.models.evaluation.Evaluation;
 import com.example.gestionpoints.models.promotion.Promotion;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class CommunLearningActivitesFragment extends Fragment {
 
-    private Promotion promotion;
-    LinearLayout learningActivitiesContainer;
-    private Listener listener;
-    private ArrayList<Evaluation> learningActivities;
-    private boolean isLongClick = false;
-    TextView activityTextView;
+    private Promotion mPromotion;
+    private LinearLayout mLearningActivitiesContainer;
+    private Listener mListener;
+    private ArrayList<Evaluation> mLearningActivities;
+    private boolean mIsLongClick = false;
+    private TextView mActivityTextView;
 
     public interface Listener {
         void onItemClick(View view, Evaluation evaluation);
@@ -47,7 +46,7 @@ public class CommunLearningActivitesFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof Listener) {
-            listener = (Listener) context;
+            mListener = (Listener) context;
         } else {
             throw new RuntimeException(context.toString() + " doit implémenter BaseActivity.Listener");
         }
@@ -57,8 +56,8 @@ public class CommunLearningActivitesFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            learningActivities = (ArrayList<Evaluation>) getArguments().getSerializable(IntentKeys.LEARNING_ACTIVITIES);
-            promotion = (Promotion) getArguments().getSerializable(IntentKeys.PROMOTION);
+            mLearningActivities = (ArrayList<Evaluation>) getArguments().getSerializable(IntentKeys.LEARNING_ACTIVITIES);
+            mPromotion = (Promotion) getArguments().getSerializable(IntentKeys.PROMOTION);
         }
     }
 
@@ -67,16 +66,16 @@ public class CommunLearningActivitesFragment extends Fragment {
         // TODO POURQUOI DEFOIS ON DANS ONCREATEVIEW ON FAIT UN SUPER ET PARFOIS PAS ?
         // super.onCreateView(inflater, container, savedInstanceState);
         View v = inflater.inflate(R.layout.fragment_learning_activities, container, false);
-        learningActivitiesContainer = v.findViewById(R.id.learningActivitiesContainer);
-        if (promotion != null) {
+        mLearningActivitiesContainer = v.findViewById(R.id.learningActivitiesContainer);
+        if (mPromotion != null) {
             displayLearningActivities(inflater);
         }
         return v;
     }
 
     private void displayLearningActivities(LayoutInflater inflater) {
-        for (Evaluation evaluation : learningActivities) {
-                learningActivitiesContainer.addView(createLearningActivityItem(inflater, evaluation));
+        for (Evaluation evaluation : mLearningActivities) {
+                mLearningActivitiesContainer.addView(createLearningActivityItem(inflater, evaluation));
         }
     }
 
@@ -88,27 +87,27 @@ public class CommunLearningActivitesFragment extends Fragment {
         return learningActivityItem;
     }
     private View getPromotionItemView(LayoutInflater inflater) {
-        return inflater.inflate(R.layout.list_item_learning_activity, learningActivitiesContainer, false);
+        return inflater.inflate(R.layout.list_item_learning_activity, mLearningActivitiesContainer, false);
     }
     private void retrieveView(View learningActivityItem) {
-        activityTextView = learningActivityItem.findViewById(R.id.learningActivityTextView);
+        mActivityTextView = learningActivityItem.findViewById(R.id.learningActivityTextView);
     }
     private void setLearningActivityData(View learningActivityItem, Evaluation evaluation) {
-        activityTextView.setText(evaluation.getName());
+        mActivityTextView.setText(evaluation.getName());
         learningActivityItem.setSelected(evaluation.isSelected());
     }
 
     private void setupClickListeners(View learningActivityItem, Evaluation evaluation) {
         learningActivityItem.setOnClickListener((view) -> {
-            if (!isLongClick) {
-                listener.onItemClick(view, evaluation);
+            if (!mIsLongClick) {
+                mListener.onItemClick(view, evaluation);
             }
-            isLongClick = false;
+            mIsLongClick = false;
         });
 
         learningActivityItem.setOnLongClickListener((view) -> {
-            isLongClick = true;
-            listener.onLearningActivityLongClicked(evaluation);
+            mIsLongClick = true;
+            mListener.onLearningActivityLongClicked(evaluation);
             learningActivityItem.setSelected(evaluation.isSelected());
             return true;
         });

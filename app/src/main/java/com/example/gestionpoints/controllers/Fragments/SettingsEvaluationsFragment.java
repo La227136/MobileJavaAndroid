@@ -20,14 +20,13 @@ import java.util.List;
 
 public class SettingsEvaluationsFragment extends Fragment {
 
-
-    private LinearLayout learningActivitiesContainer;
-    private ArrayList<Evaluation> evaluationListFromLearningActivityDirectChild;
-    ArrayList<Evaluation> subEvaluations;
-    private Listener listener;
-    TextView mainEvaluationTextView;
-    TextView ponderationTextView;
-    Button addSubEvaluationButton;
+    private LinearLayout mLearningActivitiesContainer;
+    private ArrayList<Evaluation> mEvaluationListFromLearningActivityDirectChild;
+    private ArrayList<Evaluation> mSubEvaluations;
+    private Listener mListener;
+    private TextView mMainEvaluationTextView;
+    private TextView mPonderationTextView;
+    private Button mAddSubEvaluationButton;
 
     public interface Listener {
         void onAddSubEvaluation(Evaluation parentEvaluation);
@@ -48,7 +47,7 @@ public class SettingsEvaluationsFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof Listener) {
-            listener = (Listener) context;
+            mListener = (Listener) context;
         } else {
             throw new RuntimeException(context.toString() + " must implement AddSubEvaluationListener");
         }
@@ -58,31 +57,31 @@ public class SettingsEvaluationsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            evaluationListFromLearningActivityDirectChild = (ArrayList<Evaluation>) getArguments().getSerializable(IntentKeys.EVALUATIONLIST);
+            mEvaluationListFromLearningActivityDirectChild = (ArrayList<Evaluation>) getArguments().getSerializable(IntentKeys.EVALUATIONLIST);
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_learning_activities, container, false);
-        learningActivitiesContainer = v.findViewById(R.id.learningActivitiesContainer);
+        mLearningActivitiesContainer = v.findViewById(R.id.learningActivitiesContainer);
         //TODO gere error potentiel si null
-        displayEval(inflater, evaluationListFromLearningActivityDirectChild, 0);
+        displayEval(inflater, mEvaluationListFromLearningActivityDirectChild, 0);
         return v;
     }
 
     private void displayEval(LayoutInflater inflater, List<Evaluation> evaluationList, int level) {
         for (Evaluation evaluation : evaluationList) {
             display(inflater, evaluation, level);
-            subEvaluations = listener.getChildrenForEvaluation(evaluation);
-            if (subEvaluations != null && !subEvaluations.isEmpty()) {
-                displayEval(inflater, subEvaluations, level + 1);
+            mSubEvaluations = mListener.getChildrenForEvaluation(evaluation);
+            if (mSubEvaluations != null && !mSubEvaluations.isEmpty()) {
+                displayEval(inflater, mSubEvaluations, level + 1);
             }
         }
     }
 
     private void display(LayoutInflater inflater, Evaluation evaluation, int level) {
-        View evalItemView = inflater.inflate(R.layout.list_item_evaluation_settings, learningActivitiesContainer, false);
+        View evalItemView = inflater.inflate(R.layout.list_item_evaluation_settings, mLearningActivitiesContainer, false);
         //TODO gere params
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -91,30 +90,30 @@ public class SettingsEvaluationsFragment extends Fragment {
         evalItemView.setSelected(evalItemView.isSelected());
         setEvalData(evaluation);
         setListeners(evaluation, evalItemView);
-        learningActivitiesContainer.addView(evalItemView);
+        mLearningActivitiesContainer.addView(evalItemView);
         params.setMargins(16 + (90 * level), 10, 16, 0);
     }
 
     private void setListeners(Evaluation evaluation, View evalItemView) {
-        addSubEvaluationButton.setOnClickListener(v -> {
-            listener.onAddSubEvaluation(evaluation);
+        mAddSubEvaluationButton.setOnClickListener(v -> {
+            mListener.onAddSubEvaluation(evaluation);
         });
         evalItemView.setOnLongClickListener((view) -> {
             evalItemView.setSelected(!evalItemView.isSelected());
-            listener.onLongClick(view, evaluation);
+            mListener.onLongClick(view, evaluation);
             return true;
         });
     }
 
     private void setEvalData(Evaluation evaluation) {
-        mainEvaluationTextView.setText(evaluation.getName());
-        ponderationTextView.setText(String.valueOf(evaluation.getMaxGrade()));
+        mMainEvaluationTextView.setText(evaluation.getName());
+        mPonderationTextView.setText(String.valueOf(evaluation.getMaxGrade()));
     }
 
     private  void retrieveView(View evalItemView) {
-        addSubEvaluationButton = evalItemView.findViewById(R.id.addSubEvaluationButton);
-        mainEvaluationTextView = evalItemView.findViewById(R.id.mainEvaluationTextView);
-        ponderationTextView = evalItemView.findViewById(R.id.ponderationTextView);
+        mAddSubEvaluationButton = evalItemView.findViewById(R.id.addSubEvaluationButton);
+        mMainEvaluationTextView = evalItemView.findViewById(R.id.mainEvaluationTextView);
+        mPonderationTextView = evalItemView.findViewById(R.id.ponderationTextView);
     }
 }
 

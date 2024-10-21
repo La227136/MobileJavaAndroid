@@ -1,21 +1,18 @@
 package com.example.gestionpoints.controllers.Fragments.DialogFragment;
 
-import android.util.Log;
-import android.widget.EditText;
-
 import com.example.gestionpoints.models.evaluation.Evaluation;
 
 public class AddLearningActivitiesDialogFragment extends AddItemDialogFragment<Evaluation> {
 
-   private Integer promotionId;
+   private Integer mPromotionId;
 
     public AddLearningActivitiesDialogFragment(int promotionId) {
-        this.promotionId = promotionId;
+        this.mPromotionId = promotionId;
     }
 
     @Override
     protected Evaluation createNewItem(String name) {
-        return new Evaluation(null, promotionId, 20, name);
+        return new Evaluation(null, mPromotionId, 20, name);
     }
 
     @Override
