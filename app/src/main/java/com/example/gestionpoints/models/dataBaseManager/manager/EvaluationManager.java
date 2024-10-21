@@ -159,4 +159,31 @@ public class EvaluationManager {
         values.put(EvaluationTable.Cols.PROMOTION_ID, evaluation.getPromotionId());
         return values;
     }
+
+    public List<Integer> getEvaluationIdList(Integer id) {
+        List<Integer> evaluationIdList = new ArrayList<>();
+
+        Cursor cursor = mDatabase.query(
+                EvaluationTable.NAME,
+                null,
+                EvaluationTable.Cols.PROMOTION_ID + " = ?",
+                new String[]{String.valueOf(id)},
+                null,
+                null,
+                null
+        );
+
+        EvaluationCursorWrapper cursorWrapper = new EvaluationCursorWrapper(cursor);
+
+        try {
+            cursorWrapper.moveToFirst();
+            while (!cursorWrapper.isAfterLast()) {
+                evaluationIdList.add(cursorWrapper.getEvaluation().getId());
+                cursorWrapper.moveToNext();
+            }
+        } finally {
+            cursorWrapper.close();
+        }
+        return evaluationIdList;
+    }
 }

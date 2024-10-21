@@ -57,4 +57,8 @@ public class Student implements Serializable {
     public int getPromotionId() {
         return mPromotion.getId();
     }
+
+    public void setId(int lastId) {
+        mId = lastId;
+    }
 }

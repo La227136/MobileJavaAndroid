@@ -2,7 +2,6 @@ package com.example.gestionpoints.controllers.Activities.SettingsActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import androidx.fragment.app.Fragment;
@@ -18,7 +17,6 @@ import com.example.gestionpoints.models.dataBaseManager.manager.GradeManager;
 import com.example.gestionpoints.models.dataBaseManager.manager.StudentManager;
 import com.example.gestionpoints.models.evaluation.Evaluation;
 import com.example.gestionpoints.models.promotion.Promotion;
-import com.example.gestionpoints.models.student.Student;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,7 +74,7 @@ public class SettingsLearningActivitiesListActivity extends BaseActivity impleme
         AddLearningActivitiesDialogFragment dialogFragment = new AddLearningActivitiesDialogFragment(promotion.getId());
         dialogFragment.setAddItemListener(newLearningActivity -> {
             evaluationManager.addEvaluation(newLearningActivity);
-            gradeManager.addGrade(newLearningActivity.getId(),studentIdList);
+            gradeManager.addGradeWhenNewEvaluation(newLearningActivity.getId(),studentIdList);
             replaceFragment();
         });
         dialogFragment.show(getSupportFragmentManager(), "AddLearningActivitiesFragment");

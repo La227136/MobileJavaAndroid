@@ -9,6 +9,8 @@ import com.example.gestionpoints.Utils.IntentKeys;
 import com.example.gestionpoints.controllers.Activities.BaseActivity;
 import com.example.gestionpoints.controllers.Fragments.AddStudentsFragment;
 import com.example.gestionpoints.models.ExceptionTextField;
+import com.example.gestionpoints.models.dataBaseManager.manager.EvaluationManager;
+import com.example.gestionpoints.models.dataBaseManager.manager.GradeManager;
 import com.example.gestionpoints.models.dataBaseManager.manager.StudentManager;
 import com.example.gestionpoints.models.promotion.Promotion;
 import com.example.gestionpoints.models.student.Student;
@@ -16,10 +18,14 @@ import com.example.gestionpoints.models.student.Student;
 public class AddStudentsActivity extends BaseActivity implements AddStudentsFragment.Listener {
     private Promotion promotion;
     private StudentManager studentManager;
+    private GradeManager gradeManager;
+    private EvaluationManager evaluationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         studentManager = new StudentManager(this);
+        gradeManager = new GradeManager(this);
+        evaluationManager = new EvaluationManager(this);
         promotion = (Promotion) getIntent().getSerializableExtra(IntentKeys.PROMOTION);
         super.onCreate(savedInstanceState);
     }
@@ -60,7 +66,7 @@ public class AddStudentsActivity extends BaseActivity implements AddStudentsFrag
     @Override
     public void onStudentAdded(String lastName, String surFirstName, Promotion promotion) {
         try {
-            addStudent(lastName, surFirstName, promotion);
+          addStudent(lastName, surFirstName, promotion);
         } catch (ExceptionTextField e) {
             e.ShowToast(this);
         }
@@ -78,6 +84,7 @@ public class AddStudentsActivity extends BaseActivity implements AddStudentsFrag
 
         Student student = new Student(lastName, firstName, promotion);
         studentManager.addStudent(student);
+        gradeManager.addGradeWhenNewStudent(student.getId(), evaluationManager.getEvaluationIdList(promotion.getId()));
         Toast.makeText(this, "L'étudiant a bien été ajouté", Toast.LENGTH_SHORT).show();
     }
 //endregion

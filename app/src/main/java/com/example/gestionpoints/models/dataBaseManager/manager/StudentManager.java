@@ -127,11 +127,13 @@ public class StudentManager {
     }
 
     public void addStudent(Student student) {
-
         mDatabase.insert(StudentTable.NAME, null, getContentValues(student));
-
+        student.setId(getLastId());
     }
 
+    public int getLastId() {
+        return (int) mDatabase.compileStatement("SELECT last_insert_rowid()").simpleQueryForLong();
+    }
     public void updateStudent(Student student) {
         mDatabase.update(StudentTable.NAME, getContentValues(student),
                 StudentTable.Cols.ID + " = ?",
