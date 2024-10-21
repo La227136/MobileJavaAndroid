@@ -2,13 +2,16 @@ package com.example.gestionpoints.controllers.Activities.GradeActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.gestionpoints.R;
 import com.example.gestionpoints.Utils.IntentKeys;
 import com.example.gestionpoints.controllers.Activities.BaseActivity;
 import com.example.gestionpoints.controllers.Fragments.CommunLearningActivitesFragment;
+import com.example.gestionpoints.controllers.Fragments.SettingsEvaluationsFragment;
 import com.example.gestionpoints.models.dataBaseManager.manager.EvaluationManager;
 import com.example.gestionpoints.models.evaluation.Evaluation;
 import com.example.gestionpoints.models.promotion.Promotion;
@@ -64,6 +67,7 @@ public class GradeLearningActivitiesActivity extends BaseActivity implements Com
         intent.putExtra(IntentKeys.LEARNING_ACTIVITY, learningActivity);
         startActivity(intent);
     }
+
 
     @Override
     public void onLearningActivityLongClicked(Evaluation promotion) {

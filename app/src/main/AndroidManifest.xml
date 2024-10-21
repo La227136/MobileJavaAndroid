@@ -33,6 +33,7 @@
             android:exported="true" />
         <activity
             android:name=".controllers.Activities.GradeActivity.GradeLearningActivitiesActivity"
+
             android:exported="true" />
         <activity
             android:name=".controllers.Activities.SettingsActivity.SettingsEvaluationsActivity"

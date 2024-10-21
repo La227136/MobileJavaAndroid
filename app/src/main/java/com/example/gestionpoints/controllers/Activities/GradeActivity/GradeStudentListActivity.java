@@ -5,8 +5,10 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.gestionpoints.R;
 import com.example.gestionpoints.Utils.IntentKeys;
 import com.example.gestionpoints.controllers.Activities.BaseActivity;
+import com.example.gestionpoints.controllers.Fragments.GradeStudentEvaluationsFragment;
 import com.example.gestionpoints.controllers.Fragments.GradeStudentListFragment;
 import com.example.gestionpoints.models.dataBaseManager.manager.StudentManager;
 import com.example.gestionpoints.models.evaluation.Evaluation;
@@ -64,5 +66,20 @@ public class GradeStudentListActivity extends BaseActivity implements GradeStude
         super.onSaveInstanceState(outState);
         outState.putSerializable(IntentKeys.PROMOTION, promotion);
         outState.putSerializable(IntentKeys.LEARNING_ACTIVITY, learningActivity);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        replaceFragment();
+    }
+
+    public void replaceFragment() {
+        StudentManager studentManager = new StudentManager(this);
+        studentList = studentManager.getStudentsForPromotion(promotion);
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.middlePageContainer, GradeStudentListFragment.newInstance(studentList,learningActivity))
+                .commit();
     }
 }
