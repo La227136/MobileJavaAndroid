@@ -21,6 +21,8 @@ private Student student;
 private Evaluation learningActivity;
 private GradeManager gradeManager;
 private EvaluationManager evaluationManager;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         evaluationManager = new EvaluationManager(this);
@@ -30,11 +32,11 @@ private EvaluationManager evaluationManager;
         super.onCreate(savedInstanceState);
     }
 
+    //region BaseActivity related methods
     @Override
     public Fragment getMiddleFragmentToLaunch() {
         return GradeStudentEvaluationsFragment.newInstance(student, learningActivity);
     }
-
     @Override
     public String getTitlePage() {
         return "Points: "+student.getFirstName() + " " + student.getLastName();
@@ -43,21 +45,18 @@ private EvaluationManager evaluationManager;
     public void setupFooter() {
         // Pas de footer
     }
+    //endregion
 
+    // region GradeStudentEvaluationsFragment.Listener related methods
     @Override
-    public Grade getGrade(Student student, Evaluation evaluation) {
-        gradeManager = new GradeManager(this);
-        return new Grade(student,evaluation, gradeManager.getGrade(evaluation.getId(),student.getId()));
+    public Grade createGrade(Student student, Evaluation evaluation) {
+        return new Grade(student,evaluation, getGrade(student, evaluation));
     }
 
     @Override
     public void updateGrade(Grade grade, float editableGrade) {
-        //grade.setGrade(editableGrade);
         gradeManager.updateGrade(grade,editableGrade);
-
         updateParentGrades(grade.getEvaluation());
-
-
     }
 
     private void updateParentGrades(Evaluation evaluation) {
@@ -81,7 +80,7 @@ private EvaluationManager evaluationManager;
         List<Evaluation> subEvaluations = evaluationManager.getEvaluationForParentEvaluation(evaluation);
         if (subEvaluations == null || subEvaluations.isEmpty()) {
             // Si pas de sous-évaluations, retourner la note actuelle de l'évaluation
-            float gradeValue = gradeManager.getGrade(evaluation.getId(), student.getId());
+            float gradeValue = getGrade(student, evaluation);
             return gradeValue >= 0 ? gradeValue : 0;
         } else {
             // Calculer la note en fonction des sous-évaluations
@@ -98,9 +97,14 @@ private EvaluationManager evaluationManager;
         }
     }
 
-
     @Override
     public ArrayList<Evaluation> getEvalutionForParentEvaluation(Evaluation evaluation) {
         return evaluationManager.getEvaluationForParentEvaluation(evaluation);
     }
+    private float getGrade(Student student, Evaluation evaluation) {
+        return gradeManager.getGrade(evaluation.getId(), student.getId());
+    }
+    //endregion
+
+
 }

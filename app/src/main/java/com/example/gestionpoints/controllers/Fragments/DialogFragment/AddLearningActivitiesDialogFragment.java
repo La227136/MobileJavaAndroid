@@ -9,13 +9,11 @@ public class AddLearningActivitiesDialogFragment extends AddItemDialogFragment<E
    private Integer promotionId;
 
     public AddLearningActivitiesDialogFragment(int promotionId) {
-        Log.d("caca", "AddLearningActivitiesDialogFragment: " + promotionId);
         this.promotionId = promotionId;
     }
 
     @Override
     protected Evaluation createNewItem(String name) {
-        Log.d("doiswork", "createNewItem: " + name);
         return new Evaluation(null, promotionId, 20, name);
     }
 
