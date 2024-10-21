@@ -1,6 +1,7 @@
 package com.example.gestionpoints.controllers.Fragments.DialogFragment;
 
 import android.util.Log;
+import android.widget.EditText;
 
 import com.example.gestionpoints.models.evaluation.Evaluation;
 
@@ -26,4 +27,5 @@ public class AddLearningActivitiesDialogFragment extends AddItemDialogFragment<E
     protected String getName() {
         return "l'activité d'apprentissage";
     }
+
 }

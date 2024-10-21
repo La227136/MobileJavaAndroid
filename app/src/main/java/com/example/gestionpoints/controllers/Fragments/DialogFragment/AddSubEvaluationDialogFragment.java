@@ -1,22 +1,19 @@
 package com.example.gestionpoints.controllers.Fragments.DialogFragment;
 
-
 import com.example.gestionpoints.models.evaluation.Evaluation;
 
-public class AddEvaluationDialogFragment extends AddBaseEvaluationDialogFragment {
-
-
-    public AddEvaluationDialogFragment(Evaluation evaluation) {
+public class AddSubEvaluationDialogFragment extends AddBaseEvaluationDialogFragment {
+    public AddSubEvaluationDialogFragment(Evaluation evaluation) {
         super(evaluation);
     }
 
     @Override
     protected String getTitle() {
-        return "Evaluation";
+        return "Sous-évaluation";
     }
 
     @Override
     protected String getName() {
-        return "l'évaluation";
+        return "la sous-évaluation";
     }
 }
