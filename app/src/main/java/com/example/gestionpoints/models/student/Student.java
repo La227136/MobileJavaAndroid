@@ -6,37 +6,6 @@ import java.io.Serializable;
 import java.util.List;
 
 public class Student implements Serializable {
-    public Student(int id, String lastName, String firstName, int promotionId) {
-         mId = id;
-        mLastName = lastName;
-        mFirstName = firstName;
-        mPromotionID = promotionId;
-    }
-
-    public String getLastName() {
-        return mLastName;
-    }
-
-    public void setLastName(String mLastName) {
-        this.mLastName = mLastName;
-    }
-
-    public String getFirstName() {
-        return mFirstName;
-    }
-
-    public void setFirstName(String mFirstName) {
-        this.mFirstName = mFirstName;
-    }
-
-
-    public int getPromotionID() {
-        return mPromotionID;
-    }
-
-    public void setPromotionID(int mPromotionID) {
-        this.mPromotionID = mPromotionID;
-    }
 
     private String mLastName;
     private String mFirstName;
@@ -44,10 +13,25 @@ public class Student implements Serializable {
     private Promotion mPromotion;
     private int mId;
 
+    public Student(int id, String lastName, String firstName, int promotionId) {
+        mId = id;
+        mLastName = lastName;
+        mFirstName = firstName;
+        mPromotionID = promotionId;
+    }
+
     public Student(String lastName, String firstName, Promotion promotion) {
         this.mLastName = lastName;
         this.mFirstName = firstName;
         this.mPromotion = promotion;
+    }
+
+    public String getLastName() {
+        return mLastName;
+    }
+
+    public String getFirstName() {
+        return mFirstName;
     }
 
     public int getId() {

@@ -4,85 +4,70 @@ import java.io.Serializable;
 import java.util.List;
 
 public class Evaluation implements Serializable {
-    private Integer id;
-    private Integer parentId;
-    private Integer promotionId;
-    private float maxGrade;
-    private String name;
-    private boolean isSelected;
-    private List<Evaluation> subEvaluations;
+
+    private Integer mId;
+    private Integer mParentId;
+    private Integer mPromotionId;
+    private float mMaxGrade;
+    private String mName;
+    private boolean mIsSelected;
+    private List<Evaluation> mSubEvaluations;
 
     public Evaluation(Integer id, Integer parentId, Integer promotionId, float maxGrade, String name) {
-        this.id = id;
-        this.parentId = parentId;
-        this.promotionId = promotionId;
-        this.maxGrade = maxGrade;
-        this.name = name;
+        this.mId = id;
+        this.mParentId = parentId;
+        this.mPromotionId = promotionId;
+        this.mMaxGrade = maxGrade;
+        this.mName = name;
     }
 
     public Evaluation(Evaluation evaluation, List<Evaluation> subEvaluations) {
-        this.id = evaluation.getId();
-        this.parentId = evaluation.getParentId();
-        this.promotionId = evaluation.getPromotionId();
-        this.maxGrade = evaluation.getMaxGrade();
-        this.name = evaluation.getName();
-        this.isSelected = evaluation.isSelected();
-        this.subEvaluations = subEvaluations;
+        this.mId = evaluation.getId();
+        this.mParentId = evaluation.getParentId();
+        this.mPromotionId = evaluation.getPromotionId();
+        this.mMaxGrade = evaluation.getMaxGrade();
+        this.mName = evaluation.getName();
+        this.mIsSelected = evaluation.isSelected();
+        this.mSubEvaluations = subEvaluations;
     }
 
     public Evaluation(Integer parentId, Integer promotionId, float maxGrade, String name) {
-        this.parentId = parentId;
-        this.promotionId = promotionId;
-        this.maxGrade = maxGrade;
-        this.name = name;
-        this.subEvaluations = null;
+        this.mParentId = parentId;
+        this.mPromotionId = promotionId;
+        this.mMaxGrade = maxGrade;
+        this.mName = name;
+        this.mSubEvaluations = null;
     }
 
     public Integer getId() {
-        return id;
+        return mId;
     }
 
     public void setId(Integer id) {
-        this.id = id;
+        this.mId = id;
     }
 
     public Integer getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(Integer parentId) {
-        this.parentId = parentId;
+        return mParentId;
     }
 
     public Integer getPromotionId() {
-        return promotionId;
-    }
-
-    public void setPromotionId(Integer promotionId) {
-        this.promotionId = promotionId;
+        return mPromotionId;
     }
 
     public float getMaxGrade() {
-        return maxGrade;
-    }
-
-    public void setMaxGrade(float maxGrade) {
-        this.maxGrade = maxGrade;
+        return mMaxGrade;
     }
 
     public String getName() {
-        return name;
+        return mName;
     }
 
     public boolean isSelected() {
-        return isSelected;
+        return mIsSelected;
     }
 
     public void setSelected(boolean selected) {
-        isSelected = selected;
-    }
-
-    public List<Evaluation> getSubEvaluations() {
-        return subEvaluations;
+        mIsSelected = selected;
     }
 }

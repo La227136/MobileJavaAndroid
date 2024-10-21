@@ -8,7 +8,6 @@ import com.example.gestionpoints.models.dataBaseManager.dbSchema.BulletinDBSchem
 import com.example.gestionpoints.models.dataBaseManager.dbSchema.BulletinDBSchema.StudentTable;
 import com.example.gestionpoints.models.dataBaseManager.dbSchema.BulletinDBSchema.EvaluationTable;
 import com.example.gestionpoints.models.dataBaseManager.dbSchema.BulletinDBSchema.GradeTable;
-import com.example.gestionpoints.models.dataBaseManager.manager.DataGenerationTest;
 
 public class BulletinBaseHelper extends SQLiteOpenHelper {
     private static final int VERSION = 1;

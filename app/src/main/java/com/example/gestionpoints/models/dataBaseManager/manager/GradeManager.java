@@ -39,6 +39,12 @@ public class GradeManager implements Serializable {
         }
     }
 
+
+    public float getRoundedGrade(int evaluationId, int studentId) {
+        float grade = getGrade(evaluationId, studentId);
+        return Math.round(grade * 2) / 2.0f; // Arrondir à la demi-unité la plus proche
+    }
+
     public float getGrade(int evaluationId, int studentId) {
         // Requête pour récupérer la note
         String whereClause = GradeTable.Cols.EVALUATION_ID + " = ? AND " + GradeTable.Cols.STUDENT_ID + " = ?";

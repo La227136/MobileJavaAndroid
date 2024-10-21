@@ -22,23 +22,23 @@ import java.util.List;
 public class SettingsEvaluationsActivity extends BaseActivity implements FooterFragment.FooterListener, SettingsEvaluationsFragment.Listener {
 
     public static final String ADD_EVALUATION_DIALOG_FRAGMENT = "AddEvaluationDialogFragment";
-    private Evaluation learningActivity;
-    private EvaluationManager evaluationManager;
-    private GradeManager gradeManager;
-    private StudentManager studentManager;
-    ArrayList<Evaluation> selectedEvaluationList = new ArrayList<>();
-    ArrayList<Evaluation> directSubEvaluation;
-    private List<Integer> studentIdList = new ArrayList<>();
+    private Evaluation mLearningActivity;
+    private EvaluationManager mEvaluationManager;
+    private GradeManager mGradeManager;
+    private StudentManager mStudentManager;
+    private ArrayList<Evaluation> mSelectedEvaluationList = new ArrayList<>();
+    private ArrayList<Evaluation> mDirectSubEvaluation;
+    private List<Integer> mStudentIdList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        evaluationManager = new EvaluationManager(this);
-        gradeManager = new GradeManager(this);
-        studentManager = new StudentManager(this);
-        learningActivity = (Evaluation) getIntent().getSerializableExtra(IntentKeys.LEARNING_ACTIVITY);
-        studentIdList = studentManager.getStudentIdList(learningActivity.getPromotionId());
+        mEvaluationManager = new EvaluationManager(this);
+        mGradeManager = new GradeManager(this);
+        mStudentManager = new StudentManager(this);
+        mLearningActivity = (Evaluation) getIntent().getSerializableExtra(IntentKeys.LEARNING_ACTIVITY);
+        mStudentIdList = mStudentManager.getStudentIdList(mLearningActivity.getPromotionId());
         //TODO erroor peut etre
-        directSubEvaluation =  evaluationManager.getEvaluationForParentEvaluation(learningActivity);
+        mDirectSubEvaluation =  mEvaluationManager.getEvaluationForParentEvaluation(mLearningActivity);
         super.onCreate(savedInstanceState);
     }
 
@@ -49,7 +49,7 @@ public class SettingsEvaluationsActivity extends BaseActivity implements FooterF
 
     @Override
     public Fragment getMiddleFragmentToLaunch() {
-        return SettingsEvaluationsFragment.newInstance(directSubEvaluation);
+        return SettingsEvaluationsFragment.newInstance(mDirectSubEvaluation);
     }
     @Override
     public void setupFooter(){
@@ -58,10 +58,10 @@ public class SettingsEvaluationsActivity extends BaseActivity implements FooterF
 
     @Override
     public void onAddButtonClick() {
-        AddEvaluationDialogFragment dialogFragment = new AddEvaluationDialogFragment(learningActivity);
+        AddEvaluationDialogFragment dialogFragment = new AddEvaluationDialogFragment(mLearningActivity);
         dialogFragment.setAddItemListener(newEvaluation -> {
-            evaluationManager.addEvaluation(newEvaluation);
-            gradeManager.addGradeWhenNewEvaluation(newEvaluation.getId(),studentIdList);
+            mEvaluationManager.addEvaluation(newEvaluation);
+            mGradeManager.addGradeWhenNewEvaluation(newEvaluation.getId(), mStudentIdList);
             replaceFragment();
         });
         dialogFragment.show(getSupportFragmentManager(), ADD_EVALUATION_DIALOG_FRAGMENT);
@@ -70,22 +70,22 @@ public class SettingsEvaluationsActivity extends BaseActivity implements FooterF
     @Override
     public void onDeleteButtonClick() {
         boolean update = false;
-        for (Evaluation evaluation : selectedEvaluationList) {
-                update = true;
-                evaluationManager.deleteEvaluation(evaluation);
+        for (Evaluation evaluation : mSelectedEvaluationList) {
+            update = true;
+            mEvaluationManager.deleteEvaluation(evaluation);
         }
         if (update) {
             replaceFragment();
-            selectedEvaluationList.clear();
+            mSelectedEvaluationList.clear();
         }
     }
 
     public void onAddSubEvaluation(Evaluation parentEvaluation) {
         AddEvaluationDialogFragment dialogFragment = new AddEvaluationDialogFragment(parentEvaluation);
         dialogFragment.setAddItemListener(newEvaluation -> {
-            evaluationManager.addEvaluation(newEvaluation);
-            gradeManager.addGradeWhenNewEvaluation(newEvaluation.getId(),studentIdList);
-        replaceFragment();
+            mEvaluationManager.addEvaluation(newEvaluation);
+            mGradeManager.addGradeWhenNewEvaluation(newEvaluation.getId(), mStudentIdList);
+            replaceFragment();
         });
         dialogFragment.show(getSupportFragmentManager(), ADD_EVALUATION_DIALOG_FRAGMENT);
     }
@@ -93,22 +93,22 @@ public class SettingsEvaluationsActivity extends BaseActivity implements FooterF
     @Override
     public void onLongClick(View view, Evaluation evaluation) {
         evaluation.setSelected(!evaluation.isSelected());
-       if (evaluation.isSelected()) {
-           selectedEvaluationList.add(evaluation);
+        if (evaluation.isSelected()) {
+            mSelectedEvaluationList.add(evaluation);
         } else {
-          selectedEvaluationList.remove(evaluation);
+            mSelectedEvaluationList.remove(evaluation);
         }
     }
     @Override
     public ArrayList<Evaluation> getChildrenForEvaluation(Evaluation evaluation) {
-        return  evaluationManager.getEvaluationForParentEvaluation(evaluation);
+        return  mEvaluationManager.getEvaluationForParentEvaluation(evaluation);
     }
 
 
     private void replaceFragment() {
-        directSubEvaluation =  evaluationManager.getEvaluationForParentEvaluation(learningActivity);
+        mDirectSubEvaluation =  mEvaluationManager.getEvaluationForParentEvaluation(mLearningActivity);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.middlePageContainer, SettingsEvaluationsFragment.newInstance(directSubEvaluation))
+                .replace(R.id.middlePageContainer, SettingsEvaluationsFragment.newInstance(mDirectSubEvaluation))
                 .commit();
     }
 }

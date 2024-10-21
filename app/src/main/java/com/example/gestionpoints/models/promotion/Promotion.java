@@ -8,10 +8,6 @@ public class Promotion implements Serializable {
     private Integer mId;
     private String mName;
 
-    public Integer getId() {
-        return mId;
-    }
-
     public Promotion(String name, int id) {
         this.mName = name;
         this.mId = id;
@@ -19,6 +15,9 @@ public class Promotion implements Serializable {
 
     public Promotion(String name) {
         this.mName = name;
+    }
+    public Integer getId() {
+        return mId;
     }
 
     public String getName() {

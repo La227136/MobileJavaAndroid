@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment;
 import com.example.gestionpoints.R;
 import com.example.gestionpoints.Utils.IntentKeys;
 import com.example.gestionpoints.controllers.Activities.BaseActivity;
-import com.example.gestionpoints.controllers.Fragments.GradeStudentEvaluationsFragment;
 import com.example.gestionpoints.controllers.Fragments.GradeStudentListFragment;
 import com.example.gestionpoints.models.dataBaseManager.manager.StudentManager;
 import com.example.gestionpoints.models.evaluation.Evaluation;
@@ -18,17 +17,17 @@ import java.util.ArrayList;
 
 public class GradeStudentListActivity extends BaseActivity implements GradeStudentListFragment.Listener  {
 
-    private Promotion promotion;
-    private Evaluation learningActivity;
-    ArrayList<Student> studentList;
+    private Promotion mPromotion;
+    private Evaluation mLearningActivity;
+    private ArrayList<Student> mStudentList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
-            promotion = (Promotion) savedInstanceState.getSerializable(IntentKeys.PROMOTION);
-            learningActivity = (Evaluation) savedInstanceState.getSerializable(IntentKeys.LEARNING_ACTIVITY);
+            mPromotion = (Promotion) savedInstanceState.getSerializable(IntentKeys.PROMOTION);
+            mLearningActivity = (Evaluation) savedInstanceState.getSerializable(IntentKeys.LEARNING_ACTIVITY);
         } else {
-            promotion = (Promotion) getIntent().getSerializableExtra(IntentKeys.PROMOTION);
-            learningActivity = (Evaluation) getIntent().getSerializableExtra(IntentKeys.LEARNING_ACTIVITY);
+            mPromotion = (Promotion) getIntent().getSerializableExtra(IntentKeys.PROMOTION);
+            mLearningActivity = (Evaluation) getIntent().getSerializableExtra(IntentKeys.LEARNING_ACTIVITY);
         }
         super.onCreate(savedInstanceState);
     }
@@ -36,14 +35,14 @@ public class GradeStudentListActivity extends BaseActivity implements GradeStude
     //region BaseActivity related methods
     @Override
     public String getTitlePage() {
-        return "Liste des étudiants de " + learningActivity.getName();
+        return "Liste des étudiants de " + mLearningActivity.getName();
     }
     @Override
     public Fragment getMiddleFragmentToLaunch() {
         // todo faire comment dans SettingsLearningActivitiesListActivity pour le save instance et tt
         StudentManager studentManager = new StudentManager(this);
-        studentList = studentManager.getStudentsForPromotion(promotion);
-        return GradeStudentListFragment.newInstance(studentList,learningActivity);
+        mStudentList = studentManager.getStudentsForPromotion(mPromotion);
+        return GradeStudentListFragment.newInstance(mStudentList, mLearningActivity);
     }
     //endregion
 
@@ -56,7 +55,7 @@ public class GradeStudentListActivity extends BaseActivity implements GradeStude
     private void openGradeSingleStudentActivity(Student student) {
         Intent intent = new Intent(getApplicationContext(), GradeStudentEvaluationsActivity.class);
         intent.putExtra(IntentKeys.STUDENT, student);
-        intent.putExtra(IntentKeys.LEARNING_ACTIVITY, learningActivity);
+        intent.putExtra(IntentKeys.LEARNING_ACTIVITY, mLearningActivity);
         startActivity(intent);
     }
     //endregion
@@ -64,8 +63,8 @@ public class GradeStudentListActivity extends BaseActivity implements GradeStude
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putSerializable(IntentKeys.PROMOTION, promotion);
-        outState.putSerializable(IntentKeys.LEARNING_ACTIVITY, learningActivity);
+        outState.putSerializable(IntentKeys.PROMOTION, mPromotion);
+        outState.putSerializable(IntentKeys.LEARNING_ACTIVITY, mLearningActivity);
     }
 
     @Override
@@ -76,10 +75,10 @@ public class GradeStudentListActivity extends BaseActivity implements GradeStude
 
     public void replaceFragment() {
         StudentManager studentManager = new StudentManager(this);
-        studentList = studentManager.getStudentsForPromotion(promotion);
+        mStudentList = studentManager.getStudentsForPromotion(mPromotion);
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.middlePageContainer, GradeStudentListFragment.newInstance(studentList,learningActivity))
+                .replace(R.id.middlePageContainer, GradeStudentListFragment.newInstance(mStudentList, mLearningActivity))
                 .commit();
     }
 }

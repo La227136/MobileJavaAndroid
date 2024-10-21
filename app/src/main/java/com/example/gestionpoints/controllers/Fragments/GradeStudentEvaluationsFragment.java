@@ -30,7 +30,7 @@ public class GradeStudentEvaluationsFragment extends Fragment {
     private Evaluation learningActivity;
     private TextView ponderation;
     private TextView evaluationName;
-  //  private EditText gradeEditText;
+    //  private EditText gradeEditText;
     private Listener listener;
 
     public static GradeStudentEvaluationsFragment newInstance(Student student, Evaluation learningActivity) {
@@ -70,7 +70,13 @@ public class GradeStudentEvaluationsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_grades_display, container, false);
+        setupTouchListenersForFocusClear();
+        displayGradeContainer = v.findViewById(R.id.fragmentGradesDisplayContainer);
+        displayEvaluationList(inflater, listener.getEvalutionForParentEvaluation(learningActivity), 0);
+        return v;
+    }
 
+    private void setupTouchListenersForFocusClear() {
         // Cette View est nécessaire pour le clique autour de titre
         View rootView = getActivity().findViewById(R.id.learningActivityActivity);
 
@@ -98,21 +104,13 @@ public class GradeStudentEvaluationsFragment extends Fragment {
                     return false;
                 }
             });
-        } else {
-            Log.d("iiiiiiiiiiiii", "scrollView est null");
         }
-
-
-        displayGradeContainer = v.findViewById(R.id.fragmentGradesDisplayContainer);
-        displayEvaluationList(inflater, listener.getEvalutionForParentEvaluation(learningActivity), 0);
-        return v;
     }
 
     private void hideKeyboardAndClearFocus(View view) {
         View currentFocus = getActivity().getCurrentFocus();
         if (currentFocus != null) {
             currentFocus.clearFocus();
-            Log.d("iiiiiiiiiiiii", "Cacher le clavier");
             // Cacher le clavier
             InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(currentFocus.getWindowToken(), 0);
@@ -174,14 +172,14 @@ public class GradeStudentEvaluationsFragment extends Fragment {
 
     private void setEvalItemData(Evaluation evaluation, Grade grade, EditText gradeEditText) {
         evaluationName.setText(evaluation.getName());
-        gradeEditText.setText(String.valueOf(grade.calculGrade()));
+        gradeEditText.setText(String.valueOf(grade.getRoundedGrade()));
         ponderation.setText(String.valueOf(evaluation.getMaxGrade()));
     }
 
     private void retrieveView(View view) {
         ponderation = view.findViewById(R.id.ponderationTextViewGrade);
         evaluationName = view.findViewById(R.id.evaluationNameTextView);
-      //  gradeEditText = view.findViewById(R.id.displayGradeEditText);
+        //  gradeEditText = view.findViewById(R.id.displayGradeEditText);
     }
 
 }

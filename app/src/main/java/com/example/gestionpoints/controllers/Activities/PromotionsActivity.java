@@ -19,18 +19,16 @@ import com.example.gestionpoints.models.promotion.Promotion;
 import java.util.ArrayList;
 
 public class PromotionsActivity extends BaseActivity implements FooterFragment.FooterListener, PromotionListFragment.Listener {
-    ArrayList<Promotion> promotionList;
-    PromotionManager promotionManager;
+    private ArrayList<Promotion> mPromotionList;
+    private PromotionManager mPromotionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //DataGenerationTest testDataGenerator = new DataGenerationTest(this);
-        //testDataGenerator.generateTestData();
-        promotionManager = new PromotionManager(this);
+        mPromotionManager = new PromotionManager(this);
         if (savedInstanceState != null) {
-            promotionList = (ArrayList<Promotion>) savedInstanceState.getSerializable(IntentKeys.PROMOTIONS);
+            mPromotionList = (ArrayList<Promotion>) savedInstanceState.getSerializable(IntentKeys.PROMOTIONS);
         } else {
-            promotionList = promotionManager.getAllPromotions();
+            mPromotionList = mPromotionManager.getAllPromotions();
         }
         super.onCreate(savedInstanceState);
     }
@@ -42,7 +40,7 @@ public class PromotionsActivity extends BaseActivity implements FooterFragment.F
     }
     @Override
     public Fragment getMiddleFragmentToLaunch() {
-        return PromotionListFragment.newInstance(promotionList);
+        return PromotionListFragment.newInstance(mPromotionList);
     }
     @Override
     public void setupFooter(){
@@ -55,9 +53,9 @@ public class PromotionsActivity extends BaseActivity implements FooterFragment.F
     public void onAddButtonClick() {
         AddPromotionDialogFragment dialogFragment = new AddPromotionDialogFragment();
         dialogFragment.setAddItemListener(newPromotion -> {
-            promotionManager.addPromotion(newPromotion);
-            promotionList = promotionManager.getAllPromotions();
-            replaceFragment(promotionList);
+            mPromotionManager.addPromotion(newPromotion);
+            mPromotionList = mPromotionManager.getAllPromotions();
+            replaceFragment(mPromotionList);
         });
         dialogFragment.show(getSupportFragmentManager(), "AddPromotionDialogFragment");
     }
@@ -65,15 +63,15 @@ public class PromotionsActivity extends BaseActivity implements FooterFragment.F
     @Override
     public void onDeleteButtonClick() {
         boolean update = false;
-        for (Promotion promotion : promotionList) {
+        for (Promotion promotion : mPromotionList) {
             if (promotion.isSelected()) {
-                promotionManager.deletePromotion(promotion);
+                mPromotionManager.deletePromotion(promotion);
                 update = true;
             }
         }
         if (update){
-            promotionList = promotionManager.getAllPromotions();
-            replaceFragment(promotionList);
+            mPromotionList = mPromotionManager.getAllPromotions();
+            replaceFragment(mPromotionList);
         }
     }
 
@@ -115,7 +113,7 @@ public class PromotionsActivity extends BaseActivity implements FooterFragment.F
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putSerializable(IntentKeys.PROMOTIONS, promotionList);
+        outState.putSerializable(IntentKeys.PROMOTIONS, mPromotionList);
     }
 
 }

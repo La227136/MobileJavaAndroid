@@ -28,7 +28,7 @@ public class GradeStudentListFragment extends Fragment {
     private GradeManager gradeManager;
     private Evaluation learningActivity;
     TextView fullNameTextView;
-    TextView studentIdTextView;
+    TextView studentGradeTextView;
 
     public interface Listener {
         void onItemClick(Student student);
@@ -74,15 +74,15 @@ public class GradeStudentListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_student_list, container, false);
         studentListContainer = view.findViewById(R.id.studentListContainer);
         if(studentList != null){
-          displayStudents(inflater);
+            displayStudents(inflater);
         }
         return view;
     }
 
     private void displayStudents(LayoutInflater inflater) {
-            for (Student student : studentList) {
-              studentListContainer.addView(createStudentItem(inflater, student));
-            }
+        for (Student student : studentList) {
+            studentListContainer.addView(createStudentItem(inflater, student));
+        }
     }
 
     private @NonNull View createStudentItem(LayoutInflater inflater, Student student) {
@@ -97,7 +97,7 @@ public class GradeStudentListFragment extends Fragment {
     }
     private void retrieveView(View studentItem) {
         fullNameTextView = studentItem.findViewById(R.id.studentFullNameTextView);
-        studentIdTextView = studentItem.findViewById(R.id.studentGradeTextView);
+        studentGradeTextView = studentItem.findViewById(R.id.studentGradeTextView);
     }
     private void setUpOnClickListener(View studentItem, Student student) {
         studentItem.setOnClickListener((view) -> {
@@ -106,7 +106,7 @@ public class GradeStudentListFragment extends Fragment {
     }
 
     private void setStudentItemData(Student student) {
-        studentIdTextView.setText(String.valueOf(gradeManager.getGrade(learningActivity.getId(), student.getId())));
+        studentGradeTextView.setText(String.valueOf(gradeManager.getRoundedGrade(learningActivity.getId(), student.getId())));
         fullNameTextView.setText(student.getLastName() + " " + student.getFirstName());
     }
 }

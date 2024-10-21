@@ -16,17 +16,17 @@ import com.example.gestionpoints.models.promotion.Promotion;
 import com.example.gestionpoints.models.student.Student;
 
 public class AddStudentsActivity extends BaseActivity implements AddStudentsFragment.Listener {
-    private Promotion promotion;
-    private StudentManager studentManager;
-    private GradeManager gradeManager;
-    private EvaluationManager evaluationManager;
+    private Promotion mPromotion;
+    private StudentManager mStudentManager;
+    private GradeManager mGradeManager;
+    private EvaluationManager mEvaluationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        studentManager = new StudentManager(this);
-        gradeManager = new GradeManager(this);
-        evaluationManager = new EvaluationManager(this);
-        promotion = (Promotion) getIntent().getSerializableExtra(IntentKeys.PROMOTION);
+        mStudentManager = new StudentManager(this);
+        mGradeManager = new GradeManager(this);
+        mEvaluationManager = new EvaluationManager(this);
+        mPromotion = (Promotion) getIntent().getSerializableExtra(IntentKeys.PROMOTION);
         super.onCreate(savedInstanceState);
     }
 
@@ -38,7 +38,7 @@ public class AddStudentsActivity extends BaseActivity implements AddStudentsFrag
 
     @Override
     public Fragment getMiddleFragmentToLaunch() {
-        return AddStudentsFragment.newInstance(promotion);
+        return AddStudentsFragment.newInstance(mPromotion);
     }
     //endregion
 
@@ -55,7 +55,7 @@ public class AddStudentsActivity extends BaseActivity implements AddStudentsFrag
                 if (studentData.length != 2) {
                     throw new ExceptionTextField("Le format du fichier CSV est incorrect. Chaque ligne doit contenir un nom et un prénom séparés par une virgule.");
                 }
-                addStudent(studentData[0].trim(), studentData[1].trim(), promotion);
+                addStudent(studentData[0].trim(), studentData[1].trim(), mPromotion);
             }
         } catch (ExceptionTextField e) {
             e.ShowToast(this);
@@ -66,7 +66,7 @@ public class AddStudentsActivity extends BaseActivity implements AddStudentsFrag
     @Override
     public void onStudentAdded(String lastName, String surFirstName, Promotion promotion) {
         try {
-          addStudent(lastName, surFirstName, promotion);
+            addStudent(lastName, surFirstName, promotion);
         } catch (ExceptionTextField e) {
             e.ShowToast(this);
         }
@@ -83,8 +83,8 @@ public class AddStudentsActivity extends BaseActivity implements AddStudentsFrag
         }
 
         Student student = new Student(lastName, firstName, promotion);
-        studentManager.addStudent(student);
-        gradeManager.addGradeWhenNewStudent(student.getId(), evaluationManager.getEvaluationIdList(promotion.getId()));
+        mStudentManager.addStudent(student);
+        mGradeManager.addGradeWhenNewStudent(student.getId(), mEvaluationManager.getEvaluationIdList(promotion.getId()));
         Toast.makeText(this, "L'étudiant a bien été ajouté", Toast.LENGTH_SHORT).show();
     }
 //endregion

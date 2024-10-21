@@ -2,16 +2,13 @@ package com.example.gestionpoints.controllers.Activities.GradeActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.gestionpoints.R;
 import com.example.gestionpoints.Utils.IntentKeys;
 import com.example.gestionpoints.controllers.Activities.BaseActivity;
 import com.example.gestionpoints.controllers.Fragments.CommunLearningActivitesFragment;
-import com.example.gestionpoints.controllers.Fragments.SettingsEvaluationsFragment;
 import com.example.gestionpoints.models.dataBaseManager.manager.EvaluationManager;
 import com.example.gestionpoints.models.evaluation.Evaluation;
 import com.example.gestionpoints.models.promotion.Promotion;
@@ -20,21 +17,21 @@ import java.util.ArrayList;
 
 
 public class GradeLearningActivitiesActivity extends BaseActivity implements CommunLearningActivitesFragment.Listener  {
-    private Promotion promotion;
-    private EvaluationManager evaluationManager;
-    private ArrayList<Evaluation> learningActivityList;
+    private Promotion mPromotion;
+    private EvaluationManager mEvaluationManager;
+    private ArrayList<Evaluation> mLearningActivityList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        evaluationManager = new EvaluationManager(this);
-        promotion = (Promotion) getIntent().getSerializableExtra(IntentKeys.PROMOTION);
+        mEvaluationManager = new EvaluationManager(this);
+        mPromotion = (Promotion) getIntent().getSerializableExtra(IntentKeys.PROMOTION);
         //TODO maybe null rien dans onsavedinstancestate a voir si grave
-        learningActivityList = getLearningActivityList();
+        mLearningActivityList = getLearningActivityList();
         super.onCreate(savedInstanceState);
     }
 
     public ArrayList<Evaluation> getLearningActivityList() {
-        ArrayList<Evaluation> evaluationList = evaluationManager.getEvaluationsForPromotion(promotion);
+        ArrayList<Evaluation> evaluationList = mEvaluationManager.getEvaluationsForPromotion(mPromotion);
         ArrayList<Evaluation> learningActivityList = new ArrayList<>();
         for (Evaluation evaluation : evaluationList) {
             if (evaluation.getParentId() == 0)
@@ -51,7 +48,7 @@ public class GradeLearningActivitiesActivity extends BaseActivity implements Com
 
     @Override
     public Fragment getMiddleFragmentToLaunch() {
-        return CommunLearningActivitesFragment.newInstance(promotion, learningActivityList);
+        return CommunLearningActivitesFragment.newInstance(mPromotion, mLearningActivityList);
     }
     //endregion
 
@@ -63,7 +60,7 @@ public class GradeLearningActivitiesActivity extends BaseActivity implements Com
 
     private void openGradeStudentListActivity(Evaluation learningActivity) {
         Intent intent = new Intent(getApplicationContext(), GradeStudentListActivity.class);
-        intent.putExtra(IntentKeys.PROMOTION, promotion);
+        intent.putExtra(IntentKeys.PROMOTION, mPromotion);
         intent.putExtra(IntentKeys.LEARNING_ACTIVITY, learningActivity);
         startActivity(intent);
     }

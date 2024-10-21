@@ -23,31 +23,31 @@ import java.util.List;
 
 public class SettingsLearningActivitiesListActivity extends BaseActivity implements FooterFragment.FooterListener, CommunLearningActivitesFragment.Listener {
 
-    private EvaluationManager evaluationManager;
-    private GradeManager gradeManager;
-    private Promotion promotion;
-    private StudentManager studentManager;
-    private ArrayList<Evaluation> learningActivityList = new ArrayList<>();
-    ArrayList<Evaluation> selectedLearningActivity = new ArrayList<>();
-    private List<Integer> studentIdList = new ArrayList<>();
+    private EvaluationManager mEvaluationManager;
+    private GradeManager mGradeManager;
+    private Promotion mPromotion;
+    private StudentManager mStudentManager;
+    private ArrayList<Evaluation> mLearningActivityList;
+    private ArrayList<Evaluation> mSelectedLearningActivity = new ArrayList<>();
+    private List<Integer> mStudentIdList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        studentManager = new StudentManager(this);
-        evaluationManager = new EvaluationManager(this);
-        gradeManager = new GradeManager(this);
+        mStudentManager = new StudentManager(this);
+        mEvaluationManager = new EvaluationManager(this);
+        mGradeManager = new GradeManager(this);
         initializeAttributes(savedInstanceState);
-        studentIdList = studentManager.getStudentIdList(promotion.getId());
+        mStudentIdList = mStudentManager.getStudentIdList(mPromotion.getId());
         super.onCreate(savedInstanceState);
     }
 
     private void initializeAttributes(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
-            promotion = (Promotion) savedInstanceState.getSerializable(IntentKeys.PROMOTION);
-            learningActivityList = (ArrayList<Evaluation>) savedInstanceState.getSerializable(IntentKeys.LEARNING_ACTIVITIES);
+            mPromotion = (Promotion) savedInstanceState.getSerializable(IntentKeys.PROMOTION);
+            mLearningActivityList = (ArrayList<Evaluation>) savedInstanceState.getSerializable(IntentKeys.LEARNING_ACTIVITIES);
         } else {
-            promotion = (Promotion) getIntent().getSerializableExtra(IntentKeys.PROMOTION);
-            learningActivityList = getLearningActivityList();
+            mPromotion = (Promotion) getIntent().getSerializableExtra(IntentKeys.PROMOTION);
+            mLearningActivityList = getLearningActivityList();
         }
     }
 
@@ -59,7 +59,7 @@ public class SettingsLearningActivitiesListActivity extends BaseActivity impleme
 
     @Override
     public Fragment getMiddleFragmentToLaunch() {
-        return CommunLearningActivitesFragment.newInstance(promotion, learningActivityList);
+        return CommunLearningActivitesFragment.newInstance(mPromotion, mLearningActivityList);
     }
 
     @Override
@@ -71,10 +71,10 @@ public class SettingsLearningActivitiesListActivity extends BaseActivity impleme
     // region FooterListener related methods
     @Override
     public void onAddButtonClick() {
-        AddLearningActivitiesDialogFragment dialogFragment = new AddLearningActivitiesDialogFragment(promotion.getId());
+        AddLearningActivitiesDialogFragment dialogFragment = new AddLearningActivitiesDialogFragment(mPromotion.getId());
         dialogFragment.setAddItemListener(newLearningActivity -> {
-            evaluationManager.addEvaluation(newLearningActivity);
-            gradeManager.addGradeWhenNewEvaluation(newLearningActivity.getId(),studentIdList);
+            mEvaluationManager.addEvaluation(newLearningActivity);
+            mGradeManager.addGradeWhenNewEvaluation(newLearningActivity.getId(), mStudentIdList);
             replaceFragment();
         });
         dialogFragment.show(getSupportFragmentManager(), "AddLearningActivitiesFragment");
@@ -82,19 +82,19 @@ public class SettingsLearningActivitiesListActivity extends BaseActivity impleme
 
     @Override
     public void onDeleteButtonClick() {
-      if(!selectedLearningActivity.isEmpty()) {
-          for (Evaluation evaluation : selectedLearningActivity) {
-              evaluationManager.deleteEvaluation(evaluation);
-          }
-          replaceFragment();
-          selectedLearningActivity.clear();
-      }
+        if(!mSelectedLearningActivity.isEmpty()) {
+            for (Evaluation evaluation : mSelectedLearningActivity) {
+                mEvaluationManager.deleteEvaluation(evaluation);
+            }
+            replaceFragment();
+            mSelectedLearningActivity.clear();
+        }
     }
 
     private void replaceFragment() {
-        learningActivityList = getLearningActivityList();
+        mLearningActivityList = getLearningActivityList();
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.middlePageContainer, CommunLearningActivitesFragment.newInstance(promotion, learningActivityList))
+                .replace(R.id.middlePageContainer, CommunLearningActivitesFragment.newInstance(mPromotion, mLearningActivityList))
                 .commit();
     }
     //endregion
@@ -104,9 +104,9 @@ public class SettingsLearningActivitiesListActivity extends BaseActivity impleme
     public void onLearningActivityLongClicked(Evaluation learningActivity) {
         learningActivity.setSelected(!learningActivity.isSelected());
         if (learningActivity.isSelected()) {
-            selectedLearningActivity.add(learningActivity);
+            mSelectedLearningActivity.add(learningActivity);
         } else {
-            selectedLearningActivity.remove(learningActivity);
+            mSelectedLearningActivity.remove(learningActivity);
         }
     }
 
@@ -123,7 +123,7 @@ public class SettingsLearningActivitiesListActivity extends BaseActivity impleme
     //endregion
 
     public ArrayList<Evaluation> getLearningActivityList() {
-        ArrayList<Evaluation> evaluationList = evaluationManager.getEvaluationsForPromotion(promotion);
+        ArrayList<Evaluation> evaluationList = mEvaluationManager.getEvaluationsForPromotion(mPromotion);
         ArrayList<Evaluation> learningActivityList = new ArrayList<>();
         for (Evaluation evaluation : evaluationList) {
             if (evaluation.getParentId() == 0)
@@ -135,7 +135,7 @@ public class SettingsLearningActivitiesListActivity extends BaseActivity impleme
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putSerializable(IntentKeys.LEARNING_ACTIVITIES, learningActivityList);
-        outState.putSerializable(IntentKeys.PROMOTION, promotion);
+        outState.putSerializable(IntentKeys.LEARNING_ACTIVITIES, mLearningActivityList);
+        outState.putSerializable(IntentKeys.PROMOTION, mPromotion);
     }
 }

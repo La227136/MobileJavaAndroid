@@ -1,43 +1,38 @@
 package com.example.gestionpoints.models.grade;
 
-import android.util.Log;
-
-import com.example.gestionpoints.models.dataBaseManager.manager.GradeManager;
 import com.example.gestionpoints.models.evaluation.Evaluation;
 import com.example.gestionpoints.models.student.Student;
 
 import java.io.Serializable;
 
 public class Grade implements Serializable {
-    Student student;
-    Evaluation evaluation;
-    float grade;
-    private GradeManager gradeManager;
+    private Student mStudent;
+    private Evaluation mEvaluation;
+    private float mGrade;
 
-    // Constructeur pour une évaluation avec une note donnée
     public Grade(Student student, Evaluation evaluation, float grade) {
-        this.student = student;
-        this.evaluation = evaluation;
-        this.grade = grade;
+        this.mStudent = student;
+        this.mEvaluation = evaluation;
+        this.mGrade = grade;
     }
 
     public Evaluation getEvaluation() {
-        return evaluation;
+        return mEvaluation;
     }
 
-    public Float calculGrade (){
-        return grade;
+    public Float getGrade(){
+        return mGrade;
     }
 
-    public void setGrade(float grade) {
-        this.grade = grade;
+    public float getRoundedGrade() {
+        return Math.round(mGrade * 2) / 2.0f;
     }
 
     public int getEvaluationId() {
-        return evaluation.getId();
+        return mEvaluation.getId();
     }
 
     public int getStudentgId() {
-        return student.getId();
+        return mStudent.getId();
     }
 }
