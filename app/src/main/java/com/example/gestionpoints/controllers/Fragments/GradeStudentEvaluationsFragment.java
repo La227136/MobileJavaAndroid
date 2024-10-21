@@ -142,25 +142,27 @@ public class GradeStudentEvaluationsFragment extends Fragment {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
-                    // L'EditText a perdu le focus
-                    String text = gradeEditText.getText().toString();
-                    Log.d("iiiiiiiiiiiii", "Nouvelle note: " + text);
-                    float newGradeValue = 0;
-                    try {
-                        newGradeValue = Float.parseFloat(text);
-                    } catch (NumberFormatException e) {
-                        // Gérer le cas où l'utilisateur entre une valeur non numérique
-                        newGradeValue = 0;
+                    String text = gradeEditText.getText().toString().trim();
+                    if (text.isEmpty()) {
+                        gradeEditText.setError("La note ne peut pas être vide.");
+                        return;
                     }
-                    listener.updateGrade(grade, newGradeValue);
-                    listener.replaceFragment();
+                    try {
+                        float newGradeValue = Float.parseFloat(text);
+                        if (newGradeValue < 0) {
+                            gradeEditText.setError("La note ne peut pas être négative.");
+                        } else {
+                            listener.updateGrade(grade, newGradeValue);
+                            listener.replaceFragment();
+                        }
+                    } catch (NumberFormatException e) {
+                        gradeEditText.setError("Veuillez entrer un nombre valide.");
+                    }
                 }
             }
         });
-
         ApplyMargin(level, evalItemView);
         displayGradeContainer.addView(evalItemView);
-
     }
 
     private void ApplyMargin(int level, View evalItemView) {
