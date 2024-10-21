@@ -42,10 +42,14 @@ public abstract class AddBaseEvaluationDialogFragment extends AddItemDialogFragm
     protected Evaluation createNewItem(String name) {
         try {
             maxGrade = Float.parseFloat(editTextGradeEvaluation.getText().toString());
+            if(maxGrade < 0) {
+                throw new ExceptionTextField("La ponderation doit être un nombre positif");
+            }
             return new Evaluation(parentId, promotionId, maxGrade, name);
-        } catch (NumberFormatException e) {
+
+        } catch (NumberFormatException | ExceptionTextField e) {
             try {
-                throw new ExceptionTextField("La ponderation doit être un nombre");
+                throw new ExceptionTextField("La ponderation doit être un nombre positif");
             } catch (ExceptionTextField ex) {
                 ex.setErrorMessage(editTextGradeEvaluation);
                 return null;
