@@ -36,7 +36,7 @@ public class SettingsEvaluationsActivity extends BaseActivity implements FooterF
         gradeManager = new GradeManager(this);
         studentManager = new StudentManager(this);
         learningActivity = (Evaluation) getIntent().getSerializableExtra(IntentKeys.LEARNING_ACTIVITY);
-        studentIdList = studentManager.getStudentIdList(learningActivity.getId());
+        studentIdList = studentManager.getStudentIdList(learningActivity.getPromotionId());
         //TODO erroor peut etre
         directSubEvaluation =  evaluationManager.getEvaluationForParentEvaluation(learningActivity);
         super.onCreate(savedInstanceState);
