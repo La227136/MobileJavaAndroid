@@ -4,9 +4,11 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.gestionpoints.R;
 import com.example.gestionpoints.Utils.IntentKeys;
 import com.example.gestionpoints.controllers.Activities.BaseActivity;
 import com.example.gestionpoints.controllers.Fragments.GradeStudentEvaluationsFragment;
+import com.example.gestionpoints.controllers.Fragments.SettingsEvaluationsFragment;
 import com.example.gestionpoints.models.dataBaseManager.manager.EvaluationManager;
 import com.example.gestionpoints.models.dataBaseManager.manager.GradeManager;
 import com.example.gestionpoints.models.evaluation.Evaluation;
@@ -106,5 +108,11 @@ private EvaluationManager evaluationManager;
     }
     //endregion
 
+    @Override
+    public void replaceFragment() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.middlePageContainer, GradeStudentEvaluationsFragment.newInstance(student, learningActivity))
+                .commit();
+    }
 
 }

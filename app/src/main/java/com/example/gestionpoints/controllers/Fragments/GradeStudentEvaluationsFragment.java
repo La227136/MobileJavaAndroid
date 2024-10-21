@@ -2,14 +2,15 @@ package com.example.gestionpoints.controllers.Fragments;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -29,7 +30,7 @@ public class GradeStudentEvaluationsFragment extends Fragment {
     private Evaluation learningActivity;
     private TextView ponderation;
     private TextView evaluationName;
-    private EditText gradeEditText;
+  //  private EditText gradeEditText;
     private Listener listener;
 
     public static GradeStudentEvaluationsFragment newInstance(Student student, Evaluation learningActivity) {
@@ -44,6 +45,7 @@ public class GradeStudentEvaluationsFragment extends Fragment {
         Grade createGrade(Student student, Evaluation evaluation);
         void updateGrade(Grade grade, float editableGrade);
         ArrayList<Evaluation> getEvalutionForParentEvaluation(Evaluation evaluation);
+        void replaceFragment();
     }
 
     @Override
@@ -68,9 +70,53 @@ public class GradeStudentEvaluationsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_grades_display, container, false);
+
+        // Cette View est nécessaire pour le clique autour de titre
+        View rootView = getActivity().findViewById(R.id.learningActivityActivity);
+
+        if (rootView != null) {
+            rootView.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View view, MotionEvent event) {
+                    // Cacher le clavier virtuel et retirer le focus de l'EditText
+                    hideKeyboardAndClearFocus(view);
+                    return false;  // Return false pour que l'événement continue à être traité normalement
+                }
+            });
+        } else {
+            // Gérer le cas où rootView est null
+            Log.d("iiiiiiiiiiiii", "rootView est null");
+        }
+
+        // Cette View est nécessaire pour le clique sur le reste de la page
+        ScrollView scrollView = getActivity().findViewById(R.id.scrollView3);
+        if (scrollView != null) {
+            scrollView.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View view, MotionEvent event) {
+                    hideKeyboardAndClearFocus(view);
+                    return false;
+                }
+            });
+        } else {
+            Log.d("iiiiiiiiiiiii", "scrollView est null");
+        }
+
+
         displayGradeContainer = v.findViewById(R.id.fragmentGradesDisplayContainer);
         displayEvaluationList(inflater, listener.getEvalutionForParentEvaluation(learningActivity), 0);
         return v;
+    }
+
+    private void hideKeyboardAndClearFocus(View view) {
+        View currentFocus = getActivity().getCurrentFocus();
+        if (currentFocus != null) {
+            currentFocus.clearFocus();
+            Log.d("iiiiiiiiiiiii", "Cacher le clavier");
+            // Cacher le clavier
+            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(currentFocus.getWindowToken(), 0);
+        }
     }
 
     private void displayEvaluationList(LayoutInflater inflater, List<Evaluation> evaluationList, int level) {
@@ -86,27 +132,11 @@ public class GradeStudentEvaluationsFragment extends Fragment {
     private void displayEvaluation(LayoutInflater inflater, Evaluation evaluation, int level) {
         View evalItemView = inflater.inflate(R.layout.list_item_evaluation_points, displayGradeContainer, false);
         retrieveView(evalItemView);
-
+        EditText gradeEditText = evalItemView.findViewById(R.id.displayGradeEditText);
 
         Grade grade = listener.createGrade(student, evaluation);
-        setEvalItemData(evaluation, grade);
+        setEvalItemData(evaluation, grade, gradeEditText);
 
-//        gradeEditText.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//                // Nothing to do
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                // Nothing to do
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable editableGrade) {
-//                listener.updateGrade(grade, Float.parseFloat(editableGrade.toString()));
-//            }
-//        });
 
         gradeEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -114,6 +144,7 @@ public class GradeStudentEvaluationsFragment extends Fragment {
                 if (!hasFocus) {
                     // L'EditText a perdu le focus
                     String text = gradeEditText.getText().toString();
+                    Log.d("iiiiiiiiiiiii", "Nouvelle note: " + text);
                     float newGradeValue = 0;
                     try {
                         newGradeValue = Float.parseFloat(text);
@@ -122,19 +153,24 @@ public class GradeStudentEvaluationsFragment extends Fragment {
                         newGradeValue = 0;
                     }
                     listener.updateGrade(grade, newGradeValue);
+                    listener.replaceFragment();
                 }
             }
         });
 
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        evalItemView.setLayoutParams(params);
-        params.setMargins(16 + (90 * level), 10, 16, 0);
+        ApplyMargin(level, evalItemView);
         displayGradeContainer.addView(evalItemView);
 
     }
 
-    private void setEvalItemData(Evaluation evaluation, Grade grade) {
+    private void ApplyMargin(int level, View evalItemView) {
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        evalItemView.setLayoutParams(params);
+        params.setMargins(16 + (90 * level), 10, 16, 0);
+    }
+
+    private void setEvalItemData(Evaluation evaluation, Grade grade, EditText gradeEditText) {
         evaluationName.setText(evaluation.getName());
         gradeEditText.setText(String.valueOf(grade.calculGrade()));
         ponderation.setText(String.valueOf(evaluation.getMaxGrade()));
@@ -143,7 +179,7 @@ public class GradeStudentEvaluationsFragment extends Fragment {
     private void retrieveView(View view) {
         ponderation = view.findViewById(R.id.ponderationTextViewGrade);
         evaluationName = view.findViewById(R.id.evaluationNameTextView);
-        gradeEditText = view.findViewById(R.id.displayGradeEditText);
+      //  gradeEditText = view.findViewById(R.id.displayGradeEditText);
     }
 
 }

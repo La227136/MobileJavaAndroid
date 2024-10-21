@@ -104,6 +104,7 @@ public class GradeStudentListFragment extends Fragment {
             listener.onItemClick(student);
         });
     }
+
     private void setStudentItemData(Student student) {
         studentIdTextView.setText(String.valueOf(gradeManager.getGrade(learningActivity.getId(), student.getId())));
         fullNameTextView.setText(student.getLastName() + " " + student.getFirstName());

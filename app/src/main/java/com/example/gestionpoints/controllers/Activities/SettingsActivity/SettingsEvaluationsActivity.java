@@ -104,6 +104,7 @@ public class SettingsEvaluationsActivity extends BaseActivity implements FooterF
         return  evaluationManager.getEvaluationForParentEvaluation(evaluation);
     }
 
+
     private void replaceFragment() {
         directSubEvaluation =  evaluationManager.getEvaluationForParentEvaluation(learningActivity);
         getSupportFragmentManager().beginTransaction()
