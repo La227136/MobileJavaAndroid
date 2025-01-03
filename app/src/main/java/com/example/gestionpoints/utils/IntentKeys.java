@@ -11,4 +11,6 @@ public class IntentKeys {
     public static final String STUDENTLIST = "studentList";
 
     public static final String EVALUATIONLIST = "evaluationList";
+    public static final String SELECTED_LEARNING_ACTIVITIES = "selectedLearningActivities";
+    public static final String SELECTED_EVALUATION = "selectedEvaluation";
 }

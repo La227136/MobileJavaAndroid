@@ -36,11 +36,20 @@ public class SettingsEvaluationsActivity extends BaseActivity implements FooterF
         mEvaluationManager = new EvaluationManager(this);
         mGradeManager = new GradeManager(this);
         mStudentManager = new StudentManager(this);
-        mLearningActivity = (Evaluation) getIntent().getSerializableExtra(IntentKeys.LEARNING_ACTIVITY);
-        mStudentIdList = mStudentManager.getStudentIdList(mLearningActivity.getPromotionId());
-        //TODO erroor peut etre
-        mDirectSubEvaluation =  mEvaluationManager.getEvaluationForParentEvaluation(mLearningActivity);
+        initializeAttributes(savedInstanceState);
         super.onCreate(savedInstanceState);
+    }
+
+    private void initializeAttributes(Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
+            mLearningActivity = (Evaluation) savedInstanceState.getSerializable(IntentKeys.LEARNING_ACTIVITY);
+            mDirectSubEvaluation = (ArrayList<Evaluation>) savedInstanceState.getSerializable(IntentKeys.EVALUATIONLIST);
+            mSelectedEvaluationList = (ArrayList<Evaluation>) savedInstanceState.getSerializable(IntentKeys.SELECTED_EVALUATION);
+        } else {
+            mLearningActivity = (Evaluation) getIntent().getSerializableExtra(IntentKeys.LEARNING_ACTIVITY);
+            mDirectSubEvaluation = mEvaluationManager.getEvaluationForParentEvaluation(mLearningActivity);
+        }
+        mStudentIdList = mStudentManager.getStudentIdList(mLearningActivity.getPromotionId());
     }
 
     @Override
@@ -52,8 +61,9 @@ public class SettingsEvaluationsActivity extends BaseActivity implements FooterF
     public Fragment getMiddleFragmentToLaunch() {
         return SettingsEvaluationsFragment.newInstance(mDirectSubEvaluation);
     }
+
     @Override
-    public void setupFooter(){
+    public void setupFooter() {
         setupFragment(R.id.footerContainer, new FooterFragment());
     }
 
@@ -100,16 +110,24 @@ public class SettingsEvaluationsActivity extends BaseActivity implements FooterF
             mSelectedEvaluationList.remove(evaluation);
         }
     }
+
     @Override
     public ArrayList<Evaluation> getChildrenForEvaluation(Evaluation evaluation) {
-        return  mEvaluationManager.getEvaluationForParentEvaluation(evaluation);
+        return mEvaluationManager.getEvaluationForParentEvaluation(evaluation);
     }
 
 
     private void replaceFragment() {
-        mDirectSubEvaluation =  mEvaluationManager.getEvaluationForParentEvaluation(mLearningActivity);
+        mDirectSubEvaluation = mEvaluationManager.getEvaluationForParentEvaluation(mLearningActivity);
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.middlePageContainer, SettingsEvaluationsFragment.newInstance(mDirectSubEvaluation))
                 .commit();
+    }
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable(IntentKeys.LEARNING_ACTIVITY, mLearningActivity);
+        outState.putSerializable(IntentKeys.EVALUATIONLIST, mDirectSubEvaluation);
+        outState.putSerializable(IntentKeys.SELECTED_EVALUATION,mSelectedEvaluationList);
     }
 }

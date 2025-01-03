@@ -45,6 +45,7 @@ public class SettingsLearningActivitiesActivity extends BaseActivity implements 
         if (savedInstanceState != null) {
             mPromotion = (Promotion) savedInstanceState.getSerializable(IntentKeys.PROMOTION);
             mLearningActivityList = (ArrayList<Evaluation>) savedInstanceState.getSerializable(IntentKeys.LEARNING_ACTIVITIES);
+            mSelectedLearningActivity = (ArrayList<Evaluation>) savedInstanceState.getSerializable(IntentKeys.SELECTED_LEARNING_ACTIVITIES);
         } else {
             mPromotion = (Promotion) getIntent().getSerializableExtra(IntentKeys.PROMOTION);
             mLearningActivityList = getLearningActivityList();
@@ -137,5 +138,6 @@ public class SettingsLearningActivitiesActivity extends BaseActivity implements 
         super.onSaveInstanceState(outState);
         outState.putSerializable(IntentKeys.LEARNING_ACTIVITIES, mLearningActivityList);
         outState.putSerializable(IntentKeys.PROMOTION, mPromotion);
+        outState.putSerializable(IntentKeys.SELECTED_LEARNING_ACTIVITIES, mSelectedLearningActivity);
     }
 }

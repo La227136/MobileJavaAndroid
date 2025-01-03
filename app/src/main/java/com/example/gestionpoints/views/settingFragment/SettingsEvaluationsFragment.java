@@ -89,6 +89,7 @@ public class SettingsEvaluationsFragment extends Fragment {
         retrieveView(evalItemView);
         evalItemView.setSelected(evalItemView.isSelected());
         setEvalData(evaluation);
+        evalItemView.setSelected(evaluation.isSelected());
         setListeners(evaluation, evalItemView);
         mLearningActivitiesContainer.addView(evalItemView);
         params.setMargins(16 + (90 * level), 10, 16, 0);
@@ -99,8 +100,8 @@ public class SettingsEvaluationsFragment extends Fragment {
             mListener.onAddSubEvaluation(evaluation);
         });
         evalItemView.setOnLongClickListener((view) -> {
-            evalItemView.setSelected(!evalItemView.isSelected());
             mListener.onLongClick(view, evaluation);
+            evalItemView.setSelected(evaluation.isSelected());
             return true;
         });
     }
