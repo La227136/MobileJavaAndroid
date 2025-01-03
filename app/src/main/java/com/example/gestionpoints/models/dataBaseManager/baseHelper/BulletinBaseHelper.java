@@ -16,8 +16,7 @@ public class BulletinBaseHelper extends SQLiteOpenHelper {
 
     public BulletinBaseHelper(Context context) {
         super(context, DATABASE_NAME, null, VERSION);
-        mContext = context;  // Stockez le contexte reçu
-
+        mContext = context;
     }
 
     @Override
