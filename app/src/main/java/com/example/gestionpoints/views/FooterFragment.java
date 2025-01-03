@@ -42,12 +42,12 @@ public class FooterFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View v = inflater.inflate(R.layout.fragment_footer, container, false);
         retrieveView(v);
-        setData();
-        setupButtonListeners(mAddBtn, mDeleteBtn);
+        setButtonssText();
+        setupButtonsListeners(mAddBtn, mDeleteBtn);
         return v;
     }
 
-    private void setData() {
+    private void setButtonssText() {
         mAddBtn.setText("Ajouter");
         mDeleteBtn.setText("Supprimer");
     }
@@ -57,9 +57,9 @@ public class FooterFragment extends Fragment {
         mDeleteBtn = v.findViewById(R.id.deleteBtn);
     }
 
-    private void setupButtonListeners(Button addBtn, Button deleteBtn) {
-        addBtn.setOnClickListener(this::handleAddButtonClick);
-        deleteBtn.setOnClickListener(this::handleDeleteButtonClick);
+    private void setupButtonsListeners(Button addBtn, Button deleteBtn) {
+        addBtn.setOnClickListener(v -> handleAddButtonClick(v));
+        deleteBtn.setOnClickListener(v -> handleDeleteButtonClick(v));
     }
 
     private void handleAddButtonClick(View v) {
