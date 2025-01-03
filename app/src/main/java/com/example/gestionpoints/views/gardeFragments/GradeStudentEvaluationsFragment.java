@@ -68,9 +68,9 @@ public class GradeStudentEvaluationsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_grades_display_container, container, false);
+        View v = inflater.inflate(R.layout.fragment_container, container, false);
         setupTouchListenersForFocusClear();
-        mDisplayGradeContainer = v.findViewById(R.id.fragmentGradesDisplayContainer);
+        mDisplayGradeContainer = v.findViewById(R.id.fragmentContainer);
         displayEvaluationList(inflater, mListener.getEvalutionForParentEvaluation(mLearningActivity), 0);
         return v;
     }

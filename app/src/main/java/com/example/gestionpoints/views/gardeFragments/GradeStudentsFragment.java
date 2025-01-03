@@ -71,8 +71,8 @@ public class GradeStudentsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.fragment_student_list_container, container, false);
-        mStudentListContainer = view.findViewById(R.id.studentListContainer);
+        View view = inflater.inflate(R.layout.fragment_container, container, false);
+        mStudentListContainer = view.findViewById(R.id.fragmentContainer);
         if(mStudentList != null){
             displayStudents(inflater);
         }

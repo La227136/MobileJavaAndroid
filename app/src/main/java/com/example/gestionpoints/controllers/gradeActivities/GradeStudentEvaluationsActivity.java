@@ -109,9 +109,16 @@ public class GradeStudentEvaluationsActivity extends BaseActivity implements Gra
 
     @Override
     public void replaceFragment() {
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.middlePageContainer, GradeStudentEvaluationsFragment.newInstance(mStudent, mLearningActivity))
-                .commit();
+        // Vérif si l'activité est toujours active
+        // Si on fait pas cette vérif si l'utilisateur appuie sur le btn back
+        // alors que il a tjrs son curseur actif sur une note
+        // l'application va crasher
+        // Quand le utilisateur appuie sur le btn back, il y a un onFocusChange donc ca appelle la méthode onFocusChange qui appelle replaceFragment
+        if (!isFinishing() && !isDestroyed()) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.middlePageContainer, GradeStudentEvaluationsFragment.newInstance(mStudent, mLearningActivity))
+                    .commit();
+        }
     }
 
 }

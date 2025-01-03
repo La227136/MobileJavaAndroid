@@ -63,8 +63,8 @@ public class SettingsEvaluationsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_learning_activities_container, container, false);
-        mLearningActivitiesContainer = v.findViewById(R.id.learningActivitiesContainer);
+        View v = inflater.inflate(R.layout.fragment_container, container, false);
+        mLearningActivitiesContainer = v.findViewById(R.id.fragmentContainer);
         //TODO gere error potentiel si null
         displayEval(inflater, mEvaluationListFromLearningActivityDirectChild, 0);
         return v;

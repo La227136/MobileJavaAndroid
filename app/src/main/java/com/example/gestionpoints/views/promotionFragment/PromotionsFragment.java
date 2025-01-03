@@ -62,8 +62,8 @@ public class PromotionsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_promotion_list_container, container, false);
-        mPromotionListContainer = view.findViewById(R.id.promotion_list_container);
+        View view = inflater.inflate(R.layout.fragment_container, container, false);
+        mPromotionListContainer = view.findViewById(R.id.fragmentContainer);
         displayPromotionList(inflater);
         return view;
     }
