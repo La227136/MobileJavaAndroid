@@ -1,5 +1,4 @@
 package com.example.gestionpoints.views.promotionFragment;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -23,16 +22,16 @@ public class PromotionsFragment extends Fragment {
     private ArrayList<Promotion> mPromotionList;
     private LinearLayout mPromotionListContainer;
     private TextView mPromotionLevelTextView;
-    private ImageButton mSettingBtn;
-    private ImageButton mGradeBtn;
-    private ImageButton mAddStudentsBtn;
+    private ImageButton mSettingIcon;
+    private ImageButton mGradeIcon;
+    private ImageButton mAddStudentsIcon;
     private Listener mListener;
 
     public interface Listener {
         void onPromotionLongClicked(Promotion promotion);
-        void setOnClickSettingBtn(Promotion promotion);
-        void setOnClickGradeBtn(Promotion promotion);
-        void setOnClickAddStudentsBtn(Promotion promotion);
+        void setOnClickSettingIcon(Promotion promotion);
+        void setOnClickGradeIcon(Promotion promotion);
+        void setOnClickAddStudentsIcon(Promotion promotion);
     }
     @Override
     public void onAttach(Context context) {
@@ -89,9 +88,9 @@ public class PromotionsFragment extends Fragment {
 
     private void retrieveView(View classeView) {
         mPromotionLevelTextView = classeView.findViewById(R.id.promotionsTextView);
-        mSettingBtn = classeView.findViewById(R.id.evalBtn);
-        mGradeBtn = classeView.findViewById(R.id.pointsBtn);
-        mAddStudentsBtn = classeView.findViewById(R.id.addEtudiant);
+        mSettingIcon = classeView.findViewById(R.id.evalBtn);
+        mGradeIcon = classeView.findViewById(R.id.pointsBtn);
+        mAddStudentsIcon = classeView.findViewById(R.id.addEtudiant);
     }
 
     private void setPromotionData(Promotion promotion, View promotionItem) {
@@ -101,9 +100,9 @@ public class PromotionsFragment extends Fragment {
 
     private void setListeners(Promotion promotion, View promotionItem) {
         setLongClickListener(promotion, promotionItem);
-        mSettingBtn.setOnClickListener(v -> mListener.setOnClickSettingBtn(promotion));
-        mGradeBtn.setOnClickListener(v -> mListener.setOnClickGradeBtn(promotion));
-        mAddStudentsBtn.setOnClickListener(v -> mListener.setOnClickAddStudentsBtn(promotion));
+        mSettingIcon.setOnClickListener(v -> mListener.setOnClickSettingIcon(promotion));
+        mGradeIcon.setOnClickListener(v -> mListener.setOnClickGradeIcon(promotion));
+        mAddStudentsIcon.setOnClickListener(v -> mListener.setOnClickAddStudentsIcon(promotion));
     }
 
     private  void setLongClickListener(Promotion promotion, View promotionItem) {
@@ -113,7 +112,5 @@ public class PromotionsFragment extends Fragment {
             return true;
         });
     }
-
-
 
 }

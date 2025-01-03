@@ -90,17 +90,17 @@ public class PromotionsActivity extends BaseActivity implements FooterFragment.F
     }
 
     @Override
-    public void setOnClickSettingBtn(Promotion promotion) {
+    public void setOnClickSettingIcon(Promotion promotion) {
         startActivityWithPromotion(SettingsLearningActivitiesActivity.class, promotion);
     }
 
     @Override
-    public void setOnClickGradeBtn(Promotion promotion) {
+    public void setOnClickGradeIcon(Promotion promotion) {
         startActivityWithPromotion(GradeLearningActivitiesActivity.class, promotion);
     }
 
     @Override
-    public void setOnClickAddStudentsBtn(Promotion promotion) {
+    public void setOnClickAddStudentsIcon(Promotion promotion) {
         startActivityWithPromotion(AddStudentsActivity.class, promotion);
     }
 
@@ -116,7 +116,6 @@ public class PromotionsActivity extends BaseActivity implements FooterFragment.F
         super.onSaveInstanceState(outState);
         outState.putSerializable(IntentKeys.PROMOTIONS, mPromotionList);
     }
-
 }
 
 
