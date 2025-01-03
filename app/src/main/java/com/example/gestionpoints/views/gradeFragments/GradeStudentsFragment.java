@@ -1,4 +1,4 @@
-package com.example.gestionpoints.views.gardeFragments;
+package com.example.gestionpoints.views.gradeFragments;
 
 import android.content.Context;
 import android.os.Bundle;

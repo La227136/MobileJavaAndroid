@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment;
 import com.example.gestionpoints.R;
 import com.example.gestionpoints.utils.IntentKeys;
 import com.example.gestionpoints.controllers.BaseActivity;
-import com.example.gestionpoints.views.gardeFragments.GradeStudentsFragment;
+import com.example.gestionpoints.views.gradeFragments.GradeStudentsFragment;
 import com.example.gestionpoints.models.dataBaseManager.manager.StudentManager;
 import com.example.gestionpoints.models.Evaluation;
 import com.example.gestionpoints.models.Promotion;
