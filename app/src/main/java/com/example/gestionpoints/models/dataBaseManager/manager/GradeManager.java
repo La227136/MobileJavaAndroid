@@ -6,9 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.gestionpoints.models.dataBaseManager.baseHelper.BulletinBaseHelper;
-import com.example.gestionpoints.models.dataBaseManager.cursorWrapper.GradeWrapper;
+import com.example.gestionpoints.models.dataBaseManager.cursorWrapper.GradeCursorWrapper;
 import com.example.gestionpoints.models.dataBaseManager.dbSchema.BulletinDBSchema.GradeTable;
-import com.example.gestionpoints.models.grade.Grade;
+import com.example.gestionpoints.models.Grade;
 
 import java.io.Serializable;
 import java.util.List;
@@ -63,8 +63,8 @@ public class GradeManager implements Serializable {
         try {
             if (cursor.getCount() > 0) {
                 cursor.moveToFirst();
-                GradeWrapper gradeWrapper = new GradeWrapper(cursor);
-                return gradeWrapper.getGrade();  // Retourner la note
+                GradeCursorWrapper gradeCursorWrapper = new GradeCursorWrapper(cursor);
+                return gradeCursorWrapper.getGrade();  // Retourner la note
             } else {
                 return -1;  // Retourner une valeur par défaut si aucune note n'est trouvée
             }

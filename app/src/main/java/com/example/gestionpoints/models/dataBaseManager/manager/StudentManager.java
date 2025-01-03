@@ -4,15 +4,14 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import com.example.gestionpoints.models.dataBaseManager.baseHelper.BulletinBaseHelper;
 
 import com.example.gestionpoints.models.dataBaseManager.cursorWrapper.StudentCursorWrapper;
 import com.example.gestionpoints.models.dataBaseManager.dbSchema.BulletinDBSchema.StudentTable;
 import com.example.gestionpoints.models.dataBaseManager.dbSchema.BulletinDBSchema;
-import com.example.gestionpoints.models.promotion.Promotion;
-import com.example.gestionpoints.models.student.Student;
+import com.example.gestionpoints.models.Promotion;
+import com.example.gestionpoints.models.Student;
 
 
 import java.util.ArrayList;

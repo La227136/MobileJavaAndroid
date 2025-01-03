@@ -4,7 +4,7 @@ import android.database.Cursor;
 import android.database.CursorWrapper;
 
 import com.example.gestionpoints.models.dataBaseManager.dbSchema.BulletinDBSchema;
-import com.example.gestionpoints.models.student.Student;
+import com.example.gestionpoints.models.Student;
 
 public class StudentCursorWrapper extends CursorWrapper {
 

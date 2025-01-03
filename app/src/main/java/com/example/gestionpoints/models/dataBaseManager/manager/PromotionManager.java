@@ -8,11 +8,10 @@ import android.database.sqlite.SQLiteDatabase;
 import com.example.gestionpoints.models.dataBaseManager.baseHelper.BulletinBaseHelper;
 import com.example.gestionpoints.models.dataBaseManager.cursorWrapper.PromotionCursorWrapper;
 import com.example.gestionpoints.models.dataBaseManager.dbSchema.BulletinDBSchema.PromotionTable;
-import com.example.gestionpoints.models.promotion.Promotion;
+import com.example.gestionpoints.models.Promotion;
 
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class PromotionManager {
     private SQLiteDatabase mDatabase;
