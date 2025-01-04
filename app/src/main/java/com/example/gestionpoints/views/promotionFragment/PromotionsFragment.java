@@ -112,5 +112,4 @@ public class PromotionsFragment extends Fragment {
             return true;
         });
     }
-
 }

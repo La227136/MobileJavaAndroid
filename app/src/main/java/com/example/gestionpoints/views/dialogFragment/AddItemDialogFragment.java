@@ -35,26 +35,21 @@ public abstract class AddItemDialogFragment<T> extends DialogFragment {
         fillText();
         mAddItemButton.setOnClickListener(v -> {
             String itemName = mItemNameInput.getText().toString().trim();
-            try {
-                isErrorTextField(itemName);
-            } catch (ExceptionTextField e) {
-                e.setErrorMessage(mItemNameInput);
+            if (!isValidInput(itemName)) {
                 return;
             }
-             if(createNewItem(itemName) == null)
-                 return;
-              T  newItem = createNewItem(itemName);
+            T newItem = createNewItem(itemName);
             mListener.onItemAdded(newItem);
-
             dismiss();
         });
-
         return mView;
     }
 
-    protected void isErrorTextField(String itemName) throws ExceptionTextField {
-        if (itemName.isEmpty())
-            throw new ExceptionTextField("Le champ ne peut pas être vide");
+    protected void retrieveView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container) {
+        mView = inflater.inflate(R.layout.dialog_add_item, container, false);
+        mItemNameInput = mView.findViewById(R.id.itemNameInput);
+        mAddItemButton = mView.findViewById(R.id.addItemButton);
+        mTitleTextView = mView.findViewById(R.id.dialogTitle);
     }
 
     private void fillText() {
@@ -63,11 +58,26 @@ public abstract class AddItemDialogFragment<T> extends DialogFragment {
         mItemNameInput.setHint("Nom de " + getName());
     }
 
-    protected void retrieveView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container) {
-        mView = inflater.inflate(R.layout.dialog_add_item, container, false);
-        mItemNameInput = mView.findViewById(R.id.itemNameInput);
-        mAddItemButton = mView.findViewById(R.id.addItemButton);
-        mTitleTextView = mView.findViewById(R.id.dialogTitle);
+    private boolean isValidInput(String itemName) {
+        try {
+            isErrorTextField(itemName);
+            return true;
+        } catch (ExceptionTextField e) {
+            e.setErrorMessage(mItemNameInput);
+            return false;
+        }
+    }
+
+    protected void isErrorTextField(String itemName) throws ExceptionTextField {
+        if (itemName.isEmpty())
+            throw new ExceptionTextField("Le champ ne peut pas être vide");
+        if (itemName.length() > 40) {
+            throw new ExceptionTextField("Le nom ne doit pas dépasser 20 caractères");
+        }
+        if (!itemName.matches("[a-zA-Z0-9 ]+")) {
+            throw new ExceptionTextField("Caractères spéciaux non autorisés");
+        }
+
     }
 
     public void setAddItemListener(AddItemListener<T> listener) {

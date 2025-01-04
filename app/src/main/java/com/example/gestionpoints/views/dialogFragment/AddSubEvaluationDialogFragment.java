@@ -3,6 +3,7 @@ package com.example.gestionpoints.views.dialogFragment;
 import com.example.gestionpoints.models.Evaluation;
 
 public class AddSubEvaluationDialogFragment extends AddBaseEvaluationDialogFragment {
+
     public AddSubEvaluationDialogFragment(Evaluation evaluation) {
         super(evaluation);
     }
