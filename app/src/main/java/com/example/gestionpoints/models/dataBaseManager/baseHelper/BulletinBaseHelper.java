@@ -11,7 +11,7 @@ import com.example.gestionpoints.models.dataBaseManager.dbSchema.BulletinDBSchem
 
 public class BulletinBaseHelper extends SQLiteOpenHelper {
     private static final int VERSION = 1;
-    private static final String DATABASE_NAME = "HHHHHHbulletinDataBase.db";
+    private static final String DATABASE_NAME = "bulletinDataBase.db";
     private Context mContext;
 
     public BulletinBaseHelper(Context context) {
