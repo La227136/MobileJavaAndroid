@@ -47,7 +47,6 @@ public abstract class AddBaseEvaluationDialogFragment extends AddItemDialogFragm
                 throw new ExceptionTextField("La ponderation doit être un nombre positif");
             }
             return new Evaluation(mParentId, mPromotionId, mMaxGrade, name);
-
         } catch (NumberFormatException | ExceptionTextField e) {
             try {
                 throw new ExceptionTextField("La ponderation doit être un nombre positif");

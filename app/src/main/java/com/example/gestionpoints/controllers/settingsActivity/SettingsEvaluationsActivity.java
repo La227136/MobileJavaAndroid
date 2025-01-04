@@ -91,6 +91,7 @@ public class SettingsEvaluationsActivity extends BaseActivity implements FooterF
         }
     }
 
+    @Override
     public void onAddSubEvaluation(Evaluation parentEvaluation) {
         AddSubEvaluationDialogFragment dialogFragment = new AddSubEvaluationDialogFragment(parentEvaluation);
         dialogFragment.setAddItemListener(newEvaluation -> {

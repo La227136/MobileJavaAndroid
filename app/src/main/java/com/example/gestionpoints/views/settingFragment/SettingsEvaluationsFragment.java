@@ -65,7 +65,6 @@ public class SettingsEvaluationsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_container, container, false);
         mLearningActivitiesContainer = v.findViewById(R.id.fragmentContainer);
-        //TODO gere error potentiel si null
         displayEval(inflater, mEvaluationListFromLearningActivityDirectChild, 0);
         return v;
     }
@@ -82,7 +81,6 @@ public class SettingsEvaluationsFragment extends Fragment {
 
     private void display(LayoutInflater inflater, Evaluation evaluation, int level) {
         View evalItemView = inflater.inflate(R.layout.list_item_evaluation_settings, mLearningActivitiesContainer, false);
-        //TODO gere params
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         evalItemView.setLayoutParams(params);

@@ -63,8 +63,6 @@ public class CommunLearningActivitesFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO POURQUOI DEFOIS ON DANS ONCREATEVIEW ON FAIT UN SUPER ET PARFOIS PAS ?
-        // super.onCreateView(inflater, container, savedInstanceState);
         View v = inflater.inflate(R.layout.fragment_container, container, false);
         mLearningActivitiesContainer = v.findViewById(R.id.fragmentContainer);
         if (mPromotion != null) {

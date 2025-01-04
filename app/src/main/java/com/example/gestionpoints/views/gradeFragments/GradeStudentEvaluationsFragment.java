@@ -88,9 +88,6 @@ public class GradeStudentEvaluationsFragment extends Fragment {
                     return false;  // Return false pour que l'événement continue à être traité normalement
                 }
             });
-        } else {
-            // Gérer le cas où rootView est null
-            Log.d("iiiiiiiiiiiii", "rootView est null");
         }
 
         // Cette View est nécessaire pour le clique sur le reste de la page

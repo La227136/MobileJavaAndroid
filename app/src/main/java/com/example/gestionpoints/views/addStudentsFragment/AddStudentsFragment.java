@@ -27,7 +27,6 @@ public class AddStudentsFragment extends Fragment {
     private EditText mStudentSurFirstNameEditText;
     private EditText mCsvEditText;
 
-
     public static AddStudentsFragment newInstance(Promotion promotion) {
         AddStudentsFragment fragment = new AddStudentsFragment();
         Bundle args = new Bundle();

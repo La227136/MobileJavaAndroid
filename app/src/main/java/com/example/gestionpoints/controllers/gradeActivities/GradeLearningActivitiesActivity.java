@@ -25,7 +25,6 @@ public class GradeLearningActivitiesActivity extends BaseActivity implements Com
     protected void onCreate(Bundle savedInstanceState) {
         mEvaluationManager = new EvaluationManager(this);
         mPromotion = (Promotion) getIntent().getSerializableExtra(IntentKeys.PROMOTION);
-        //TODO maybe null rien dans onsavedinstancestate a voir si grave
         mLearningActivityList = getLearningActivityList();
         super.onCreate(savedInstanceState);
     }
@@ -59,7 +58,7 @@ public class GradeLearningActivitiesActivity extends BaseActivity implements Com
     }
 
     private void openGradeStudentListActivity(Evaluation learningActivity) {
-        Intent intent = new Intent(getApplicationContext(), GradeStudentsActivity.class);
+        Intent intent = new Intent(getApplicationContext(), GradeStudentListActivity.class);
         intent.putExtra(IntentKeys.PROMOTION, mPromotion);
         intent.putExtra(IntentKeys.LEARNING_ACTIVITY, learningActivity);
         startActivity(intent);

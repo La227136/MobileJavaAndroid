@@ -8,14 +8,14 @@ import androidx.fragment.app.Fragment;
 import com.example.gestionpoints.R;
 import com.example.gestionpoints.utils.IntentKeys;
 import com.example.gestionpoints.controllers.BaseActivity;
-import com.example.gestionpoints.views.gradeFragments.GradeStudentsFragment;
+import com.example.gestionpoints.views.gradeFragments.GradeStudentListFragment;
 import com.example.gestionpoints.models.dataBaseManager.manager.StudentManager;
 import com.example.gestionpoints.models.Evaluation;
 import com.example.gestionpoints.models.Promotion;
 import com.example.gestionpoints.models.Student;
 import java.util.ArrayList;
 
-public class GradeStudentsActivity extends BaseActivity implements GradeStudentsFragment.Listener  {
+public class GradeStudentListActivity extends BaseActivity implements GradeStudentListFragment.Listener  {
 
     private Promotion mPromotion;
     private Evaluation mLearningActivity;
@@ -39,10 +39,9 @@ public class GradeStudentsActivity extends BaseActivity implements GradeStudents
     }
     @Override
     public Fragment getMiddleFragmentToLaunch() {
-        // todo faire comment dans SettingsLearningActivitiesListActivity pour le save instance et tt
         StudentManager studentManager = new StudentManager(this);
         mStudentList = studentManager.getStudentsForPromotion(mPromotion);
-        return GradeStudentsFragment.newInstance(mStudentList, mLearningActivity);
+        return GradeStudentListFragment.newInstance(mStudentList, mLearningActivity);
     }
     //endregion
 
@@ -78,7 +77,7 @@ public class GradeStudentsActivity extends BaseActivity implements GradeStudents
         mStudentList = studentManager.getStudentsForPromotion(mPromotion);
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.middlePageContainer, GradeStudentsFragment.newInstance(mStudentList, mLearningActivity))
+                .replace(R.id.middlePageContainer, GradeStudentListFragment.newInstance(mStudentList, mLearningActivity))
                 .commit();
     }
 }

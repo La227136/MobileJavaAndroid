@@ -27,7 +27,7 @@
             android:name=".controllers.gradeActivities.GradeStudentEvaluationsActivity"
             android:exported="false" />
         <activity
-            android:name=".controllers.gradeActivities.GradeStudentsActivity"
+            android:name=".controllers.gradeActivities.GradeStudentListActivity"
             android:exported="false" />
 
         <activity

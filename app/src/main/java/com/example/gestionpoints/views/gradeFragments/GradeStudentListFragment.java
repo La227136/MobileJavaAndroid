@@ -20,7 +20,7 @@ import com.example.gestionpoints.models.Student;
 
 import java.util.ArrayList;
 
-public class GradeStudentsFragment extends Fragment {
+public class GradeStudentListFragment extends Fragment {
 
     private ArrayList<Student> mStudentList;
     private LinearLayout mStudentListContainer;
@@ -34,8 +34,8 @@ public class GradeStudentsFragment extends Fragment {
         void onItemClick(Student student);
     }
 
-    public static GradeStudentsFragment newInstance(ArrayList<Student> studentList, Evaluation learningActivity) {
-        GradeStudentsFragment fragment = new GradeStudentsFragment();
+    public static GradeStudentListFragment newInstance(ArrayList<Student> studentList, Evaluation learningActivity) {
+        GradeStudentListFragment fragment = new GradeStudentListFragment();
         Bundle args = new Bundle();
         args.putSerializable(IntentKeys.STUDENTLIST, studentList);
         args.putSerializable(IntentKeys.LEARNING_ACTIVITY,learningActivity);

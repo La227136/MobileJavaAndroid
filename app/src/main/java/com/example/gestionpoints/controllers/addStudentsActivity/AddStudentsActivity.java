@@ -75,7 +75,7 @@ public class AddStudentsActivity extends BaseActivity implements AddStudentsFrag
     private void addStudent(String lastName, String firstName, Promotion promotion) throws ExceptionTextField {
 
         if (lastName.isEmpty() || firstName.isEmpty()) {
-            throw new ExceptionTextField("Le nom et le prénom ne peuvent pas être vides");
+            throw new ExceptionTextField("Le nom ou le prénom ne peuvent pas être vides");
         }
 
         if (!lastName.matches("^[a-zA-ZÀ-ÖØ-öø-ÿ\\-]+$") || !firstName.matches("^[a-zA-ZÀ-ÖØ-öø-ÿ\\-]+$")) {
