@@ -22,8 +22,6 @@ public class EvaluationManager {
         mDatabase = new BulletinBaseHelper(context).getWritableDatabase();
     }
 
-
-
     public ArrayList<Evaluation> getEvaluationsForPromotion(Promotion promotion) {
         ArrayList<Evaluation> evaluations = new ArrayList<>();
         Cursor cursor = mDatabase.query(
