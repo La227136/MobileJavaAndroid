@@ -1,4 +1,4 @@
-package com.example.gestionpoints.views.dialogFragment;
+package com.example.gestionpoints.views.dialogFragment.addEvaluationDialogFragments;
 
 
 import com.example.gestionpoints.models.Evaluation;

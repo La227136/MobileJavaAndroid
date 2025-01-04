@@ -11,7 +11,7 @@ import com.example.gestionpoints.controllers.addStudentsActivity.AddStudentsActi
 import com.example.gestionpoints.controllers.gradeActivities.GradeLearningActivitiesActivity;
 import com.example.gestionpoints.controllers.settingsActivity.SettingsLearningActivitiesActivity;
 import com.example.gestionpoints.controllers.BaseActivity;
-import com.example.gestionpoints.views.dialogFragment.AddPromotionDialogFragment;
+import com.example.gestionpoints.views.dialogFragment.addItemDialogFragments.AddPromotionDialogFragment;
 import com.example.gestionpoints.views.FooterFragment;
 import com.example.gestionpoints.views.promotionFragment.PromotionsFragment;
 import com.example.gestionpoints.models.dataBaseManager.manager.PromotionManager;

@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment;
 import com.example.gestionpoints.R;
 import com.example.gestionpoints.utils.IntentKeys;
 import com.example.gestionpoints.controllers.BaseActivity;
-import com.example.gestionpoints.views.dialogFragment.AddLearningActivitiesDialogFragment;
+import com.example.gestionpoints.views.dialogFragment.addItemDialogFragments.AddLearningActivitiesDialogFragment;
 import com.example.gestionpoints.views.FooterFragment;
 import com.example.gestionpoints.views.CommunLearningActivitesFragment;
 import com.example.gestionpoints.models.dataBaseManager.manager.EvaluationManager;

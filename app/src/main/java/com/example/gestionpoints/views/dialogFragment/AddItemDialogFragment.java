@@ -39,6 +39,10 @@ public abstract class AddItemDialogFragment<T> extends DialogFragment {
                 return;
             }
             T newItem = createNewItem(itemName);
+            // Si l'item a est null par exemple pas de pondération ou quoi on ne fait rien
+            if(newItem == null) {
+                return;
+            }
             mListener.onItemAdded(newItem);
             dismiss();
         });

@@ -1,4 +1,4 @@
-package com.example.gestionpoints.views.dialogFragment;
+package com.example.gestionpoints.views.dialogFragment.addEvaluationDialogFragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import com.example.gestionpoints.R;
 import com.example.gestionpoints.models.exception.ExceptionTextField;
 import com.example.gestionpoints.models.Evaluation;
+import com.example.gestionpoints.views.dialogFragment.AddItemDialogFragment;
 
 public abstract class AddBaseEvaluationDialogFragment extends AddItemDialogFragment<Evaluation> {
     private Integer mParentId;

@@ -1,6 +1,7 @@
-package com.example.gestionpoints.views.dialogFragment;
+package com.example.gestionpoints.views.dialogFragment.addItemDialogFragments;
 
 import com.example.gestionpoints.models.Evaluation;
+import com.example.gestionpoints.views.dialogFragment.AddItemDialogFragment;
 
 public class AddLearningActivitiesDialogFragment extends AddItemDialogFragment<Evaluation> {
 
